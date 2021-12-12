@@ -28,7 +28,7 @@ public class ClientController {
         System.out.println("Clicked inbox button!"); /* for testing */
 
         /* to test the loading pages */
-        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("test-view.fxml"/* <--delete this file */));
+        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-list-view.fxml"));
         contentPanel.getChildren().setAll(panel);
 
     }
