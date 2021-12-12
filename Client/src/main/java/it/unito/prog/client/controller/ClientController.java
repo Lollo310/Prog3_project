@@ -19,23 +19,25 @@ public class ClientController {
     private Label userEmail;
 
     @FXML
-    void onComposeButtonAction(ActionEvent event) {
-        System.out.println("Clicked compose button!"); /* for testing */
-    }
+    void onComposeButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
+        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-write-view.fxml"));
 
-    @FXML
-    void onInboxButtonAction(ActionEvent event) throws IOException {
-        System.out.println("Clicked inbox button!"); /* for testing */
-
-        /* to test the loading pages */
-        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-list-view.fxml"));
         contentPanel.getChildren().setAll(panel);
-
     }
 
     @FXML
-    void onSentButtonAction(ActionEvent event) {
-        System.out.println("Clicked sent button!");
+    void onInboxButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
+        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-list-view.fxml"));
+
+        contentPanel.getChildren().setAll(panel);
+    }
+
+    //Incorporare con onInboxButtonAction?!
+    @FXML
+    void onSentButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
+        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-list-view.fxml"));
+
+        contentPanel.getChildren().setAll(panel);
     }
 
 }
