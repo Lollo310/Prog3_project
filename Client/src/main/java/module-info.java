@@ -1,6 +1,7 @@
 module it.unito.prog.client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
 
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;

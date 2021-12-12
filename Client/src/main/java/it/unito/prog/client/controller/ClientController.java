@@ -4,6 +4,7 @@ import it.unito.prog.client.view.ClientApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -20,16 +21,19 @@ public class ClientController {
 
     @FXML
     void onComposeButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
-        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-write-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
+        Object controller = loader.getController();
 
-        contentPanel.getChildren().setAll(panel);
+        contentPanel.getChildren().setAll((Node) loader.load());
     }
 
     @FXML
     void onInboxButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
-        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-list-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-list-view.fxml"));
+        Object controller = loader.getController();
 
-        contentPanel.getChildren().setAll(panel);
+        contentPanel.getChildren().setAll((Node) loader.load());
+
     }
 
     //Incorporare con onInboxButtonAction?!
