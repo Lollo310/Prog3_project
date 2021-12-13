@@ -12,8 +12,8 @@
       <TextField fx:id="subjectTextField" layoutX="80.0" layoutY="64.0" prefHeight="38.0" prefWidth="595.0" />
       <Label fx:id="toLabel" layoutX="27.0" layoutY="12.0" prefHeight="38.0" prefWidth="50.0" text="To" />
       <Label fx:id="subjectLabel" layoutX="27.0" layoutY="64.0" prefHeight="38.0" prefWidth="50.0" text="Subject" />
-      <Button fx:id="sendButton" layoutX="610.0" layoutY="536.0" mnemonicParsing="false" prefWidth="65.0" text="Send" />
+      <Button fx:id="sendButton" layoutX="610.0" layoutY="536.0" mnemonicParsing="false" onAction="#onSendButtonAction" prefWidth="65.0" text="Send" />
       <HTMLEditor fx:id="messageHTMLEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="80.0" layoutY="116.0" prefHeight="407.0" prefWidth="595.0" />
-      <Button fx:id="deleteButton" layoutX="525.0" layoutY="536.0" mnemonicParsing="false" prefWidth="65.0" text="Delete" />
+      <Button fx:id="deleteButton" layoutX="525.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDeleteButtonAction" prefWidth="65.0" text="Delete" />
    </children>
 </AnchorPane>

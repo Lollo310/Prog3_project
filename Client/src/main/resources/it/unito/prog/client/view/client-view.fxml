@@ -24,9 +24,9 @@
                     <padding>
                         <Insets bottom="25.0" />
                     </padding></Label>
-                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onComposeButtonAction" prefHeight="75.0" prefWidth="200.0" text=" + Compose" />
-                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onInboxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox" />
-                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSentButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent" />
+                <Button fx:id="composeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text=" + Compose" />
+                <Button fx:id="inboxButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox" />
+                <Button fx:id="sentButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent" />
             </children>
         </VBox>
     </left>

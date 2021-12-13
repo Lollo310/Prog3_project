@@ -7,11 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientController {
+    private Map<String, String> views;
 
     @FXML
     private AnchorPane contentPanel;
@@ -20,28 +22,20 @@ public class ClientController {
     private Label userEmail;
 
     @FXML
-    void onComposeButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
-        FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
-        Object controller = loader.getController();
-
-        contentPanel.getChildren().setAll((Node) loader.load());
-    }
-
-    @FXML
-    void onInboxButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
-        FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-list-view.fxml"));
-        Object controller = loader.getController();
-
-        contentPanel.getChildren().setAll((Node) loader.load());
-
-    }
-
-    //Incorporare con onInboxButtonAction?!
-    @FXML
-    void onSentButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
-        Pane panel = FXMLLoader.load(ClientApplication.class.getResource("email-list-view.fxml"));
+    void onVBoxButtonAction(ActionEvent event) throws IOException { /* gestire eccezione */
+        Node node = (Node) event.getSource();
+        Node panel = FXMLLoader.load(ClientApplication.class.getResource(views.get(node.getId())));
 
         contentPanel.getChildren().setAll(panel);
+    }
+
+    @FXML
+    void initialize() {
+        views = new HashMap<>();
+
+        views.put("composeButton", "email-write-view.fxml");
+        views.put("inboxButton", "email-list-view.fxml");
+        views.put("sentButton", "email-list-view.fxml");
     }
 
 }
