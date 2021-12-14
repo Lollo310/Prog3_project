@@ -2,6 +2,7 @@ package it.unito.prog.client.model;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
@@ -10,8 +11,8 @@ public class Client {
     private ListProperty<Email> inbox;
     private ListProperty<Email> sent;
 
-    public Client(StringProperty user) {
-        this.user = user;
+    public Client(String user) {
+        this.user = new SimpleStringProperty(user);
         this.inbox = new SimpleListProperty<>();
         this.sent = new SimpleListProperty<>();
     }

@@ -1,5 +1,6 @@
 package it.unito.prog.client.controller;
 
+import it.unito.prog.client.model.Client;
 import it.unito.prog.client.view.ClientApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,11 +32,14 @@ public class ClientController {
 
     @FXML
     void initialize() {
-        views = new HashMap<>();
+        Client clientModel = new Client("michele.lorenzo@edu.unito.it");
 
+        views = new HashMap<>();
         views.put("composeButton", "email-write-view.fxml");
         views.put("inboxButton", "email-list-view.fxml");
         views.put("sentButton", "email-list-view.fxml");
+
+        userEmail.textProperty().bind(clientModel.userProperty());
     }
 
 }
