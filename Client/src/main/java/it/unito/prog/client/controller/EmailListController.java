@@ -20,6 +20,9 @@ public class EmailListController {
 
     @FXML
     void onEmailListViewMouseClicked() throws IOException { // gestire eccezione
+        //check che non sia null altrimenti genera errori on click
+        System.out.println("[EmailList] list button.");
+
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-read-view.fxml"));
         EmailReadController emailReadController = loader.getController();
 
