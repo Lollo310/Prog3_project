@@ -1,11 +1,13 @@
 package it.unito.prog.client.controller;
 
+import it.unito.prog.client.model.Email;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class EmailReadController {
+    private Email email;
 
     @FXML
     private TextField datetimeTextField;
@@ -36,6 +38,10 @@ public class EmailReadController {
 
     @FXML
     void initialize() {
+    }
+
+    void setEmail(Email email) {
+        this.email = email;
     }
 
 }
