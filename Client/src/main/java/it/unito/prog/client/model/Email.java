@@ -3,6 +3,8 @@ package it.unito.prog.client.model;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class Email {
     private StringProperty sender; // it's assumed that the email addresses are correct
     private ListProperty<String> receivers; // it's assumed that the email addresses are correct
@@ -10,12 +12,15 @@ public class Email {
     private StringProperty message;
     private LongProperty timestamp;
 
-    public Email(StringProperty sender, ListProperty<String> receivers, StringProperty object, StringProperty message, LongProperty timestamp) {
-        this.sender = sender;
-        this.receivers = receivers;
-        this.object = object;
-        this.message = message;
-        this.timestamp = timestamp;
+    public Email(String sender, List<String> receivers, String object, String message, Long timestamp) {
+        this.sender = new SimpleStringProperty(sender);
+
+        this.receivers = new SimpleListProperty<String>();
+        this.receivers.addAll(receivers);
+
+        this.object = new SimpleStringProperty(object);
+        this.message = new SimpleStringProperty(message);
+        this.timestamp = new SimpleLongProperty(timestamp);
     }
 
     public String getSender() {
