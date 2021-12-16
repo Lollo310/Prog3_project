@@ -10,9 +10,9 @@ public class Email {
     private ListProperty<String> receivers; // it's assumed that the email addresses are correct
     private StringProperty object;
     private StringProperty message;
-    private LongProperty timestamp;
+    private StringProperty timestamp;
 
-    public Email(String sender, List<String> receivers, String object, String message, Long timestamp) {
+    public Email(String sender, List<String> receivers, String object, String message, String timestamp) {
         this.sender = new SimpleStringProperty(sender);
 
         this.receivers = new SimpleListProperty<String>();
@@ -20,7 +20,7 @@ public class Email {
 
         this.object = new SimpleStringProperty(object);
         this.message = new SimpleStringProperty(message);
-        this.timestamp = new SimpleLongProperty(timestamp);
+        this.timestamp = new SimpleStringProperty(timestamp);
     }
 
     public String getSender() {
@@ -55,11 +55,11 @@ public class Email {
         return message;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp.get();
     }
 
-    public LongProperty timestampProperty() {
+    public StringProperty timestampProperty() {
         return timestamp;
     }
 
@@ -79,7 +79,7 @@ public class Email {
         this.message.set(message);
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp.set(timestamp);
     }
 }
