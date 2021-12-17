@@ -11,8 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EmailListController {
 
@@ -42,9 +40,7 @@ public class EmailListController {
 
     private void setEmailListView() {
         ObservableList<Email> emails = FXCollections.observableArrayList();
-        List<String> receivers = new ArrayList<>();
-        receivers.add("Elisa");
-        emails.add(new Email("Michele Foca Grassa", receivers, "Ciao finocchia", "Sei proprio bella", "10/12/2021"));
+        emails.add(new Email("Michele Foca Grassa", "Elisa grassa", "Ciao finocchia", "Sei proprio bella", "10/12/2021"));
         emailListView.setItems(emails);
         emailListView.setCellFactory(listView -> new EmailListElement());
     }

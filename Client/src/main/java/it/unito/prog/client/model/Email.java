@@ -1,22 +1,19 @@
 package it.unito.prog.client.model;
 
-import javafx.beans.property.*;
-import javafx.collections.ObservableList;
-
-import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Email {
     private StringProperty sender; // it's assumed that the email addresses are correct
-    private ListProperty<String> receivers; // it's assumed that the email addresses are correct
+    private StringProperty receivers; // it's assumed that the email addresses are correct
     private StringProperty object;
     private StringProperty message;
     private StringProperty timestamp;
 
-    public Email(String sender, List<String> receivers, String object, String message, String timestamp) {
+    public Email(String sender, String receivers, String object, String message, String timestamp) {
         this.sender = new SimpleStringProperty(sender);
 
-        this.receivers = new SimpleListProperty<String>();
-        this.receivers.addAll(receivers);
+        this.receivers = new SimpleStringProperty(receivers);
 
         this.object = new SimpleStringProperty(object);
         this.message = new SimpleStringProperty(message);
@@ -31,11 +28,11 @@ public class Email {
         return sender;
     }
 
-    public ObservableList<String> getReceivers() {
+    public String getReceivers() {
         return receivers.get();
     }
 
-    public ListProperty<String> receiversProperty() {
+    public StringProperty receiversProperty() {
         return receivers;
     }
 
@@ -67,7 +64,7 @@ public class Email {
         this.sender.set(sender);
     }
 
-    public void setReceivers(ObservableList<String> receivers) {
+    public void setReceivers(String receivers) {
         this.receivers.set(receivers);
     }
 
@@ -81,5 +78,16 @@ public class Email {
 
     public void setTimestamp(String timestamp) {
         this.timestamp.set(timestamp);
+    }
+
+    @Override
+    public String toString() {  //debug
+        return "Email{" +
+                "sender=" + sender +
+                ", receivers=" + receivers +
+                ", object=" + object +
+                ", message=" + message +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }
