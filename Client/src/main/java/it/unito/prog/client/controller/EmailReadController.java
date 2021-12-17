@@ -42,6 +42,15 @@ public class EmailReadController {
 
     void setEmail(Email email) {
         this.email = email;
+        setProperty();
+    }
+
+    private void setProperty() {
+        fromTextField.textProperty().bind(this.email.senderProperty());
+        toTextField.textProperty().bind(this.email.receiversProperty());
+        subjectTextField.textProperty().bind(this.email.objectProperty());
+        messageAreaField.textProperty().bind(this.email.messageProperty());
+        datetimeTextField.textProperty().bind(this.email.timestampProperty());
     }
 
 }
