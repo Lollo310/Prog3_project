@@ -1,13 +1,9 @@
 package it.unito.prog.client.controller;
 
 import it.unito.prog.client.model.Email;
-import it.unito.prog.client.view.ClientApplication;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
 
 public class EmailListElementController {
 
@@ -22,16 +18,6 @@ public class EmailListElementController {
 
     @FXML
     private Label userLabel;
-
-    public EmailListElementController() {
-        FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-list-element-view.fxml"));
-        loader.setController(this);
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public AnchorPane getEmailListElement() {
         return emailListElement;
