@@ -7,26 +7,26 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.client.controller.ClientController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.client.controller.ClientController">
     <center>
-        <AnchorPane fx:id="contentPanel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
+        <AnchorPane fx:id="contentPanel" prefHeight="575.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
     </center>
     <bottom>
-        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="297.0" layoutY="4.0" text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" />
+                <Label alignment="CENTER" layoutX="297.0" layoutY="4.0" text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" />
             </children></AnchorPane>
     </bottom>
     <left>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="575.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="userEmail" alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="200.0">
+                <Label fx:id="userEmail" alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0">
                     <padding>
                         <Insets bottom="25.0" />
                     </padding></Label>
-                <Button fx:id="composeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text=" + Compose" />
-                <Button fx:id="inboxButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox" />
-                <Button fx:id="sentButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent" />
+                <Button fx:id="composeButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text=" + Compose" />
+                <Button fx:id="inboxButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox" />
+                <Button fx:id="sentButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent" />
             </children>
         </VBox>
     </left>

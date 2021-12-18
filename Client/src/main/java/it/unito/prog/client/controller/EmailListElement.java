@@ -27,7 +27,7 @@ public class EmailListElement extends ListCell<Email> {
 
                 loader.load();
                 controller = loader.getController();
-                controller.setModel(email);
+                controller.setEmail(email);
                 controller.setContentPane(this.contentPanel);
                 setGraphic(controller.getEmailListElement());
             } catch (IOException e) {

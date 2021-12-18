@@ -12,9 +12,7 @@ public class Email {
 
     public Email(String sender, String receivers, String object, String message, String timestamp) {
         this.sender = new SimpleStringProperty(sender);
-
         this.receivers = new SimpleStringProperty(receivers);
-
         this.object = new SimpleStringProperty(object);
         this.message = new SimpleStringProperty(message);
         this.timestamp = new SimpleStringProperty(timestamp);

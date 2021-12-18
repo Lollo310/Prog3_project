@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class EmailListElementController {
-    private Email model;
+    private Email email;
     private Pane contentPane;
 
     @FXML
@@ -36,7 +36,7 @@ public class EmailListElementController {
             Node panel = loader.load();
             EmailReadController emailReadController = loader.getController();
 
-            emailReadController.setEmail(this.model);
+            emailReadController.setEmail(this.email);
             this.contentPane.getChildren().setAll(panel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,15 +47,25 @@ public class EmailListElementController {
         return emailListElement;
     }
 
-    void setModel(Email email) {
-        this.model = email;
-        userLabel.setText(email.getSender());
-        previewLabel.setText(email.getObject());
-        dateLabel.setText(email.getTimestamp());
+    void setEmail(Email email) {
+        if (email == null)
+            throw new IllegalArgumentException("Email can't be null!");
+
+        this.email= email;
+        setLabel();
     }
 
     public void setContentPane(Pane contentPane) {
+        if (contentPane == null)
+            throw new IllegalArgumentException("contentPane can't be null");
+
         this.contentPane = contentPane;
+    }
+
+    private void setLabel() {
+        userLabel.setText(this.email.getSender());
+        previewLabel.setText(this.email.getObject());
+        dateLabel.setText(this.email.getTimestamp());
     }
 }
 

@@ -36,10 +36,6 @@ public class EmailReadController {
     @FXML
     private TextField toTextField;
 
-    @FXML
-    void initialize() {
-    }
-
     void setEmail(Email email) {
         this.email = email;
         setProperty();

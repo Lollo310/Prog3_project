@@ -1,13 +1,13 @@
 package it.unito.prog.client.controller;
 
-import it.unito.prog.client.view.ClientApplication;
+import it.unito.prog.client.model.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
 
 public class EmailWriteController {
+    private Client clientModel;
 
     @FXML
     private HTMLEditor messageHTMLEditor;
@@ -26,7 +26,6 @@ public class EmailWriteController {
 
     @FXML
     void onDeleteButtonAction(ActionEvent event) {
-
         System.out.println("[EmailWrite] delete button.");
     }
 
@@ -35,5 +34,8 @@ public class EmailWriteController {
         System.out.println("[EmailWrite] init().");
     }
 
+    public void setClientModel(Client clientModel) {
+        this.clientModel = clientModel;
+    }
 }
 
