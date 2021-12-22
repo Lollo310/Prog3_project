@@ -1,6 +1,6 @@
-package it.unito.prog.client.controller;
+package it.unito.prog.client.controllers;
 
-import it.unito.prog.client.model.Email;
+import it.unito.prog.client.models.Email;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -47,7 +47,7 @@ public class EmailReadController implements Controller {
     @Override
     public void setModel(Object model) {
         if (model == null || !(model instanceof Email))
-            throw new IllegalArgumentException("model cannot be null and it must be a Email instance");
+            throw new IllegalArgumentException("models cannot be null and it must be a Email instance");
         this.emailModel = (Email) model;
         setProperty();
     }

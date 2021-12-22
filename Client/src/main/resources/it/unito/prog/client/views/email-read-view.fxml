@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.client.controller.EmailReadController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.client.controllers.EmailReadController">
    <children>
       <TextField fx:id="fromTextField" editable="false" layoutX="80.0" layoutY="14.0" prefHeight="38.0" prefWidth="408.0" />
       <TextField fx:id="toTextField" editable="false" layoutX="80.0" layoutY="64.0" prefHeight="38.0" prefWidth="595.0" />

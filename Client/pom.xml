@@ -62,7 +62,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>it.unito.prog.client/it.unito.prog.client.view.ClientApplication</mainClass>
+                            <mainClass>it.unito.prog.client/it.unito.prog.client.views.ClientApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>

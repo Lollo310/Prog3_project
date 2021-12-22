@@ -1,4 +1,4 @@
-package it.unito.prog.client.controller;
+package it.unito.prog.client.controllers;
 
 public interface Controller {
     void setModel(Object model);

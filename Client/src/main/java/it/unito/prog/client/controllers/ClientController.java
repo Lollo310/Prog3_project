@@ -1,7 +1,7 @@
-package it.unito.prog.client.controller;
+package it.unito.prog.client.controllers;
 
-import it.unito.prog.client.model.Client;
-import it.unito.prog.client.view.ClientApplication;
+import it.unito.prog.client.models.Client;
+import it.unito.prog.client.views.ClientApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,8 +29,9 @@ public class ClientController implements Controller{
             Node node = (Node) event.getSource();
             FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource(views.get(node.getId())));
             Node panel = loader.load();
+            Controller controller = loader.getController();
 
-            //loader.getController().setClientModel(clientModel);
+            controller.setModel(this.clientModel);
             contentPanel.getChildren().setAll(panel);
         } catch (IOException e) {
             e.printStackTrace();

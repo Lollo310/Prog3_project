@@ -1,4 +1,4 @@
-package it.unito.prog.client.model;
+package it.unito.prog.client.models;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

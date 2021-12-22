@@ -1,7 +1,7 @@
-package it.unito.prog.client.controller;
+package it.unito.prog.client.controllers;
 
-import it.unito.prog.client.model.Email;
-import it.unito.prog.client.view.ClientApplication;
+import it.unito.prog.client.models.Email;
+import it.unito.prog.client.views.ClientApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Pane;

@@ -1,7 +1,7 @@
-package it.unito.prog.client.controller;
+package it.unito.prog.client.controllers;
 
-import it.unito.prog.client.model.Client;
-import it.unito.prog.client.model.Email;
+import it.unito.prog.client.models.Client;
+import it.unito.prog.client.models.Email;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,16 +18,14 @@ public class EmailListController implements Controller {
     private ListView<Email> emailListView;
 
     @FXML
-    void initialize() {
-        setEmailListView();
-    }
+    void initialize() {}
 
     //Implementare listView con le property
     private void setEmailListView() {
         ObservableList<Email> emails = FXCollections.observableArrayList();
-
         emails.add(new Email("Michele Foca Grassa", "Elisa grassa", "Ciao finocchia", "Sei proprio bella", "10/12/2021"));
-        emailListView.setItems(emails);
+        clientModel.setEmails(emails);
+        emailListView.setItems(clientModel.getEmails()); //equals to bind for listView
         emailListView.setCellFactory(listView -> new EmailListElement(contentAnchorPane));
     }
 
@@ -36,6 +34,7 @@ public class EmailListController implements Controller {
         if (model == null || !(model instanceof Client))
             throw  new IllegalArgumentException("Client cannot be null and it must be a Client instance");
         this.clientModel = (Client) model;
+        setEmailListView();
     }
 
     @Override

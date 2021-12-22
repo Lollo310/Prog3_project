@@ -1,6 +1,6 @@
-package it.unito.prog.client.controller;
+package it.unito.prog.client.controllers;
 
-import it.unito.prog.client.model.Client;
+import it.unito.prog.client.models.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -37,7 +37,7 @@ public class EmailWriteController implements Controller {
     @Override
     public void setModel(Object model) {
         if (model == null || !(model instanceof Client))
-            throw new IllegalArgumentException("model cannot be null and it must be a Client instance");
+            throw new IllegalArgumentException("models cannot be null and it must be a Client instance");
         this.clientModel = (Client) model;
     }
 

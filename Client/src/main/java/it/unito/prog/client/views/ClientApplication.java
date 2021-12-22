@@ -1,4 +1,4 @@
-package it.unito.prog.client.view;
+package it.unito.prog.client.views;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

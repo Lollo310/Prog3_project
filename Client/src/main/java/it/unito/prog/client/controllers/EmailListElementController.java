@@ -1,7 +1,7 @@
-package it.unito.prog.client.controller;
+package it.unito.prog.client.controllers;
 
-import it.unito.prog.client.model.Email;
-import it.unito.prog.client.view.ClientApplication;
+import it.unito.prog.client.models.Email;
+import it.unito.prog.client.views.ClientApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -56,7 +56,7 @@ public class EmailListElementController implements Controller {
     @Override
     public void setModel(Object model) {
         if (model == null || !(model instanceof Email))
-            throw new IllegalArgumentException("model cannot be null and it must be a Email instance");
+            throw new IllegalArgumentException("models cannot be null and it must be a Email instance");
         this.emailModel = (Email) model;
         setLabel();
     }
