@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
-public class EmailListController {
+public class EmailListController implements Controller {
     private Client clientModel;
 
     @FXML
@@ -31,8 +31,16 @@ public class EmailListController {
         emailListView.setCellFactory(listView -> new EmailListElement(contentAnchorPane));
     }
 
-    void setClientModel(Client clientModel) {
-        this.clientModel = clientModel;
+    @Override
+    public void setModel(Object model) {
+        if (model == null || !(model instanceof Client))
+            throw  new IllegalArgumentException("Client cannot be null and it must be a Client instance");
+        this.clientModel = (Client) model;
+    }
+
+    @Override
+    public void setExtraArgs(Object extraArgs) {
+        //do nothing
     }
 }
 

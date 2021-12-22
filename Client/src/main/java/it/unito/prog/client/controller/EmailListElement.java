@@ -23,13 +23,17 @@ public class EmailListElement extends ListCell<Email> {
             FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-list-element-view.fxml"));
 
             try {
-                EmailListElementController controller;
+                Controller controller;
 
                 loader.load();
                 controller = loader.getController();
-                controller.setEmail(email);
-                controller.setContentPane(this.contentPanel);
-                setGraphic(controller.getEmailListElement());
+
+                if (controller == null || !(controller instanceof EmailListElementController))
+                    throw new RuntimeException("unexpected return value");
+
+                controller.setModel(email);
+                controller.setExtraArgs(this.contentPanel);
+                setGraphic(((EmailListElementController) controller).getEmailListElement());
             } catch (IOException e) {
                 e.printStackTrace();
             }

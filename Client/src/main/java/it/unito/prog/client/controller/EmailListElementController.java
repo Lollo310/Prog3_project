@@ -11,8 +11,8 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-public class EmailListElementController {
-    private Email email;
+public class EmailListElementController implements Controller {
+    private Email emailModel;
     private Pane contentPane;
 
     @FXML
@@ -34,9 +34,9 @@ public class EmailListElementController {
 
         try {
             Node panel = loader.load();
-            EmailReadController emailReadController = loader.getController();
+            Controller controller = loader.getController();
 
-            emailReadController.setEmail(this.email);
+            controller.setModel(this.emailModel);
             this.contentPane.getChildren().setAll(panel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,25 +47,25 @@ public class EmailListElementController {
         return emailListElement;
     }
 
-    void setEmail(Email email) {
-        if (email == null)
-            throw new IllegalArgumentException("Email can't be null!");
+    private void setLabel() {
+        userLabel.setText(this.emailModel.getSender());
+        previewLabel.setText(this.emailModel.getObject());
+        dateLabel.setText(this.emailModel.getTimestamp());
+    }
 
-        this.email= email;
+    @Override
+    public void setModel(Object model) {
+        if (model == null || !(model instanceof Email))
+            throw new IllegalArgumentException("model cannot be null and it must be a Email instance");
+        this.emailModel = (Email) model;
         setLabel();
     }
 
-    public void setContentPane(Pane contentPane) {
-        if (contentPane == null)
-            throw new IllegalArgumentException("contentPane can't be null");
-
-        this.contentPane = contentPane;
-    }
-
-    private void setLabel() {
-        userLabel.setText(this.email.getSender());
-        previewLabel.setText(this.email.getObject());
-        dateLabel.setText(this.email.getTimestamp());
+    @Override
+    public void setExtraArgs(Object extraArgs) {
+        if (extraArgs == null || !(extraArgs instanceof Pane))
+            throw new IllegalArgumentException("extraArgs connot be null and it must be a Pane instance");
+        this.contentPane = (Pane) extraArgs;
     }
 }
 

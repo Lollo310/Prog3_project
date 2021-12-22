@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientController {
+public class ClientController implements Controller{
     private Client clientModel;
     private Map<String, String> views;
 
@@ -57,5 +57,17 @@ public class ClientController {
         views.put("composeButton", "email-write-view.fxml");
         views.put("inboxButton", "email-list-view.fxml");
         views.put("sentButton", "email-list-view.fxml");
+    }
+
+    @Override
+    public void setModel(Object model) {
+        if (model == null || !(model instanceof Client))
+            throw new IllegalArgumentException("Model cannot be null and it must be a Client instance");
+        this.clientModel = (Client) model;
+    }
+
+    @Override
+    public void setExtraArgs(Object extraArgs) {
+        //do nothing
     }
 }

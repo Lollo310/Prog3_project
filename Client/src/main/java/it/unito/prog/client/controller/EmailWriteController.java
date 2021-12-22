@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
 
-public class EmailWriteController {
+public class EmailWriteController implements Controller {
     private Client clientModel;
 
     @FXML
@@ -34,8 +34,16 @@ public class EmailWriteController {
         System.out.println("[EmailWrite] init().");
     }
 
-    public void setClientModel(Client clientModel) {
-        this.clientModel = clientModel;
+    @Override
+    public void setModel(Object model) {
+        if (model == null || !(model instanceof Client))
+            throw new IllegalArgumentException("model cannot be null and it must be a Client instance");
+        this.clientModel = (Client) model;
+    }
+
+    @Override
+    public void setExtraArgs(Object extraArgs) {
+        //do nothing
     }
 }
 
