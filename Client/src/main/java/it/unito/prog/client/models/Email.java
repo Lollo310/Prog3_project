@@ -10,6 +10,14 @@ public class Email {
     private StringProperty message;
     private StringProperty timestamp;
 
+    public Email() {
+        this.sender = new SimpleStringProperty();
+        this.receivers = new SimpleStringProperty();
+        this.object = new SimpleStringProperty();
+        this.message = new SimpleStringProperty();
+        this.timestamp = new SimpleStringProperty();
+    }
+
     public Email(String sender, String receivers, String object, String message, String timestamp) {
         this.sender = new SimpleStringProperty(sender);
         this.receivers = new SimpleStringProperty(receivers);

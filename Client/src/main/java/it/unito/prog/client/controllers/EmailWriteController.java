@@ -1,13 +1,14 @@
 package it.unito.prog.client.controllers;
 
 import it.unito.prog.client.models.Client;
+import it.unito.prog.client.models.Email;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
 
 public class EmailWriteController implements Controller {
-    private Client clientModel;
+    private Email emailModel;
 
     @FXML
     private HTMLEditor messageHTMLEditor;
@@ -21,7 +22,7 @@ public class EmailWriteController implements Controller {
     @FXML
     void onSendButtonAction(ActionEvent event) {
         //update timestamp
-        System.out.println("[EmailWrite] send button.");
+        System.out.println(emailModel);
     }
 
     @FXML
@@ -31,14 +32,17 @@ public class EmailWriteController implements Controller {
 
     @FXML
     void initialize() {
-        System.out.println("[EmailWrite] init().");
+        this.emailModel = new Email();
+        this.subjectTextField.textProperty().bindBidirectional(emailModel.objectProperty());
+        this.toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
     }
 
     @Override
     public void setModel(Object model) {
         if (model == null || !(model instanceof Client))
-            throw new IllegalArgumentException("models cannot be null and it must be a Client instance");
-        this.clientModel = (Client) model;
+            throw new IllegalArgumentException("model cannot be null && it must Client instance");
+
+        emailModel.setSender(((Client) model).getUser());
     }
 
     @Override
