@@ -64,6 +64,7 @@ public class ClientController implements Controller{
     public void setModel(Object model) {
         if (model == null || !(model instanceof Client))
             throw new IllegalArgumentException("Model cannot be null and it must be a Client instance");
+
         this.clientModel = (Client) model;
     }
 

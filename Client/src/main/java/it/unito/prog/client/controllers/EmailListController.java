@@ -2,6 +2,7 @@ package it.unito.prog.client.controllers;
 
 import it.unito.prog.client.models.Client;
 import it.unito.prog.client.models.Email;
+import it.unito.prog.client.utils.EmailListElement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

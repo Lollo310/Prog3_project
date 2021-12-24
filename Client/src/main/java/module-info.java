@@ -11,4 +11,6 @@ module it.unito.prog.client {
     opens it.unito.prog.client.views to javafx.fxml;
     exports it.unito.prog.client.controllers;
     opens it.unito.prog.client.controllers to javafx.fxml;
+    exports it.unito.prog.client.utils;
+    opens it.unito.prog.client.utils to javafx.fxml;
 }
