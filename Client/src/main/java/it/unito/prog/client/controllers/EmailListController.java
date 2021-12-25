@@ -32,7 +32,7 @@ public class EmailListController implements Controller {
 
     @Override
     public void setModel(Object model) {
-        if (model == null || !(model instanceof Client))
+        if (!(model instanceof Client))
             throw  new IllegalArgumentException("Client cannot be null and it must be a Client instance");
         this.clientModel = (Client) model;
         setEmailListView(); //altrimenti dà null

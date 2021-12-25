@@ -55,7 +55,7 @@ public class EmailListElementController implements Controller {
 
     @Override
     public void setModel(Object model) {
-        if (model == null || !(model instanceof Email))
+        if (!(model instanceof Email))
             throw new IllegalArgumentException("models cannot be null and it must be a Email instance");
         this.emailModel = (Email) model;
         setLabel();
@@ -63,7 +63,7 @@ public class EmailListElementController implements Controller {
 
     @Override
     public void setExtraArgs(Object extraArgs) {
-        if (extraArgs == null || !(extraArgs instanceof Pane))
+        if (!(extraArgs instanceof Pane))
             throw new IllegalArgumentException("extraArgs connot be null and it must be a Pane instance");
         this.contentPane = (Pane) extraArgs;
     }

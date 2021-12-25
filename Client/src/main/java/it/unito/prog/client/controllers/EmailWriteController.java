@@ -39,7 +39,7 @@ public class EmailWriteController implements Controller {
 
     @Override
     public void setModel(Object model) {
-        if (model == null || !(model instanceof Client))
+        if (!(model instanceof Client))
             throw new IllegalArgumentException("model cannot be null && it must Client instance");
 
         emailModel.setSender(((Client) model).getUser());

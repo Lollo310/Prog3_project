@@ -46,7 +46,7 @@ public class EmailReadController implements Controller {
 
     @Override
     public void setModel(Object model) {
-        if (model == null || !(model instanceof Email))
+        if (!(model instanceof Email))
             throw new IllegalArgumentException("models cannot be null and it must be a Email instance");
         this.emailModel = (Email) model;
         setProperty();
