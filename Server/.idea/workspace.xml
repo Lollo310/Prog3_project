@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="Create and upload Server">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/models/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/controllers/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/controllers/ServerController.java" afterDir="false" />
-    </list>
+    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="upload and update Server" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640432471348</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="upload and update Server">
+      <created>1640601788378</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1640601788378</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -113,6 +116,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create and upload Server" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create and upload Server" />
+    <MESSAGE value="upload and update Server" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload and update Server" />
   </component>
 </project>

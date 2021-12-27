@@ -2,10 +2,13 @@ package it.unito.prog.client.controllers;
 
 import it.unito.prog.client.models.Client;
 import it.unito.prog.client.models.Email;
+import it.unito.prog.client.utils.WebUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
+
+import java.io.IOException;
 
 public class EmailWriteController implements Controller {
     private Email emailModel;
@@ -23,6 +26,11 @@ public class EmailWriteController implements Controller {
     void onSendButtonAction(ActionEvent event) {
         //update timestamp
         System.out.println(emailModel);
+        try {
+            WebUtils.sendMessage(emailModel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

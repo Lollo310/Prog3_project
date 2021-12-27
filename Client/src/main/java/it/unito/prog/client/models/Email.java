@@ -3,12 +3,14 @@ package it.unito.prog.client.models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Email {
-    private StringProperty sender; // it's assumed that the email addresses are correct
-    private StringProperty receivers; // it's assumed that the email addresses are correct
-    private StringProperty object;
-    private StringProperty message;
-    private StringProperty timestamp;
+import java.io.Serializable;
+
+public class Email implements Serializable {
+    private final StringProperty sender; // it's assumed that the email addresses are correct
+    private final StringProperty receivers; // it's assumed that the email addresses are correct
+    private final StringProperty object;
+    private transient final StringProperty message;
+    private final StringProperty timestamp;
 
     public Email() {
         this.sender = new SimpleStringProperty();
