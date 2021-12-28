@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="upload and update Server">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/models/Email.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/WebUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/WebUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/views/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/views/ServerApplication.java" afterDir="false" />
-    </list>
+    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="upload" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640601788378</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="upload">
+      <created>1640710912055</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1640710912055</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -122,6 +124,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create and upload Server" />
     <MESSAGE value="upload and update Server" />
-    <option name="LAST_COMMIT_MESSAGE" value="upload and update Server" />
+    <MESSAGE value="upload" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload" />
   </component>
 </project>
