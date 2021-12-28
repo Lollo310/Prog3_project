@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="upload and update Server" />
+    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="upload and update Server">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/models/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/WebUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/WebUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/views/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/views/ServerApplication.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +47,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Server [clean,javafx:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+    <configuration name="Server [clean,javafx:run]" type="MavenRunConfiguration" factoryName="Maven" singleton="false" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />

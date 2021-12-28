@@ -15,7 +15,7 @@ public class WebUtils {
 
     private static boolean online = true;
 
-    public static Socket connect() {
+    private static Socket connect() {
         try {
             String address = InetAddress.getLocalHost().getHostName();
             return new Socket(address, port);
@@ -32,7 +32,7 @@ public class WebUtils {
             ObjectOutputStream outputStream = new ObjectOutputStream(server.getOutputStream());
             ObjectInputStream inputStream = new ObjectInputStream(server.getInputStream());
 
-            outputStream.writeUTF(""); //ci servirà per dire al server che operazione deve fare
+            outputStream.writeUTF("SEND"); //ci servirà per dire al server che operazione deve fare
             outputStream.flush();
             outputStream.writeObject(email);
             outputStream.flush();
