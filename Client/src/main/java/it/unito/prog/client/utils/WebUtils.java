@@ -11,7 +11,7 @@ import java.net.Socket;
 
 public class WebUtils {
 
-    private static int port = 8189; //non so se va bene
+    private static final int port = 8189; //non so se va bene
 
     private static boolean online = true;
 

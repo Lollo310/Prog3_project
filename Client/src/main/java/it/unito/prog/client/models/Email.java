@@ -3,14 +3,14 @@ package it.unito.prog.client.models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.io.Serializable;
+import java.io.*;
 
-public class Email implements Serializable {
-    private final StringProperty sender; // it's assumed that the email addresses are correct
-    private final StringProperty receivers; // it's assumed that the email addresses are correct
-    private final StringProperty object;
+public class Email implements Externalizable {
+    private transient final StringProperty sender; // it's assumed that the email addresses are correct
+    private transient final StringProperty receivers; // it's assumed that the email addresses are correct
+    private transient final StringProperty object;
     private transient final StringProperty message;
-    private final StringProperty timestamp;
+    private transient final StringProperty timestamp;
 
     public Email() {
         this.sender = new SimpleStringProperty();
@@ -97,5 +97,23 @@ public class Email implements Serializable {
                 ", message=" + message +
                 ", timestamp=" + timestamp +
                 '}';
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeUTF(this.sender.get());
+        out.writeUTF(this.receivers.get());
+        out.writeUTF(this.object.get());
+        //out.writeUTF(this.message.get());
+        //out.writeUTF(this.timestamp.get());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        this.sender.set(in.readUTF());
+        this.receivers.set(in.readUTF());
+        this.object.set(in.readUTF());
+        //this.message.set(in.readUTF());
+        //this.timestamp.set(in.readUTF());
     }
 }
