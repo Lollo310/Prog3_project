@@ -1,5 +1,7 @@
 package it.unito.prog.models;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -11,6 +13,7 @@ public class Email implements Externalizable {
     private transient final StringProperty object;
     private transient final StringProperty message;
     private transient final StringProperty timestamp;
+    private transient final LongProperty id;
 
     public Email() {
         this.sender = new SimpleStringProperty();
@@ -18,14 +21,16 @@ public class Email implements Externalizable {
         this.object = new SimpleStringProperty();
         this.message = new SimpleStringProperty();
         this.timestamp = new SimpleStringProperty();
+        this.id = new SimpleLongProperty();
     }
 
-    public Email(String sender, String receivers, String object, String message, String timestamp) {
+    public Email(String sender, String receivers, String object, String message, String timestamp, long id) {
         this.sender = new SimpleStringProperty(sender);
         this.receivers = new SimpleStringProperty(receivers);
         this.object = new SimpleStringProperty(object);
         this.message = new SimpleStringProperty(message);
         this.timestamp = new SimpleStringProperty(timestamp);
+        this.id = new SimpleLongProperty(id);
     }
 
     public String getSender() {
@@ -86,6 +91,18 @@ public class Email implements Externalizable {
 
     public void setTimestamp(String timestamp) {
         this.timestamp.set(timestamp);
+    }
+
+    public long getId() {
+        return id.get();
+    }
+
+    public LongProperty idProperty() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id.set(id);
     }
 
     @Override
