@@ -1,5 +1,7 @@
 package it.unito.prog.models;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -22,7 +24,7 @@ public class Email implements Externalizable {
 		this.id = new SimpleLongProperty();
     }
 
-    public Email(String sender, String receivers, String object, String message, String timestamp) {
+    public Email(String sender, String receivers, String object, String message, String timestamp, long id) {
         this.sender = new SimpleStringProperty(sender);
         this.receivers = new SimpleStringProperty(receivers);
         this.object = new SimpleStringProperty(object);
