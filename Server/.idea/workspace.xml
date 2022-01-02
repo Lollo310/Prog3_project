@@ -4,13 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="upload">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/utils/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/models/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/models/Email.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/WebUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/WebUtils.java" afterDir="false" />
+    <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/../Client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/controllers/EmailListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/controllers/EmailListElementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailListElementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/controllers/EmailReadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailReadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/controllers/EmailWriteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailWriteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/models/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/models/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/models/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/models/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/EmailListElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/EmailListElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/utils/WebUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/WebUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/client/views/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/views/ClientApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/client/views/client-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/views/client-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/client/views/email-list-element-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/views/email-list-element-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/client/views/email-list-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/views/email-list-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/client/views/email-read-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/views/email-read-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/client/views/email-write-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/views/email-write-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/models/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/models/Email.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/service/ServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/service/ServerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/controllers/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/controllers/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/models/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/models/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/models/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/models/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/service/ServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/ServerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/utils/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/utils/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/views/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/views/ServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/it/unito/prog/server/views/server-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/unito/prog/views/server-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +68,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
@@ -58,11 +82,11 @@
   </component>
   <component name="RunManager" selected="Application.ServerApplication">
     <configuration name="ServerApplication" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.unito.prog.server.views.ServerApplication" />
+      <option name="MAIN_CLASS_NAME" value="it.unito.prog.views.ServerApplication" />
       <module name="Server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="it.unito.prog.server.views.*" />
+          <option name="PATTERN" value="it.unito.prog.views.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -150,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640779899095</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="update">
+      <created>1640867261542</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1640867261542</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -169,7 +200,8 @@
     <MESSAGE value="Create and upload Server" />
     <MESSAGE value="upload and update Server" />
     <MESSAGE value="upload" />
-    <option name="LAST_COMMIT_MESSAGE" value="upload" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,4 +1,4 @@
-module it.unito.prog.client {
+module it.unito.prog {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -7,10 +7,10 @@ module it.unito.prog.client {
     requires org.kordamp.bootstrapfx.core;
     requires org.jsoup;
 
-    exports it.unito.prog.client.views;
-    opens it.unito.prog.client.views to javafx.fxml;
-    exports it.unito.prog.client.controllers;
-    opens it.unito.prog.client.controllers to javafx.fxml;
-    exports it.unito.prog.client.utils;
-    opens it.unito.prog.client.utils to javafx.fxml;
+    exports it.unito.prog.views;
+    opens it.unito.prog.views to javafx.fxml;
+    exports it.unito.prog.controllers;
+    opens it.unito.prog.controllers to javafx.fxml;
+    exports it.unito.prog.utils;
+    opens it.unito.prog.utils to javafx.fxml;
 }

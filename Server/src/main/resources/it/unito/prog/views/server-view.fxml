@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.ServerController">
+   <center>
+      <ListView fx:id="logListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </BorderPane.margin>
+      </ListView>
+   </center>
+   <top>
+      <Label text="Activity log:" BorderPane.alignment="CENTER_LEFT">
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="15.0" top="15.0" />
+         </BorderPane.margin>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </top>
+   <bottom>
+      <Label text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
+      </Label>
+   </bottom>
+</BorderPane>

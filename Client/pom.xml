@@ -66,7 +66,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>it.unito.prog.client/it.unito.prog.client.views.ClientApplication</mainClass>
+                            <mainClass>it.unito.prog/it.unito.prog.views.ClientApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>

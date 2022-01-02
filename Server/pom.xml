@@ -55,7 +55,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>it.unito.prog.server/it.unito.prog.server.views.ServerApplication</mainClass>
+                            <mainClass>it.unito.prog/it.unito.prog.views.ServerApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>
