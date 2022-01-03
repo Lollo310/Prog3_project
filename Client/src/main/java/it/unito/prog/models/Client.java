@@ -5,7 +5,9 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 public class Client {
-    private StringProperty user;
+
+    private final StringProperty user;
+
     private ObservableList<Email> emails;
 
     public Client(String user) {

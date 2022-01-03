@@ -14,7 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClientController implements Controller{
+
     private Client clientModel;
+
     private Map<String, String> views;
 
     @FXML

@@ -9,12 +9,18 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmailListElement extends ListCell<Email> {
-    private Pane contentPanel;
 
-    public EmailListElement(Pane contentPanel) {
+    private final Pane contentPanel;
+
+    private String user;
+
+    public EmailListElement(Pane contentPanel, String user) {
         this.contentPanel = contentPanel;
+        this.user = user;
     }
 
     @Override
@@ -26,15 +32,18 @@ public class EmailListElement extends ListCell<Email> {
 
             try {
                 Controller controller;
+                List<Object> args = new ArrayList<>();
 
                 loader.load();
                 controller = loader.getController();
 
-                if (controller == null || !(controller instanceof EmailListElementController))
+                if (!(controller instanceof EmailListElementController))
                     throw new RuntimeException("unexpected return value");
 
                 controller.setModel(email);
-                controller.setExtraArgs(this.contentPanel);
+                args.add(this.contentPanel);
+                args.add(this.user);
+                controller.setExtraArgs(args);
                 setGraphic(((EmailListElementController) controller).getEmailListElement());
             } catch (IOException e) {
                 e.printStackTrace();

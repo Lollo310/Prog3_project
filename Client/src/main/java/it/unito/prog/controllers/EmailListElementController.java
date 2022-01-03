@@ -10,10 +10,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.List;
 
 public class EmailListElementController implements Controller {
+
     private Email emailModel;
+
     private Pane contentPane;
+
+    private String user;
 
     @FXML
     private Label dateLabel;
@@ -37,6 +42,7 @@ public class EmailListElementController implements Controller {
             Controller controller = loader.getController();
 
             controller.setModel(this.emailModel);
+            controller.setExtraArgs(this.user);
             this.contentPane.getChildren().setAll(panel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,9 +69,10 @@ public class EmailListElementController implements Controller {
 
     @Override
     public void setExtraArgs(Object extraArgs) {
-        if (!(extraArgs instanceof Pane))
+        if (!(extraArgs instanceof List) && ((List<?>) extraArgs).isEmpty())
             throw new IllegalArgumentException("extraArgs connot be null and it must be a Pane instance");
-        this.contentPane = (Pane) extraArgs;
+        this.contentPane = (Pane) ((List<?>) extraArgs).get(0);
+        this.user = (String) ((List<?>) extraArgs).get(1);
     }
 }
 

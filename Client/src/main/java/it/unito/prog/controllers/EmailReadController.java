@@ -1,6 +1,7 @@
 package it.unito.prog.controllers;
 
 import it.unito.prog.models.Email;
+import it.unito.prog.utils.WebUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +9,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class EmailReadController implements Controller {
+
+    private String user;
+
     private Email emailModel;
 
     @FXML
@@ -39,7 +43,7 @@ public class EmailReadController implements Controller {
 
     @FXML
     void onDeleteButtonAction(ActionEvent event) {
-
+        WebUtils.deleteMessage(user, emailModel);
     }
 
     private void setProperty() {
@@ -60,7 +64,9 @@ public class EmailReadController implements Controller {
 
     @Override
     public void setExtraArgs(Object extraArgs) {
-        //do nothing
+        if (!(extraArgs instanceof String))
+            throw new IllegalArgumentException("extraArgs cannot be null and it must be a String instance");
+        this.user = (String) extraArgs;
     }
 }
 

@@ -46,22 +46,35 @@ public class WebUtils {
         //se offline ritornare msg
     }
 
-    public static void deleteMessage(Email email) throws IOException {
+    public static void deleteMessage(String user, Email email) {
         Socket server = online ? connect() : null;
 
         if (server != null) {
-            ObjectOutputStream outputStream = new ObjectOutputStream(server.getOutputStream());
-            ObjectInputStream inputStream = new ObjectInputStream(server.getInputStream());
+            ObjectOutputStream outputStream = null;
+            ObjectInputStream inputStream = null;
 
-            outputStream.writeUTF(""); //stessa cosa di sopra
-            outputStream.flush();
-            outputStream.writeObject(email);
-            outputStream.flush();
-            //stessa cosa si sopra
+            try {
+                outputStream = new ObjectOutputStream(server.getOutputStream());
+                inputStream = new ObjectInputStream(server.getInputStream());
+                outputStream.writeUTF("DELETE"); //stessa cosa di sopra
+                outputStream.flush();
+                outputStream.writeUTF(user);
+                //inviare cartella da dove elimare probabilmente basta controllare se chi la invia è lo user (o qui o nel server)
+                outputStream.writeObject(email);
+                outputStream.flush();
+                //stessa cosa si sopra
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (inputStream != null) inputStream.close();
+                    if (outputStream != null) outputStream.close();
+                    server.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-            inputStream.close();
-            outputStream.close();
-            server.close();
             //return
         }
 

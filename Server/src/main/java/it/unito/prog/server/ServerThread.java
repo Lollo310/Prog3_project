@@ -2,6 +2,7 @@ package it.unito.prog.server;
 
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Server;
+import it.unito.prog.utils.FileManager;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,14 +30,17 @@ public class ServerThread implements Runnable{
             inputStream = new ObjectInputStream(socket.getInputStream());
 
             switch (inputStream.readUTF()) {
-                case "SEND":
+                case "SEND" -> {
                     System.out.println(inputStream.readObject());
-                    break;
-                case "DELETE":
-                    System.out.println("delete okay!");
-                    break;
-                default:
-                    break;
+                }
+                case "DELETE" -> {
+                    String user = inputStream.readUTF();
+                    String dir = inputStream.readUTF();
+                    Email email = (Email) inputStream.readObject();
+                    FileManager.deleteEmail(email, user, dir);
+                }
+                default -> {
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
