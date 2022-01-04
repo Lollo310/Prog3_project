@@ -3,9 +3,7 @@ package it.unito.prog.utils;
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Feedback;
 
-import java.io.IOException;
-import java.io.File;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
@@ -79,6 +77,7 @@ public class FileManager {
             if(!initUserDir(sender)) {
                 return new Feedback(-1, "Failed to access user's data.");
             }
+            return new Feedback(-1, "Invalid sender.");
         }
         if(receivers.length == 0) return new Feedback(-1, "No receivers specified."); //handle no receivers specified
 
@@ -86,9 +85,18 @@ public class FileManager {
             if(!existsUserDir(receiver)) return new Feedback(-1, "Receiver " + receiver + " does not exist."); // dà errore o prova a creare a la directory?
         }
 
-        //lock sender's dir
-        FileChannel channel = FileChannel.open(Paths.get(), StandardOpenOption.READ);
+        //lock sender's dir and add email to sent
+        FileChannel channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.READ);
         FileLock lock = channel.lock(0, Long.MAX_VALUE, true);
+        //https://mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
+        FileOutputStream fileStream = new FileOutputStream(new File (basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
+        ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+        objectStream.writeObject(email);
+        objectStream.close();
+        lock.release();
+
+        //lock receivers' dirs and add emails to inbox
+
 
         return null;
     }
@@ -98,11 +106,7 @@ public class FileManager {
     }
 
     /*
-     * https://www.baeldung.com/java-lock-files
-     * https://stackoverflow.com/questions/128038/how-can-i-lock-a-file-using-java-if-possible
-     * https://www.tabnine.com/code/java/classes/java.nio.channels.FileLock
-     * https://stackoverflow.com/questions/8678384/java-locking-a-file-for-exclusive-access
-     * https://github.com/eugenp/tutorials/blob/master/core-java-modules/core-java-nio-2/src/main/java/com/baeldung/lock/FileLocks.java
+     * https://stackoverflow.com/questions/61987003/synchronize-folder-acess-lock-java
      */
     public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
         String username = parseEmailAddress(emailAddress);
@@ -113,10 +117,11 @@ public class FileManager {
             if(!initUserDir(username)) {
                 return new Feedback(-1, "Failed to access user's data.");
             }
+            return new Feedback(-1, "Invalid sender.");
         }
 
         if (Files.exists(Paths.get(basePath + username + File.separator + dir + File.separator + email.getId() + ".txt"))) {
-            FileChannel channel = FileChannel.open(placeholder.getAbsolutePath(), StandardOpenOption.READ);
+            FileChannel channel = FileChannel.open(Paths.get(basePath + username + File.separator + dir + File.separator + "lock"), StandardOpenOption.READ);
             FileLock lock = channel.lock(0, Long.MAX_VALUE, true);
 
             try {
