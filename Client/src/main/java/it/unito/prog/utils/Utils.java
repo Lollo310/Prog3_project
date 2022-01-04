@@ -9,5 +9,4 @@ public class Utils {
         Document doc = Jsoup.parse(htmlCode);
         return doc.body().text();
     }
-
 }

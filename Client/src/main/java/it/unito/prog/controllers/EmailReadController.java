@@ -2,17 +2,26 @@ package it.unito.prog.controllers;
 
 import it.unito.prog.models.Email;
 import it.unito.prog.utils.WebUtils;
+import it.unito.prog.views.ClientApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 public class EmailReadController implements Controller {
 
     private String user;
 
     private Email emailModel;
+
+    @FXML
+    private AnchorPane contentAnchorPane;
 
     @FXML
     private TextField datetimeTextField;
@@ -33,7 +42,7 @@ public class EmailReadController implements Controller {
     private Button replyAllButton;
 
     @FXML
-    private Button sendButton;
+    private Button replyButton;
 
     @FXML
     private TextField subjectTextField;
@@ -42,16 +51,41 @@ public class EmailReadController implements Controller {
     private TextField toTextField;
 
     @FXML
-    void onDeleteButtonAction(ActionEvent event) {
+    void onDeleteButtonAction() {
         WebUtils.deleteMessage(user, emailModel);
     }
 
-    private void setProperty() {
-        fromTextField.textProperty().bind(this.emailModel.senderProperty());
-        toTextField.textProperty().bind(this.emailModel.receiversProperty());
-        subjectTextField.textProperty().bind(this.emailModel.objectProperty());
-        messageAreaField.textProperty().bind(this.emailModel.messageProperty());
-        datetimeTextField.textProperty().bind(this.emailModel.timestampProperty());
+    @FXML
+    void onForwardButtonAction() { //risolvere problema
+        FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
+        Email forwardEmail = new Email(
+                emailModel.getId(),
+                user,
+                "",
+                emailModel.getObject(),
+                emailModel.getMessage(),
+                emailModel.getTimestamp()
+        );
+
+        try {
+            Node panel = loader.load();
+            Controller controller = loader.getController();
+
+            controller.setExtraArgs(forwardEmail);
+            contentAnchorPane.getChildren().setAll(panel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onReplyAllButtonAction() {
+
+    }
+
+    @FXML
+    void onReplyButtonAction() {
+
     }
 
     @Override
@@ -68,6 +102,15 @@ public class EmailReadController implements Controller {
             throw new IllegalArgumentException("extraArgs cannot be null and it must be a String instance");
         this.user = (String) extraArgs;
     }
+
+    private void setProperty() {
+        fromTextField.textProperty().bind(this.emailModel.senderProperty());
+        toTextField.textProperty().bind(this.emailModel.receiversProperty());
+        subjectTextField.textProperty().bind(this.emailModel.objectProperty());
+        messageAreaField.textProperty().bind(this.emailModel.messageProperty());
+        datetimeTextField.textProperty().bind(this.emailModel.timestampProperty());
+    }
+
 }
 
 

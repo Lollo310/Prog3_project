@@ -11,6 +11,7 @@ import javafx.scene.web.HTMLEditor;
 import java.io.IOException;
 
 public class EmailWriteController implements Controller {
+
     private Email emailModel;
 
     @FXML
@@ -26,11 +27,7 @@ public class EmailWriteController implements Controller {
     void onSendButtonAction(ActionEvent event) {
         //update timestamp
         System.out.println(emailModel);
-        try {
-            WebUtils.sendMessage(emailModel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        WebUtils.sendMessage(emailModel);
     }
 
     @FXML
@@ -55,7 +52,10 @@ public class EmailWriteController implements Controller {
 
     @Override
     public void setExtraArgs(Object extraArgs) {
-        //do nothing
+        if (!(extraArgs instanceof Email))
+            throw new IllegalArgumentException("extraArgs cannot be null && it must Email instance");
+
+        emailModel = (Email) extraArgs;
     }
 }
 

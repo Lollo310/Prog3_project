@@ -5,18 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40d36190-92ce-458c-aea9-721fe22a858c" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/../Client/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/utils/Feedback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/utils/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/ClientController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/models/Feedback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailListElementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailListElementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailReadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailReadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/models/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/models/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/EmailListElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/EmailListElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailWriteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/controllers/EmailWriteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/models/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/models/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/WebUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/java/it/unito/prog/utils/WebUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/views/email-read-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/main/resources/it/unito/prog/views/email-read-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/ServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/server/ServerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/models/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/models/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/utils/Feedback.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/models/Feedback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/unito/prog/utils/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unito/prog/utils/FileManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

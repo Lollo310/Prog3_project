@@ -1,6 +1,7 @@
 package it.unito.prog.utils;
 
 import it.unito.prog.models.Email;
+import it.unito.prog.models.Feedback;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,29 +25,40 @@ public class WebUtils {
         }
     }
 
-    public static void sendMessage(Email email) throws IOException { //gestire eccezione
+    public static Feedback sendMessage(Email email) { //gestire eccezione
+        Feedback feedback = new Feedback(-1, "Server offline");
         Socket server = online ? connect() : null;
 
         if (server != null) {
-            ObjectOutputStream outputStream = new ObjectOutputStream(server.getOutputStream());
-            ObjectInputStream inputStream = new ObjectInputStream(server.getInputStream());
+            ObjectOutputStream outputStream = null;
+            ObjectInputStream inputStream = null;
 
-            outputStream.writeUTF("SEND"); //ci servirà per dire al server che operazione deve fare
-            outputStream.flush();
-            outputStream.writeObject(email);
-            outputStream.flush();
-            //leggere dal server se l'operazione è andata a buon fine
-
-            inputStream.close();
-            outputStream.close();
-            server.close();
-            //ritornare il mesg
+            try {
+                outputStream = new ObjectOutputStream(server.getOutputStream());
+                inputStream = new ObjectInputStream(server.getInputStream());
+                outputStream.writeUTF("SEND"); //ci servirà per dire al server che operazione deve fare
+                outputStream.flush();
+                outputStream.writeObject(email);
+                outputStream.flush();
+                // feedback = inputStream.readObject();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (inputStream != null) inputStream.close();
+                    if (outputStream != null) outputStream.close();
+                    server.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        //se offline ritornare msg
+        return feedback;
     }
 
-    public static void deleteMessage(String user, Email email) {
+    public static Feedback deleteMessage(String user, Email email) {
+        Feedback feedback = new Feedback(-1, "Server offline");
         Socket server = online ? connect() : null;
 
         if (server != null) {
@@ -59,9 +71,10 @@ public class WebUtils {
                 outputStream.writeUTF("DELETE"); //stessa cosa di sopra
                 outputStream.flush();
                 outputStream.writeUTF(user);
-                //inviare cartella da dove elimare probabilmente basta controllare se chi la invia è lo user (o qui o nel server)
+                outputStream.flush();
                 outputStream.writeObject(email);
                 outputStream.flush();
+                //feedback = inputStream.readObject();
                 //stessa cosa si sopra
             } catch (IOException e) {
                 e.printStackTrace();
@@ -74,10 +87,8 @@ public class WebUtils {
                     e.printStackTrace();
                 }
             }
-
-            //return
         }
 
-        //return msg
+        return feedback;
     }
 }

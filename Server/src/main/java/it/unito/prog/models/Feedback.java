@@ -1,4 +1,4 @@
-package     it.unito.prog.utils;
+package it.unito.prog.models;
 
 import java.io.Serializable;
 

@@ -8,29 +8,29 @@ import javafx.beans.property.StringProperty;
 import java.io.*;
 
 public class Email implements Externalizable {
+    private long id;
     private transient final StringProperty sender; // it's assumed that the email addresses are correct
     private transient final StringProperty receivers; // it's assumed that the email addresses are correct
     private transient final StringProperty object;
     private transient final StringProperty message;
     private transient final StringProperty timestamp;
-	private transient final LongProperty id;
 
     public Email() {
+        this.id = 0; // generare id univoco
         this.sender = new SimpleStringProperty();
         this.receivers = new SimpleStringProperty();
         this.object = new SimpleStringProperty();
         this.message = new SimpleStringProperty();
         this.timestamp = new SimpleStringProperty();
-		this.id = new SimpleLongProperty();
     }
 
-    public Email(String sender, String receivers, String object, String message, String timestamp, long id) {
+    public Email(long id, String sender, String receivers, String object, String message, String timestamp) {
+        this.id = id;
         this.sender = new SimpleStringProperty(sender);
         this.receivers = new SimpleStringProperty(receivers);
         this.object = new SimpleStringProperty(object);
         this.message = new SimpleStringProperty(message);
         this.timestamp = new SimpleStringProperty(timestamp);
-		this.id = new SimpleLongProperty(id);
     }
 
     public String getSender() {
@@ -94,21 +94,18 @@ public class Email implements Externalizable {
     }
 	
 	public long getId() {
-        return id.get();
-    }
-
-    public LongProperty idProperty() {
         return id;
     }
 
     public void setId(long id) {
-        this.id.set(id);
+        this.id = id;
     }
 	
     @Override
     public String toString() {  //debug
         return "Email{" +
-                "sender=" + sender +
+                "id=" + id +
+                ", sender=" + sender +
                 ", receivers=" + receivers +
                 ", object=" + object +
                 ", message=" + message +
