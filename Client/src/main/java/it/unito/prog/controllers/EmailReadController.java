@@ -3,7 +3,6 @@ package it.unito.prog.controllers;
 import it.unito.prog.models.Email;
 import it.unito.prog.utils.WebUtils;
 import it.unito.prog.views.ClientApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -56,7 +55,7 @@ public class EmailReadController implements Controller {
     }
 
     @FXML
-    void onForwardButtonAction() { //risolvere problema
+    void onForwardButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
         Email forwardEmail = new Email(
                 emailModel.getId(),
@@ -80,6 +79,8 @@ public class EmailReadController implements Controller {
 
     @FXML
     void onReplyAllButtonAction() {
+        FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
+        Email replyAllEmail = new Email();
 
     }
 

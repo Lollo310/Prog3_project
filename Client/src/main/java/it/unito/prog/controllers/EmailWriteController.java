@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
 
-import java.io.IOException;
-
 public class EmailWriteController implements Controller {
 
     private Email emailModel;
@@ -24,22 +22,21 @@ public class EmailWriteController implements Controller {
     private TextField toTextField;
 
     @FXML
-    void onSendButtonAction(ActionEvent event) {
+    void onSendButtonAction() {
         //update timestamp
         System.out.println(emailModel);
         WebUtils.sendMessage(emailModel);
     }
 
     @FXML
-    void onDeleteButtonAction(ActionEvent event) {
+    void onDeleteButtonAction() {
         System.out.println("[EmailWrite] delete button.");
     }
 
     @FXML
     void initialize() {
         this.emailModel = new Email();
-        this.subjectTextField.textProperty().bindBidirectional(emailModel.objectProperty());
-        this.toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
+        setProperty();
     }
 
     @Override
@@ -56,6 +53,12 @@ public class EmailWriteController implements Controller {
             throw new IllegalArgumentException("extraArgs cannot be null && it must Email instance");
 
         emailModel = (Email) extraArgs;
+        setProperty();
+    }
+
+    private void setProperty() {
+        this.subjectTextField.textProperty().bindBidirectional(emailModel.objectProperty());
+        this.toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
     }
 }
 
