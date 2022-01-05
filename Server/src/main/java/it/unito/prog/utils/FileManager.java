@@ -11,6 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.unito.prog.utils.Utils.*;
@@ -64,37 +65,94 @@ public class FileManager {
         return ret;
     }
 
+    //https://stackoverflow.com/questions/106770/standard-concise-way-to-copy-a-file-in-java/16600787#16600787
     public static List<Email> getNewEmails (String emailAddress) {
         String username = parseEmailAddress(emailAddress);
-        String userPath = basePath + username + File.separator;
-        File incomingDir = new File(userPath + "Incoming");
+        File incomingDir = new File(basePath + username + File.separator + "Incoming");
         String[] incomingEmails = incomingDir.list();
+        List<Email> newEmails = new ArrayList<>(incomingEmails.length - 1);
 
-        //get list of emails from Incoming dir
+        //lock incoming dir [work in progress]
 
-        //lock incoming dir
-        //move emails to Inbox dir
-        //https://stackoverflow.com/questions/106770/standard-concise-way-to-copy-a-file-in-java/16600787#16600787
+        //get Email list and move emails to Inbox dir
         for (String email : incomingEmails) {
-            try {
-                java.nio.file.Files.move(
-                     Paths.get(userPath + "Incoming" + File.separator + email),
-                     Paths.get(userPath + "Inbox" + File.separator + email),
-                     java.nio.file.StandardCopyOption.ATOMIC_MOVE,
-                     java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-            } catch {
-                //return new Feedback(-1, "Couldn't retrieve new emails.");
+            if(!email.equals("lock")) {
+                newEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + "Incoming" + File.separator + email)));
             }
-            
         }
 
+        if(!moveNewEmails(emailAddress)) newEmails = null;
 
-        return null;
+        return newEmails;
     }
 
-    //caricare lista delle mail
-    public static void loadList(String list) {
+    public static boolean moveNewEmails(String emailAddress) {
+        String username = parseEmailAddress(emailAddress);
+        File incomingDir = new File(basePath + username + File.separator + "Incoming");
+        String[] incomingEmails = incomingDir.list();
+        int counter = 0; //per sapere dove si interrompe la move eventualmente
+        boolean ret = true;
 
+        //GESTIRE LOCK [work in progress]
+
+        for (String email : incomingEmails) {
+            try {
+                if(!email.equals("lock")) {
+                    counter++;
+                    java.nio.file.Files.move(
+                            Paths.get(basePath + username + File.separator + "Incoming" + File.separator + email), //from
+                            Paths.get(basePath + username + File.separator + "Inbox" + File.separator + email), //to
+                            java.nio.file.StandardCopyOption.ATOMIC_MOVE,
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    ret = ret && true;
+                }
+            } catch(IOException e) {
+                //return new Feedback(-1, "Couldn't retrieve new emails.");
+                ret = false;
+            }
+        }
+
+        //handle MOVE unsuccessful, rollback [WORK IN PROGRESS]
+        if(!ret) {
+
+        }
+
+        return ret;
+    }
+
+    public static boolean writeEmailOnFile(Email email, File f) throws IOException {
+        boolean ret = false;
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(f);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            email.writeExternal(objectOutputStream);
+
+            objectOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.close();
+
+            ret = true;
+        } catch (Exception e) {
+            ret = false;
+        }
+        return ret;
+    }
+
+    public static Email readEmailFromFile(Email email, File f) {
+        boolean ret = false;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(f);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            email.readExternal(objectInputStream);
+
+            objectInputStream.close();
+            fileInputStream.close();
+
+            ret = true;
+        } catch (Exception e) {
+            ret = false;
+        }
+        return email;
     }
 
     //https://stackoverflow.com/questions/8066130/should-i-close-the-filechannel
