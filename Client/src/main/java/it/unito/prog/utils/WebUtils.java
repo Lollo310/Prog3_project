@@ -68,7 +68,7 @@ public class WebUtils {
             try {
                 outputStream = new ObjectOutputStream(server.getOutputStream());
                 inputStream = new ObjectInputStream(server.getInputStream());
-                outputStream.writeUTF("DELETE"); //stessa cosa di sopra
+                outputStream.writeUTF("DELETE");
                 outputStream.flush();
                 outputStream.writeUTF(user);
                 outputStream.flush();

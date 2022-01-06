@@ -24,7 +24,7 @@ public class EmailListController implements Controller {
 
     private void setEmailListView() {
         ObservableList<Email> emails = FXCollections.observableArrayList();
-        emails.add(new Email(1234565, "Michele Foca Grassa", "Elisa grassa", "Ciao finocchia", "Sei proprio bella", "10/12/2021"));
+        emails.add(new Email("elisali.perottino@edu.unito.it", "michele.lorenzo@edu.unito.it; foca.grassa@unito.it; ciao@cio.it", "Ciao finocchia", "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p style=\"text-align: center;\"><span style=\"font-family: &quot;&quot;;\">csalkcnlsan</span></p></body></html>"));
         clientModel.setEmails(emails);
         emailListView.setItems(clientModel.getEmails()); //equals to bind for listView
         emailListView.setCellFactory(listView -> new EmailListElement(contentAnchorPane, clientModel.getUser()));

@@ -35,9 +35,8 @@ public class ServerThread implements Runnable{
                 }
                 case "DELETE" -> {
                     String user = inputStream.readUTF();
-                    String dir = inputStream.readUTF();
                     Email email = (Email) inputStream.readObject();
-                    FileManager.deleteEmail(email, user, dir);
+                    FileManager.deleteEmail(email, user);
                 }
                 default -> {
                 }

@@ -212,7 +212,7 @@ public class FileManager {
      */
     public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
         String username = parseEmailAddress(emailAddress);
-        String dir = email.getSender().equals(username) == true? "Sent" : "Inbox";
+        String dir = email.getSender().equals(username) ? "Sent" : "Inbox";
         Feedback f = new Feedback(0, "File deleted successfully.");
 
         if(!existsUserDir(username)) {

@@ -1,7 +1,6 @@
 package it.unito.prog.models;
 
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
+import it.unito.prog.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -16,21 +15,21 @@ public class Email implements Externalizable {
     private transient final StringProperty timestamp;
 
     public Email() {
-        this.id = 0; //generarlo in modo univoco
+        this.id = -1;
         this.sender = new SimpleStringProperty();
         this.receivers = new SimpleStringProperty();
         this.object = new SimpleStringProperty();
         this.message = new SimpleStringProperty();
-        this.timestamp = new SimpleStringProperty();
+        this.timestamp = new SimpleStringProperty(Utils.getTimestamp());
     }
 
-    public Email(String sender, String receivers, String object, String message, String timestamp, long id) {
-        this.id = id;
+    public Email(String sender, String receivers, String object, String message) {
+        this.id = -1;
         this.sender = new SimpleStringProperty(sender);
         this.receivers = new SimpleStringProperty(receivers);
         this.object = new SimpleStringProperty(object);
         this.message = new SimpleStringProperty(message);
-        this.timestamp = new SimpleStringProperty(timestamp);
+        this.timestamp = new SimpleStringProperty(Utils.getTimestamp());
     }
 
     public String getSender() {
@@ -118,16 +117,16 @@ public class Email implements Externalizable {
         out.writeUTF(this.sender.get());
         out.writeUTF(this.receivers.get());
         out.writeUTF(this.object.get());
-        //out.writeUTF(this.message.get());
-        //out.writeUTF(this.timestamp.get());
+        out.writeUTF(this.message.get());
+        out.writeUTF(this.timestamp.get());
     }
 
     @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+    public void readExternal(ObjectInput in) throws IOException {
         this.sender.set(in.readUTF());
         this.receivers.set(in.readUTF());
         this.object.set(in.readUTF());
-        //this.message.set(in.readUTF());
-        //this.timestamp.set(in.readUTF());
+        this.message.set(in.readUTF());
+        this.timestamp.set(in.readUTF());
     }
 }

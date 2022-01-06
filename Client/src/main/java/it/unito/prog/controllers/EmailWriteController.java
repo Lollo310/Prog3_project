@@ -3,7 +3,6 @@ package it.unito.prog.controllers;
 import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.utils.WebUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
@@ -24,6 +23,7 @@ public class EmailWriteController implements Controller {
     @FXML
     void onSendButtonAction() {
         //update timestamp
+        emailModel.setMessage(messageHTMLEditor.getHtmlText());
         System.out.println(emailModel);
         WebUtils.sendMessage(emailModel);
     }
@@ -57,8 +57,9 @@ public class EmailWriteController implements Controller {
     }
 
     private void setProperty() {
-        this.subjectTextField.textProperty().bindBidirectional(emailModel.objectProperty());
-        this.toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
+        subjectTextField.textProperty().bindBidirectional(emailModel.objectProperty());
+        toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
+        messageHTMLEditor.setHtmlText(emailModel.getMessage());
     }
 }
 
