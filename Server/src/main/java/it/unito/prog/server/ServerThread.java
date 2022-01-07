@@ -49,7 +49,14 @@ public class ServerThread implements Runnable{
 
                     //FileManager.deleteEmail(email, user);
                 }
+                case "LOAD INBOX" -> {
+                    System.out.println("Load inbox okay");
+                }
+                case "LOAD SENT" -> {
+                    System.out.println("Load sent okay");
+                }
                 default -> {
+                    System.out.println("Probably is a error");
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

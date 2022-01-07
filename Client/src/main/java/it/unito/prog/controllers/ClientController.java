@@ -1,7 +1,9 @@
 package it.unito.prog.controllers;
 
 import it.unito.prog.models.Client;
+import it.unito.prog.utils.CheckUpdateTask;
 import it.unito.prog.views.ClientApplication;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,11 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class ClientController implements Controller{
 
@@ -33,7 +40,13 @@ public class ClientController implements Controller{
             Node panel = loader.load();
             Controller controller = loader.getController();
 
-            controller.setModel(this.clientModel);
+            if (!node.getId().equals("composeButton")) {
+                String typeOfList = node.getId().equals("inboxButton") ? "INBOX" : "SENT";
+
+                controller.setExtraArgs(typeOfList);
+            }
+
+            controller.setModel(clientModel);
             contentPanel.getChildren().setAll(panel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,6 +66,7 @@ public class ClientController implements Controller{
 
         initRouteMap();
         userEmail.textProperty().bind(clientModel.userProperty());
+        startCheckUpdate();
     }
 
     private void initRouteMap(){
@@ -73,5 +87,10 @@ public class ClientController implements Controller{
     @Override
     public void setExtraArgs(Object extraArgs) {
         //do nothing
+    }
+
+    private void startCheckUpdate() {
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(new CheckUpdateTask(clientModel), 2500, 5000);
     }
 }
