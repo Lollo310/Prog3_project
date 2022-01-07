@@ -16,7 +16,7 @@ public class EmailListElement extends ListCell<Email> {
 
     private final Pane contentPanel;
 
-    private String user;
+    private final String user;
 
     public EmailListElement(Pane contentPanel, String user) {
         this.contentPanel = contentPanel;

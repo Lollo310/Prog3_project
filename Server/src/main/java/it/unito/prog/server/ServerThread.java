@@ -2,7 +2,7 @@ package it.unito.prog.server;
 
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Server;
-import it.unito.prog.utils.FileManager;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,11 +13,11 @@ public class ServerThread implements Runnable{
 
     private Socket socket;
 
-    private Server severModel;
+    private Server serverModel;
 
     public ServerThread(Socket socket, Server serverModel) {
         this.socket = socket;
-        this.severModel = serverModel;
+        this.serverModel = serverModel;
     }
 
     @Override
@@ -31,12 +31,23 @@ public class ServerThread implements Runnable{
 
             switch (inputStream.readUTF()) {
                 case "SEND" -> {
-                    System.out.println(inputStream.readObject());
+                    Email email = (Email) inputStream.readObject();
+
+                    Platform.runLater(() -> {
+                        serverModel.updateLog("[SEND] FROM " + email.getSender() + " TO " + email.getReceivers());
+                    });
+
+                    System.out.println(email);
                 }
                 case "DELETE" -> {
                     String user = inputStream.readUTF();
                     Email email = (Email) inputStream.readObject();
-                    FileManager.deleteEmail(email, user);
+
+                    Platform.runLater(() -> {
+                        serverModel.updateLog("[DELETE] FROM " + user + " WITH EMAIL ID " + email.getId());
+                    });
+
+                    //FileManager.deleteEmail(email, user);
                 }
                 default -> {
                 }

@@ -11,7 +11,7 @@ import java.net.Socket;
 
 public class WebUtils {
 
-    private static final int port = 8189; //non so se va bene
+    private static final int port = 8189;
 
     private static boolean online = true;
 
@@ -25,7 +25,7 @@ public class WebUtils {
         }
     }
 
-    public static Feedback sendMessage(Email email) { //gestire eccezione
+    public static Feedback sendMessage(Email email) {
         Feedback feedback = new Feedback(-1, "Server offline");
         Socket server = online ? connect() : null;
 
@@ -36,7 +36,7 @@ public class WebUtils {
             try {
                 outputStream = new ObjectOutputStream(server.getOutputStream());
                 inputStream = new ObjectInputStream(server.getInputStream());
-                outputStream.writeUTF("SEND"); //ci servirà per dire al server che operazione deve fare
+                outputStream.writeUTF("SEND");
                 outputStream.flush();
                 outputStream.writeObject(email);
                 outputStream.flush();
@@ -75,7 +75,6 @@ public class WebUtils {
                 outputStream.writeObject(email);
                 outputStream.flush();
                 //feedback = inputStream.readObject();
-                //stessa cosa si sopra
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

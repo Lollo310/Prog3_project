@@ -19,6 +19,6 @@
       <Button fx:id="replyAllButton" layoutX="521.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReplyAllButtonAction" prefWidth="65.0" text="Reply All" />
       <Button fx:id="forwardButton" layoutX="432.0" layoutY="536.0" mnemonicParsing="false" onAction="#onForwardButtonAction" prefWidth="65.0" text="Forward" />
       <TextField fx:id="datetimeTextField" editable="false" layoutX="509.0" layoutY="14.0" prefHeight="38.0" prefWidth="166.0" />
-      <WebView fx:id="messageAreaField" layoutX="80.0" layoutY="175.0" prefHeight="335.0" prefWidth="595.0" />
+      <WebView fx:id="messageAreaField" disable="true" layoutX="80.0" layoutY="175.0" prefHeight="335.0" prefWidth="595.0" />
    </children>
 </AnchorPane>

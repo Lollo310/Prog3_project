@@ -7,7 +7,6 @@ import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
@@ -27,22 +26,10 @@ public class EmailReadController implements Controller {
     private TextField datetimeTextField;
 
     @FXML
-    private Button deleteButton;
-
-    @FXML
-    private Button forwardButton;
-
-    @FXML
     private TextField fromTextField;
 
     @FXML
     private WebView messageAreaField;
-
-    @FXML
-    private Button replyAllButton;
-
-    @FXML
-    private Button replyButton;
 
     @FXML
     private TextField subjectTextField;
@@ -85,7 +72,7 @@ public class EmailReadController implements Controller {
                 user,
                 emailModel.getSender() + "; " + Utils.filterReceivers(user, emailModel.getReceivers()),
                 "[replyAll] " + emailModel.getObject(),
-                emailModel.getMessage()
+                ""
         );
 
         try {
@@ -106,7 +93,7 @@ public class EmailReadController implements Controller {
                 user,
                 emailModel.getSender(),
                 "[reply] " + emailModel.getObject(),
-                emailModel.getMessage()
+                ""
         );
 
         try {
@@ -139,7 +126,7 @@ public class EmailReadController implements Controller {
         fromTextField.textProperty().bind(emailModel.senderProperty());
         toTextField.textProperty().bind(emailModel.receiversProperty());
         subjectTextField.textProperty().bind(emailModel.objectProperty());
-        messageAreaField.getEngine().load(emailModel.getMessage());
+        messageAreaField.getEngine().loadContent(emailModel.getMessage());
         datetimeTextField.textProperty().bind(emailModel.timestampProperty());
     }
 

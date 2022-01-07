@@ -1,7 +1,5 @@
 package it.unito.prog.utils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,10 +7,7 @@ import java.util.List;
 
 public class Utils {
 
-    public static String htmlToText(String htmlCode) {
-        Document doc = Jsoup.parse(htmlCode);
-        return doc.body().text();
-    }
+    public static final String clearHTML = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"></body>";
 
     public static String getTimestamp() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));

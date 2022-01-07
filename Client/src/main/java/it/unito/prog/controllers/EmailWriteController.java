@@ -2,6 +2,7 @@ package it.unito.prog.controllers;
 
 import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
+import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -29,8 +30,10 @@ public class EmailWriteController implements Controller {
     }
 
     @FXML
-    void onDeleteButtonAction() {
-        System.out.println("[EmailWrite] delete button.");
+    void onClearButtonAction() {
+        emailModel = new Email();
+        emailModel.setMessage(Utils.clearHTML);
+        setProperty();
     }
 
     @FXML

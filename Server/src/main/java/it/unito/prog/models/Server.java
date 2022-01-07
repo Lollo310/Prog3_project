@@ -14,7 +14,7 @@ public class Server {
         return log;
     }
 
-    public void update(String s){
+    public void updateLog(String s){
         log.add(s);
     }
 }
