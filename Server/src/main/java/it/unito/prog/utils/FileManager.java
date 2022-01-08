@@ -66,6 +66,12 @@ public class FileManager {
     }
 
     //https://stackoverflow.com/questions/106770/standard-concise-way-to-copy-a-file-in-java/16600787#16600787
+
+    /**
+     *
+     * @param emailAddress
+     * @return
+     */
     public static List<Email> getNewEmails (String emailAddress) {
         String username = parseEmailAddress(emailAddress);
         File incomingDir = new File(basePath + username + File.separator + "Incoming");
@@ -75,6 +81,7 @@ public class FileManager {
         //lock incoming dir [work in progress]
 
         //get Email list and move emails to Inbox dir
+        //per qualche motivo stampa anche lock pure se l'ho escluso quando stampo la lista wtf
         for (String email : incomingEmails) {
             if(!email.equals("lock")) {
                 newEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + "Incoming" + File.separator + email)));
@@ -86,6 +93,11 @@ public class FileManager {
         return newEmails;
     }
 
+    /**
+     *
+     * @param emailAddress
+     * @return
+     */
     public static boolean moveNewEmails(String emailAddress) {
         String username = parseEmailAddress(emailAddress);
         File incomingDir = new File(basePath + username + File.separator + "Incoming");
@@ -120,6 +132,13 @@ public class FileManager {
         return ret;
     }
 
+    /**
+     *
+     * @param email
+     * @param f
+     * @return
+     * @throws IOException
+     */
     public static boolean writeEmailOnFile(Email email, File f) throws IOException {
         boolean ret = false;
         try {
@@ -138,6 +157,12 @@ public class FileManager {
         return ret;
     }
 
+    /**
+     *
+     * @param email
+     * @param f
+     * @return
+     */
     public static Email readEmailFromFile(Email email, File f) {
         boolean ret = false;
         try {
@@ -156,6 +181,13 @@ public class FileManager {
     }
 
     //https://stackoverflow.com/questions/8066130/should-i-close-the-filechannel
+    //https://mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
+    /**
+     *
+     * @param email
+     * @return
+     * @throws IOException
+     */
     public static Feedback sendEmail(Email email) throws IOException {
          String sender = parseEmailAddress(email.getSender());
          String[] receivers = parseReceivers(email.getReceivers());
@@ -175,7 +207,7 @@ public class FileManager {
          //lock sender's dir
          FileChannel channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.READ);
          FileLock lock = channel.lock(0, Long.MAX_VALUE, true);
-         //https://mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
+
          //write email to file in sender's Sent dir
          FileOutputStream fileStream = new FileOutputStream(new File (basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
          ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
@@ -197,10 +229,6 @@ public class FileManager {
              lock.release();
          }
          return new Feedback(0, "Message sent successfully.");
-    }
-
-    public static void readEmail(List<Email> dir) {
-
     }
 
     /*
