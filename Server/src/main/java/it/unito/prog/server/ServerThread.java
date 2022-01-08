@@ -1,6 +1,7 @@
 package it.unito.prog.server;
 
 import it.unito.prog.models.Email;
+import it.unito.prog.models.Feedback;
 import it.unito.prog.models.Server;
 import javafx.application.Platform;
 
@@ -48,6 +49,11 @@ public class ServerThread implements Runnable{
                     });
 
                     //FileManager.deleteEmail(email, user);
+                }
+                case "UPDATE" -> {
+                    System.out.println("Update success");
+                    outputStream.writeObject(new Feedback(0, "Okay"));
+                    outputStream.flush();
                 }
                 case "LOAD INBOX" -> {
                     System.out.println("Load inbox okay");

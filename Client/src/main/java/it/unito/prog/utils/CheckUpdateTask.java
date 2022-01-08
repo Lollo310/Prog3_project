@@ -14,6 +14,6 @@ public class CheckUpdateTask extends TimerTask {
 
     @Override
     public void run() {
-        System.out.println("Hello I'm the scheduled Thread");
+        WebUtils.updateInbox();
     }
 }

@@ -3,7 +3,6 @@ package it.unito.prog.controllers;
 import it.unito.prog.models.Client;
 import it.unito.prog.utils.CheckUpdateTask;
 import it.unito.prog.views.ClientApplication;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,10 +14,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class ClientController implements Controller{
 
@@ -55,17 +50,9 @@ public class ClientController implements Controller{
 
     @FXML
     void initialize() {
-        this.clientModel = new Client("michele.lorenzo@edu.unito.it");
-
-        /* for future testing
-            List<String> rec = new ArrayList<>();
-            rec.add("x@y.z");
-            Email test = new Email("me", rec, "test mail", "hello it's me", 124L);
-            clientModel.getInbox().add(test);
-        */
-
-        initRouteMap();
+        clientModel = new Client("michele.lorenzo@edu.unito.it");
         userEmail.textProperty().bind(clientModel.userProperty());
+        initRouteMap();
         startCheckUpdate();
     }
 
@@ -91,6 +78,6 @@ public class ClientController implements Controller{
 
     private void startCheckUpdate() {
         Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(new CheckUpdateTask(clientModel), 2500, 5000);
+        timer.scheduleAtFixedRate(new CheckUpdateTask(clientModel), 3000, 3000);
     }
 }

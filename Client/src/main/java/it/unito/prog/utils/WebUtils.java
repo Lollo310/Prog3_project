@@ -90,4 +90,34 @@ public class WebUtils {
 
         return feedback;
     }
+
+    public static Feedback updateInbox() {
+        Feedback feedback = new Feedback(-1, "Server offline");
+        Socket server = online ? connect() : null;
+
+        if (server != null) {
+            ObjectOutputStream outputStream = null;
+            ObjectInputStream inputStream = null;
+
+            try {
+                outputStream = new ObjectOutputStream(server.getOutputStream());
+                inputStream = new ObjectInputStream(server.getInputStream());
+                outputStream.writeUTF("UPDATE");
+                outputStream.flush();
+                feedback = (Feedback) inputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (inputStream != null) inputStream.close();
+                    if (outputStream != null) outputStream.close();
+                    server.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println(feedback);
+        return feedback;
+    }
 }
