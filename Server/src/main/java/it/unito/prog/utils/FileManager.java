@@ -16,6 +16,21 @@ import java.util.List;
 
 import static it.unito.prog.utils.Utils.*;
 
+/**
+ * NOTE
+ * - GESTIRE LOCK OVUNQUE
+ *
+ * - deleteEmail
+ *      //decide WHERE TO DELETE THE EMAIL FROM
+ *
+ * - getEmail List
+ *     // forse conviene creare un wrapper che include getList + moveEmails che restituisca un feedback
+ *     // però poi come restituire la lista con il feedback? maybe aggiungere un extra args al feedback?
+ *
+ * - moveNewEmails
+ *      // aggiungere metodo moveEmail per fattorizzare il codice?
+ */
+
 public class FileManager {
 
     private static final String cwd = Path.of("").toAbsolutePath().toString();
@@ -24,184 +39,36 @@ public class FileManager {
 
     private static final String basePath = parent + File.separator + "users" + File.separator;
 
-    /**
-     * Checks if a user's directory already exists.
-     * @param username username
-     * @return true if the user's directory exists, false otherwise.
-     */
-    public static boolean existsUserDir(String username) {
-        Path path = Paths.get(basePath + File.separator + username);
-        return Files.exists(path);
-    }
+    // PUBLIC METHODS
 
     /**
-     * Creates a user directory containing an inbox and a sent directories.
-     * @param username username
-     */
-    public static boolean initUserDir(String username) {
-        boolean ret = false;
-
-        Path user = Paths.get(basePath + username);
-        Path inbox = Paths.get(basePath + username + File.separator + "Inbox");
-        Path sent = Paths.get(basePath + username + File.separator + "Sent");
-        Path incoming = Paths.get(basePath + username + File.separator + "Incoming");
-        Path inbox_lock = Paths.get(basePath + username + File.separator + "Inbox" + File.separator + "lock");
-        Path sent_lock = Paths.get(basePath + username + File.separator + "Sent" + File.separator + "lock");
-        Path incoming_lock = Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock");
-
-        try {
-            Files.createDirectories(user);
-            Files.createDirectories(inbox);
-            Files.createDirectories(sent);
-            Files.createDirectories(incoming);
-            Files.createFile(inbox_lock);
-            Files.createFile(sent_lock);
-            Files.createFile(incoming_lock);
-            ret = true;
-        } catch (IOException e) {
-            System.err.println("Failed to initialize user's directory - " + e);
-            ret = false;
-        }
-        return ret;
-    }
-
-    //https://stackoverflow.com/questions/106770/standard-concise-way-to-copy-a-file-in-java/16600787#16600787
-
-    /**
-     *
-     * @param emailAddress
-     * @return
-     */
-    public static List<Email> getNewEmails (String emailAddress) {
-        String username = parseEmailAddress(emailAddress);
-        File incomingDir = new File(basePath + username + File.separator + "Incoming");
-        String[] incomingEmails = incomingDir.list();
-        List<Email> newEmails = new ArrayList<>(incomingEmails.length - 1);
-
-        //lock incoming dir [work in progress]
-
-        //get Email list and move emails to Inbox dir
-        //per qualche motivo stampa anche lock pure se l'ho escluso quando stampo la lista wtf
-        for (String email : incomingEmails) {
-            if(!email.equals("lock")) {
-                newEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + "Incoming" + File.separator + email)));
-            }
-        }
-
-        if(!moveNewEmails(emailAddress)) newEmails = null;
-
-        return newEmails;
-    }
-
-    /**
-     *
-     * @param emailAddress
-     * @return
-     */
-    public static boolean moveNewEmails(String emailAddress) {
-        String username = parseEmailAddress(emailAddress);
-        File incomingDir = new File(basePath + username + File.separator + "Incoming");
-        String[] incomingEmails = incomingDir.list();
-        int counter = 0; //per sapere dove si interrompe la move eventualmente
-        boolean ret = true;
-
-        //GESTIRE LOCK [work in progress]
-
-        for (String email : incomingEmails) {
-            try {
-                if(!email.equals("lock")) {
-                    counter++;
-                    java.nio.file.Files.move(
-                            Paths.get(basePath + username + File.separator + "Incoming" + File.separator + email), //from
-                            Paths.get(basePath + username + File.separator + "Inbox" + File.separator + email), //to
-                            java.nio.file.StandardCopyOption.ATOMIC_MOVE,
-                            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                    ret = ret && true;
-                }
-            } catch(IOException e) {
-                //return new Feedback(-1, "Couldn't retrieve new emails.");
-                ret = false;
-            }
-        }
-
-        //handle MOVE unsuccessful, rollback [WORK IN PROGRESS]
-        if(!ret) {
-
-        }
-
-        return ret;
-    }
-
-    /**
-     *
-     * @param email
-     * @param f
-     * @return
-     * @throws IOException
-     */
-    public static boolean writeEmailOnFile(Email email, File f) throws IOException {
-        boolean ret = false;
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(f);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            email.writeExternal(objectOutputStream);
-
-            objectOutputStream.flush();
-            objectOutputStream.close();
-            fileOutputStream.close();
-
-            ret = true;
-        } catch (Exception e) {
-            ret = false;
-        }
-        return ret;
-    }
-
-    /**
-     *
-     * @param email
-     * @param f
-     * @return
-     */
-    public static Email readEmailFromFile(Email email, File f) {
-        boolean ret = false;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(f);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            email.readExternal(objectInputStream);
-
-            objectInputStream.close();
-            fileInputStream.close();
-
-            ret = true;
-        } catch (Exception e) {
-            ret = false;
-        }
-        return email;
-    }
-
-    //https://stackoverflow.com/questions/8066130/should-i-close-the-filechannel
-    //https://mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
-    /**
-     *
-     * @param email
-     * @return
+     * Sends an email.
+     * @param email email to be sent
+     * @return      code 0 Feedback on success, code -1 Feedback on failure
      * @throws IOException
      */
     public static Feedback sendEmail(Email email) throws IOException {
          String sender = parseEmailAddress(email.getSender());
          String[] receivers = parseReceivers(email.getReceivers());
 
+         //check if sender exists, if not try creating a directory for the sender
          if(!existsUserDir(sender)) {
              if(!initUserDir(sender)) {
-                 return new Feedback(-1, "Failed to access user's data.");
+                 return new Feedback(-1, "Sender " + sender + " does not exist.");
              }
-             return new Feedback(-1, "Invalid sender.");
+             return new Feedback(-1, "Invalid sender: " + sender);
          }
-         if(receivers.length == 0) return new Feedback(-1, "No receivers specified."); //handle no receivers specified
 
+        //check if there's at least one receiver
+         if(receivers.length == 0) return new Feedback(-1, "No receivers specified.");
+
+        //check if each receiver exists, if not try creating a directory for them
          for (String receiver : receivers) {
-             if(!existsUserDir(receiver)) return new Feedback(-1, "Receiver " + receiver + " does not exist."); // dà errore o prova a creare a la directory?
+             if(!existsUserDir(receiver))
+                 if(!initUserDir(receiver)) {
+                     return new Feedback(-1, "Receiver " + receiver + " does not exist.");
+                 }
+             return new Feedback(-1, "Invalid receiver: " + receiver);
          }
 
          //lock sender's dir
@@ -209,40 +76,35 @@ public class FileManager {
          FileLock lock = channel.lock(0, Long.MAX_VALUE, true);
 
          //write email to file in sender's Sent dir
-         FileOutputStream fileStream = new FileOutputStream(new File (basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
-         ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
-         objectStream.writeObject(email);
-         objectStream.close();
+         writeEmailOnFile(email, new File (basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
          lock.release();
 
          for (String receiver : receivers) {
-             //lock receivers' dirs
+             //lock receiver's dir
              String username = parseEmailAddress(receiver);
-             channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Inbox" + File.separator + "lock"), StandardOpenOption.READ);
+             channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.READ);
              channel.lock(0, Long.MAX_VALUE, true);
 
-             //write email to file in receivers' Inbox dir
-             fileStream = new FileOutputStream(new File (basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
-             objectStream = new ObjectOutputStream(fileStream);
-             objectStream.writeObject(email);
-             objectStream.close();
+             //write email to file in receivers' Incoming dir
+             writeEmailOnFile(email, new File (basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
              lock.release();
          }
          return new Feedback(0, "Message sent successfully.");
     }
 
-    /*
-     * https://www.baeldung.com/java-lock-files
-     * https://stackoverflow.com/questions/128038/how-can-i-lock-a-file-using-java-if-possible
-     * https://www.tabnine.com/code/java/classes/java.nio.channels.FileLock
-     * https://stackoverflow.com/questions/8678384/java-locking-a-file-for-exclusive-access
-     * https://github.com/eugenp/tutorials/blob/master/core-java-modules/core-java-nio-2/src/main/java/com/baeldung/lock/FileLocks.java
+    /**
+     * Deletes an email.
+     * @param email         to be deleted
+     * @param emailAddress  user for whom the email has to be deleted
+     * @return              code 0 Feedback on success, code -1 Feedback on failure
+     * @throws IOException
      */
     public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
         String username = parseEmailAddress(emailAddress);
         String dir = email.getSender().equals(username) ? "Sent" : "Inbox";
         Feedback f = new Feedback(0, "File deleted successfully.");
 
+        //check if user exists, if not try creating a directory for said user
         if(!existsUserDir(username)) {
             if(!initUserDir(username)) {
                 return new Feedback(-1, "Failed to access user's data.");
@@ -271,5 +133,183 @@ public class FileManager {
             f = new Feedback(-1, "File not found.");
         }
         return f;
+    }
+
+
+    /**
+     * Returns a list of incoming emails and moves said emails from the user's Incoming directory to the Inbox directory.
+     * @param emailAddress user's email address
+     * @return             list of incoming emails on success, null otherwise
+     */
+    public static List<Email> getNewEmailsList (String emailAddress) {
+        String username = parseEmailAddress(emailAddress);
+        File incomingDir = new File(basePath + username + File.separator + "Incoming");
+        String[] incomingEmails = incomingDir.list();
+        List<Email> newEmails = new ArrayList<>(incomingEmails.length - 1);
+
+        //lock incoming dir [work in progress]
+
+        //get incoming emails
+        for (String email : incomingEmails) {
+            if(!email.equals("lock")) {
+                newEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + "Incoming" + File.separator + email)));
+            }
+        }
+
+        //move emails from Incoming directory to Inbox directory
+        if(!moveNewEmails(username)) newEmails = null;
+
+        return newEmails;
+    }
+
+    // AUXILIARY METHODS
+
+    /**
+     * Checks if a user's directory already exists.
+     * @param username user's username
+     * @return         true if the user's directory exists, false otherwise
+     */
+    private static boolean existsUserDir(String username) {
+        Path path = Paths.get(basePath + File.separator + username);
+        return Files.exists(path);
+    }
+
+    /**
+     * Creates a user directory containing the following sub-directories: inbox, sent, incoming.
+     * @param username user's username
+     * @return         true if the directories have been initialized correctly, false otherwise
+     */
+    private static boolean initUserDir(String username) {
+        boolean ret = false;
+
+        Path user = Paths.get(basePath + username);
+        Path inbox = Paths.get(basePath + username + File.separator + "Inbox");
+        Path sent = Paths.get(basePath + username + File.separator + "Sent");
+        Path incoming = Paths.get(basePath + username + File.separator + "Incoming");
+        Path inbox_lock = Paths.get(basePath + username + File.separator + "Inbox" + File.separator + "lock");
+        Path sent_lock = Paths.get(basePath + username + File.separator + "Sent" + File.separator + "lock");
+        Path incoming_lock = Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock");
+
+        try {
+            Files.createDirectories(user);
+            Files.createDirectories(inbox);
+            Files.createDirectories(sent);
+            Files.createDirectories(incoming);
+            Files.createFile(inbox_lock);
+            Files.createFile(sent_lock);
+            Files.createFile(incoming_lock);
+            ret = true;
+        } catch (IOException e) {
+            //System.err.println("Failed to initialize user's directory - " + e);
+            //serve un feedback invece del booleano? poi ci pensiamo
+            ret = false;
+        }
+        return ret;
+    }
+
+    /**
+     * Given a user, moves said user's incoming emails from the incoming directory to the inbox directory.
+     * In case of failure, restores the files that have already been moved.
+     * @param username user's username
+     * @return         true if the files have been moved correctly, false otherwise
+     */
+    private static boolean moveNewEmails(String username) {
+        File incomingDir = new File(basePath + username + File.separator + "Incoming");
+        String[] incomingEmails = incomingDir.list();
+        boolean ret = true;
+        ArrayList<String> movedEmails = null;
+
+        //GESTIRE LOCK [work in progress]
+
+        for (String email : incomingEmails) {
+            try {
+                if(!email.equals("lock")) {
+                    java.nio.file.Files.move(
+                            Paths.get(basePath + username + File.separator + "Incoming" + File.separator + email), //from
+                            Paths.get(basePath + username + File.separator + "Inbox" + File.separator + email), //to
+                            java.nio.file.StandardCopyOption.ATOMIC_MOVE,
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    movedEmails.add(email);
+                    ret = ret && true;
+                }
+            } catch(IOException e) {
+                //return new Feedback(-1, "Couldn't retrieve new emails.");
+                ret = false;
+            }
+        }
+
+        //if move is unsuccessful, rollback and restore previous state
+        if(!ret) {
+
+            //lock inbox
+
+            File inboxDir = new File(basePath + username + File.separator + "Inbox");
+            String[] inboxEmails = inboxDir.list();
+
+            for (String email : inboxEmails) {
+                try {
+                    if(!email.equals("lock")) {
+                        java.nio.file.Files.move(
+                                Paths.get(basePath + username + File.separator + "Inbox" + File.separator + email), //from
+                                Paths.get(basePath + username + File.separator + "Incoming" + File.separator + email), //to
+                                java.nio.file.StandardCopyOption.ATOMIC_MOVE,
+                                java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                        movedEmails.add(email);
+                    }
+                } catch(IOException e) {
+                    //return new Feedback(-1, "Couldn't retrieve new emails.");
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /**
+     * Given an email and a file, writes said email on said file.
+     * @param email email to write
+     * @param f     file to be written
+     * @return      true on success, false otherwise
+     */
+    private static boolean writeEmailOnFile(Email email, File f) {
+        boolean ret = false;
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(f);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            email.writeExternal(objectOutputStream);
+
+            // FORSE DOVREI CHIUDERLI NELLA FINALLY? IDK YET
+            objectOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.close();
+
+            ret = true;
+        } catch (Exception e) {
+            ret = false;
+        }
+        return ret;
+    }
+
+    /**
+     * Given an email and a file, reads said email from said file.
+     * @param email read email
+     * @param f     file to be read
+     * @return
+     */
+    private static Email readEmailFromFile(Email email, File f) {
+        boolean ret = false;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(f);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            email.readExternal(objectInputStream);
+
+            objectInputStream.close();
+            fileInputStream.close();
+
+            ret = true;
+        } catch (Exception e) {
+            ret = false;
+        }
+        return email;
     }
 }
