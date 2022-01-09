@@ -19,16 +19,23 @@ import static it.unito.prog.utils.Utils.*;
 /**
  * NOTE
  * - GESTIRE LOCK OVUNQUE
+ * - controllo di non aver inviato a me stesso una mail
  *
  * - deleteEmail
- *      //decide WHERE TO DELETE THE EMAIL FROM
+ *     //decide WHERE TO DELETE THE EMAIL FROM
  *
  * - getEmail List
  *     // forse conviene creare un wrapper che include getList + moveEmails che restituisca un feedback
  *     // però poi come restituire la lista con il feedback? maybe aggiungere un extra args al feedback?
+ *     // ordinamento nel client
  *
  * - moveNewEmails
  *      // aggiungere metodo moveEmail per fattorizzare il codice?
+ *      // ordinare mail
+ *
+ * - readEmailFromFile
+ *      // handle errors
+ *
  */
 
 public class FileManager {
@@ -45,7 +52,7 @@ public class FileManager {
      * Sends an email.
      * @param email email to be sent
      * @return      code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException
+     * @throws IOException on channel/lock failures
      */
     public static Feedback sendEmail(Email email) throws IOException {
          String sender = parseEmailAddress(email.getSender());
@@ -97,7 +104,7 @@ public class FileManager {
      * @param email         to be deleted
      * @param emailAddress  user for whom the email has to be deleted
      * @return              code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException
+     * @throws IOException  on channel/lock failures
      */
     public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
         String username = parseEmailAddress(emailAddress);
@@ -135,7 +142,6 @@ public class FileManager {
         return f;
     }
 
-
     /**
      * Returns a list of incoming emails and moves said emails from the user's Incoming directory to the Inbox directory.
      * @param emailAddress user's email address
@@ -145,20 +151,24 @@ public class FileManager {
         String username = parseEmailAddress(emailAddress);
         File incomingDir = new File(basePath + username + File.separator + "Incoming");
         String[] incomingEmails = incomingDir.list();
-        List<Email> newEmails = new ArrayList<>(incomingEmails.length - 1);
+        List<Email> newEmails = null;
 
         //lock incoming dir [work in progress]
 
-        //get incoming emails
-        for (String email : incomingEmails) {
-            if(!email.equals("lock")) {
-                newEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + "Incoming" + File.separator + email)));
+        //if there are no emails
+        if (incomingEmails.length > 0) {
+            newEmails = new ArrayList<>(incomingEmails.length - 1);
+
+            //get incoming emails
+            for (String email : incomingEmails) {
+                if(!email.equals("lock")) {
+                    newEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + "Incoming" + File.separator + email)));
+                }
             }
+
+            //move emails from Incoming directory to Inbox directory
+            if(!moveNewEmails(username)) newEmails = null;
         }
-
-        //move emails from Incoming directory to Inbox directory
-        if(!moveNewEmails(username)) newEmails = null;
-
         return newEmails;
     }
 
@@ -180,7 +190,7 @@ public class FileManager {
      * @return         true if the directories have been initialized correctly, false otherwise
      */
     private static boolean initUserDir(String username) {
-        boolean ret = false;
+        boolean ret;
 
         Path user = Paths.get(basePath + username);
         Path inbox = Paths.get(basePath + username + File.separator + "Inbox");
@@ -217,22 +227,24 @@ public class FileManager {
         File incomingDir = new File(basePath + username + File.separator + "Incoming");
         String[] incomingEmails = incomingDir.list();
         boolean ret = true;
-        ArrayList<String> movedEmails = null;
+        ArrayList<String> movedEmails = new ArrayList<>();
+
+        //if there are emails to be moved
+        if (incomingEmails.length > 0) return true;
 
         //GESTIRE LOCK [work in progress]
 
         for (String email : incomingEmails) {
             try {
-                if(!email.equals("lock")) {
+                if (!email.equals("lock")) {
                     java.nio.file.Files.move(
                             Paths.get(basePath + username + File.separator + "Incoming" + File.separator + email), //from
                             Paths.get(basePath + username + File.separator + "Inbox" + File.separator + email), //to
                             java.nio.file.StandardCopyOption.ATOMIC_MOVE,
                             java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                     movedEmails.add(email);
-                    ret = ret && true;
                 }
-            } catch(IOException e) {
+            } catch (IOException e) {
                 //return new Feedback(-1, "Couldn't retrieve new emails.");
                 ret = false;
             }
@@ -240,6 +252,7 @@ public class FileManager {
 
         //if move is unsuccessful, rollback and restore previous state
         if(!ret) {
+            movedEmails = new ArrayList<>();
 
             //lock inbox
 
@@ -272,7 +285,7 @@ public class FileManager {
      * @return      true on success, false otherwise
      */
     private static boolean writeEmailOnFile(Email email, File f) {
-        boolean ret = false;
+        boolean ret;
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(f);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -292,12 +305,12 @@ public class FileManager {
 
     /**
      * Given an email and a file, reads said email from said file.
-     * @param email read email
+     * @param email email object
      * @param f     file to be read
-     * @return
+     * @return      read email
      */
     private static Email readEmailFromFile(Email email, File f) {
-        boolean ret = false;
+
         try {
             FileInputStream fileInputStream = new FileInputStream(f);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -306,9 +319,8 @@ public class FileManager {
             objectInputStream.close();
             fileInputStream.close();
 
-            ret = true;
         } catch (Exception e) {
-            ret = false;
+
         }
         return email;
     }

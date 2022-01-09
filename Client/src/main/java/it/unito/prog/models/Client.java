@@ -50,7 +50,7 @@ public class Client {
     }
 
     public void addInboxEmails(List<Email> emails) {
-        inboxEmails.addAll(emails);
+        inboxEmails.addAll(0, emails);
     }
 
     public void addSentEmails(List<Email> emails) {

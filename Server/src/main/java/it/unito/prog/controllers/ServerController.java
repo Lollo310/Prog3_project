@@ -2,8 +2,11 @@ package it.unito.prog.controllers;
 
 import it.unito.prog.models.Server;
 import it.unito.prog.server.ServerThread;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,7 +18,7 @@ public class ServerController {
 
     private Server serverModel;
 
-    public static final int port = 8189;
+    private static final int port = 8189;
 
     @FXML
     private ListView<String> logListView;
@@ -25,6 +28,12 @@ public class ServerController {
         serverModel = new Server();
         logListView.setItems(serverModel.getLog());
         startServerService();
+    }
+
+
+    public void exitApplication() {
+        System.out.println("Server close");
+        Platform.exit();
     }
 
     private void startServerService() {

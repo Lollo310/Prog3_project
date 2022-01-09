@@ -93,7 +93,7 @@ public class WebUtils {
 
     public static Feedback updateInbox() {
         Feedback feedback = new Feedback(-1, "Server offline");
-        Socket server = online ? connect() : null;
+        Socket server = connect();
 
         if (server != null) {
             ObjectOutputStream outputStream = null;

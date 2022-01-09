@@ -8,9 +8,14 @@ import java.util.List;
 public class Utils {
 
     public static final String clearHTML = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"></body>";
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public static String getTimestamp() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return LocalDateTime.now().format(formatter);
+    }
+
+    public static LocalDateTime parseTimestamp(String timestamp) {
+        return LocalDateTime.parse(timestamp, formatter);
     }
 
     public static String[] parseReceivers(String receivers) {

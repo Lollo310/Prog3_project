@@ -5,8 +5,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.*;
+import java.time.LocalDateTime;
 
-public class Email implements Externalizable {
+import static it.unito.prog.utils.Utils.parseTimestamp;
+
+public class Email implements Externalizable, Comparable<Email> {
     private long id;
     private transient final StringProperty sender; // it's assumed that the email addresses are correct
     private transient final StringProperty receivers; // it's assumed that the email addresses are correct
@@ -91,24 +94,28 @@ public class Email implements Externalizable {
     public void setTimestamp(String timestamp) {
         this.timestamp.set(timestamp);
     }
-	
-	public long getId() {
+
+    public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
-	
+
+    private LocalDateTime getParsedTimestamp() {
+        return parseTimestamp(this.getTimestamp());
+    }
+
     @Override
     public String toString() {  //debug
         return "Email{" +
-                "id=" + id +
-                ", sender=" + sender +
-                ", receivers=" + receivers +
-                ", object=" + object +
-                ", message=" + message +
-                ", timestamp=" + timestamp +
+                "id=" + this.id +
+                ", sender=" + this.sender +
+                ", receivers=" + this.receivers +
+                ", object=" + this.object +
+                ", message=" + this.message +
+                ", timestamp=" + this.timestamp +
                 '}';
     }
 
@@ -128,5 +135,10 @@ public class Email implements Externalizable {
         this.object.set(in.readUTF());
         this.message.set(in.readUTF());
         this.timestamp.set(in.readUTF());
+    }
+
+    @Override
+    public int compareTo(Email o) {
+        return this.getParsedTimestamp().compareTo(o.getParsedTimestamp());
     }
 }

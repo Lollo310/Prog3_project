@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Utils {
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
     public static String parseEmailAddress (String emailAddress) {
         return emailAddress.split("@")[0];
     }
@@ -14,6 +16,10 @@ public class Utils {
     }
 
     public static String getTimestamp() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return LocalDateTime.now().format(formatter);
     }
+
+    public static LocalDateTime parseTimestamp(String timestamp) {
+        return LocalDateTime.parse(timestamp, formatter);
+    }    
 }

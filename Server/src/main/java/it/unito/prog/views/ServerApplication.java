@@ -1,5 +1,6 @@
 package it.unito.prog.views;
 
+import it.unito.prog.controllers.ServerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ public class ServerApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Server");
         stage.setScene(scene);
+        stage.setOnCloseRequest(e -> ((ServerController) fxmlLoader.getController()).exitApplication());
         stage.show();
     }
 
