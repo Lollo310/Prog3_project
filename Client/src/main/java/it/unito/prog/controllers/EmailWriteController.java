@@ -2,9 +2,11 @@ package it.unito.prog.controllers;
 
 import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
+import it.unito.prog.models.Feedback;
 import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
 
@@ -22,11 +24,21 @@ public class EmailWriteController implements Controller {
     private TextField toTextField;
 
     @FXML
+    private Label infoLabel;
+
+    @FXML
     void onSendButtonAction() {
+        Feedback feedback;
         //update timestamp
         emailModel.setMessage(messageHTMLEditor.getHtmlText());
         System.out.println(emailModel);
-        WebUtils.sendMessage(emailModel);
+        feedback = WebUtils.sendMessage(emailModel);
+
+        if (feedback.getId() == 0) {
+            infoLabel.setText("SUCCESS: " + feedback.getMsg());
+            infoLabel.setVisible(true);
+        } else
+            Utils.showAlert(feedback.getMsg());
     }
 
     @FXML
@@ -38,6 +50,8 @@ public class EmailWriteController implements Controller {
 
     @FXML
     void initialize() {
+        infoLabel.setVisible(false);
+        infoLabel.getStyleClass().add("alert-success");
         this.emailModel = new Email();
         setProperty();
     }

@@ -33,8 +33,7 @@ public class EmailListElementController implements Controller {
     private Label userLabel;
 
     @FXML
-    void onEmailListElementMouseClicked() { // gestire eccezione
-        //check che non sia null altrimenti genera errori on click
+    void onEmailListElementMouseClicked() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-read-view.fxml"));
 
         try {

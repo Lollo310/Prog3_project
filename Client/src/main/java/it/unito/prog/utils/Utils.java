@@ -1,5 +1,7 @@
 package it.unito.prog.utils;
 
+import javafx.scene.control.Alert;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 public class Utils {
 
     public static final String clearHTML = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"></body>";
+
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public static String getTimestamp() {
@@ -33,5 +36,10 @@ public class Utils {
         }
 
         return String.join("; ", filteredReceiverList);
+    }
+
+    public static void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, msg);
+        alert.show();
     }
 }

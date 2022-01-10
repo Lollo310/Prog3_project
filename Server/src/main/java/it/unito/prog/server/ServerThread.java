@@ -3,6 +3,7 @@ package it.unito.prog.server;
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Feedback;
 import it.unito.prog.models.Server;
+import it.unito.prog.utils.Utils;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -34,33 +35,50 @@ public class ServerThread implements Runnable{
                 case "SEND" -> {
                     Email email = (Email) inputStream.readObject();
 
-                    Platform.runLater(() -> {
-                        serverModel.updateLog("[SEND] FROM " + email.getSender() + " TO " + email.getReceivers());
-                    });
+                    Platform.runLater(() -> serverModel.updateLog(" [SEND] FROM "
+                                + email.getSender()
+                                + " TO "
+                                + email.getReceivers()
+                                + " - "
+                                + Utils.getTimestamp()
+                        )
+                    );
 
                     System.out.println(email);
+                    outputStream.writeObject(new Feedback(0, "Send success!"));
                 }
+
                 case "DELETE" -> {
                     String user = inputStream.readUTF();
                     Email email = (Email) inputStream.readObject();
 
                     Platform.runLater(() -> {
-                        serverModel.updateLog("[DELETE] FROM " + user + " WITH EMAIL ID " + email.getId());
+                        serverModel.updateLog("[DELETE] FROM "
+                                + user
+                                + " WITH EMAIL ID "
+                                + email.getId()
+                                + " - "
+                                + Utils.getTimestamp()
+                        );
                     });
 
                     //FileManager.deleteEmail(email, user);
                 }
+
                 case "UPDATE" -> {
                     System.out.println("Update success");
                     outputStream.writeObject(new Feedback(0, "Okay"));
                     outputStream.flush();
                 }
+
                 case "LOAD INBOX" -> {
                     System.out.println("Load inbox okay");
                 }
+
                 case "LOAD SENT" -> {
                     System.out.println("Load sent okay");
                 }
+
                 default -> {
                     System.out.println("Probably is a error");
                 }

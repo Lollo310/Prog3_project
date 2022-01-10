@@ -27,7 +27,7 @@ public class WebUtils {
 
     public static Feedback sendMessage(Email email) {
         Feedback feedback = new Feedback(-1, "Server offline");
-        Socket server = online ? connect() : null;
+        Socket server = connect();
 
         if (server != null) {
             ObjectOutputStream outputStream = null;
@@ -40,8 +40,8 @@ public class WebUtils {
                 outputStream.flush();
                 outputStream.writeObject(email);
                 outputStream.flush();
-                // feedback = inputStream.readObject();
-            } catch (IOException e) {
+                feedback = (Feedback) inputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             } finally {
                 try {
@@ -59,7 +59,7 @@ public class WebUtils {
 
     public static Feedback deleteMessage(String user, Email email) {
         Feedback feedback = new Feedback(-1, "Server offline");
-        Socket server = online ? connect() : null;
+        Socket server = connect();
 
         if (server != null) {
             ObjectOutputStream outputStream = null;

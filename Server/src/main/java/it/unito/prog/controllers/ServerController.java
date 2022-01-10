@@ -2,11 +2,12 @@ package it.unito.prog.controllers;
 
 import it.unito.prog.models.Server;
 import it.unito.prog.server.ServerThread;
+import it.unito.prog.utils.Utils;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,6 +19,10 @@ public class ServerController {
 
     private Server serverModel;
 
+    private ExecutorService executorService;
+
+    private ServerSocket serverSocket;
+
     private static final int port = 8189;
 
     @FXML
@@ -28,26 +33,34 @@ public class ServerController {
         serverModel = new Server();
         logListView.setItems(serverModel.getLog());
         startServerService();
+        serverModel.updateLog("Server start - " + Utils.getTimestamp());
     }
 
-
     public void exitApplication() {
-        System.out.println("Server close");
-        Platform.exit();
+        System.out.println("Shutting down...");
+
+        try {
+            serverSocket.close();
+            executorService.shutdown();
+            Platform.exit();
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void startServerService() {
         Thread serverService = new Thread(() -> {
             try {
-                ServerSocket serverSocket = new ServerSocket(port);
-                ExecutorService executorService = Executors.newFixedThreadPool(6);
+                serverSocket = new ServerSocket(port);
+                executorService = Executors.newFixedThreadPool(6);
 
                 while (true) {
                     Socket socket = serverSocket.accept();
                     executorService.execute(new ServerThread(socket, serverModel));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //ignored
             }
         });
 

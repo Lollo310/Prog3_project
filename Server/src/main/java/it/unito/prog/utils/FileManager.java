@@ -135,6 +135,7 @@ public class FileManager {
 
             try {
                 File forDeletion = new File(basePath + username + File.separator + dir + File.separator + email.getId() + ".txt");
+
                 if(!forDeletion.delete()) {
                     System.err.println("Failed to delete file.");
                     f = new Feedback(-1, "Failed to delete file.");
@@ -168,7 +169,7 @@ public class FileManager {
             FileChannel channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.READ);
             FileLock lock = channel.lock(0, Long.MAX_VALUE, true);
         } catch (Exception e) {
-
+            //ignored
         }
 
         //if there are new emails
@@ -176,15 +177,15 @@ public class FileManager {
             newEmails = new ArrayList<>(incomingEmails.length - 1);
 
             //get incoming emails
-            for (String email : incomingEmails) {
-                if(!email.equals("lock")) {
+            for (String email : incomingEmails)
+                if(!email.equals("lock"))
                     newEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + "Incoming" + File.separator + email)));
-                }
-            }
 
             //move emails from Incoming directory to Inbox directory
-            if(!moveNewEmails(username)) newEmails = null;
+            if(!moveNewEmails(username))
+                newEmails = null;
         }
+
         return newEmails;
     }
 
@@ -197,6 +198,7 @@ public class FileManager {
      */
     private static boolean existsUserDir(String username) {
         Path path = Paths.get(basePath + File.separator + username);
+
         return Files.exists(path);
     }
 
@@ -207,7 +209,6 @@ public class FileManager {
      */
     private static boolean initUserDir(String username) {
         boolean ret;
-
         Path user = Paths.get(basePath + username);
         Path inbox = Paths.get(basePath + username + File.separator + "Inbox");
         Path sent = Paths.get(basePath + username + File.separator + "Sent");
@@ -230,6 +231,7 @@ public class FileManager {
             //serve un feedback invece del booleano? poi ci pensiamo
             ret = false;
         }
+
         return ret;
     }
 
@@ -269,7 +271,7 @@ public class FileManager {
             }
 
             //if move is unsuccessful, rollback and restore previous state
-            if(ret == false) {
+            if(!ret) {
                 movedEmails = new ArrayList<>();
 
                 File inboxDir = new File(basePath + username + File.separator + "Inbox");
@@ -297,6 +299,7 @@ public class FileManager {
         } finally {
             //close?
         }
+
         return ret;
     }
 
@@ -307,7 +310,6 @@ public class FileManager {
      * @throws IOException  on failure
      */
     private static void writeEmailOnFile(Email email, File f)  throws IOException {
-
         FileOutputStream fileOutputStream = new FileOutputStream(f);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
@@ -323,7 +325,6 @@ public class FileManager {
      * @return      read email on success, null on failure
      */
     private static Email readEmailFromFile(Email email, File f) {
-
         try {
             FileInputStream fileInputStream = new FileInputStream(f);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -335,6 +336,7 @@ public class FileManager {
         } catch (Exception e) {
             email = null; //if the read fails, return null object
         }
+
         return email;
     }
 }

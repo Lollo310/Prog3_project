@@ -13,11 +13,11 @@ public class Feedback implements Serializable {
         this.msg = msg;
     }
 
-    private int getId() {
+    public int getId() {
         return id;
     }
 
-    private String getMsg() {
+    public String getMsg() {
         return msg;
     }
 
