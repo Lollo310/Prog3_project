@@ -13,9 +13,9 @@ import java.net.Socket;
 
 public class ServerThread implements Runnable{
 
-    private Socket socket;
+    private final Socket socket;
 
-    private Server serverModel;
+    private final Server serverModel;
 
     public ServerThread(Socket socket, Server serverModel) {
         this.socket = socket;
@@ -35,7 +35,7 @@ public class ServerThread implements Runnable{
                 case "SEND" -> {
                     Email email = (Email) inputStream.readObject();
 
-                    Platform.runLater(() -> serverModel.updateLog(" [SEND] FROM "
+                    Platform.runLater(() -> serverModel.updateLog("[SEND] FROM "
                                 + email.getSender()
                                 + " TO "
                                 + email.getReceivers()
@@ -63,11 +63,15 @@ public class ServerThread implements Runnable{
                     });
 
                     //FileManager.deleteEmail(email, user);
+                    outputStream.writeObject(new Feedback(0, "Delete success"));
+                    outputStream.flush();
                 }
 
                 case "UPDATE" -> {
-                    System.out.println("Update success");
-                    outputStream.writeObject(new Feedback(0, "Okay"));
+                    String user = inputStream.readUTF();
+
+                    Platform.runLater(() -> serverModel.updateLog("[UPDATE] " + user));
+                    outputStream.writeObject(new Feedback(0, "Update success"));
                     outputStream.flush();
                 }
 

@@ -33,7 +33,7 @@ public class ServerController {
         serverModel = new Server();
         logListView.setItems(serverModel.getLog());
         startServerService();
-        serverModel.updateLog("Server start - " + Utils.getTimestamp());
+        serverModel.updateLog("SERVER START - " + Utils.getTimestamp());
     }
 
     public void exitApplication() {

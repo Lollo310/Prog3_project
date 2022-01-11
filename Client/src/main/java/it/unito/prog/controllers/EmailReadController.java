@@ -1,12 +1,14 @@
 package it.unito.prog.controllers;
 
 import it.unito.prog.models.Email;
+import it.unito.prog.models.Feedback;
 import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
@@ -38,8 +40,17 @@ public class EmailReadController implements Controller {
     private TextField toTextField;
 
     @FXML
+    private Label infoLabel;
+
+    @FXML
     void onDeleteButtonAction() {
-        WebUtils.deleteMessage(user, emailModel);
+        Feedback feedback = WebUtils.deleteMessage(user, emailModel);
+
+        if (feedback.getId() == 0) {
+            infoLabel.setText(feedback.getMsg());
+            infoLabel.setVisible(true);
+        } else
+            Utils.showAlert(feedback.getMsg());
     }
 
     @FXML
@@ -105,6 +116,12 @@ public class EmailReadController implements Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void initialize() {
+        infoLabel.setVisible(false);
+        infoLabel.getStyleClass().add("alert-success");
     }
 
     @Override

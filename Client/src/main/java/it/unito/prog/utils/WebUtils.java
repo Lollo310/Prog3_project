@@ -15,9 +15,15 @@ public class WebUtils {
 
     private static boolean online = true;
 
+    public static boolean isOnline() {
+        return online;
+    }
+
     private static Socket connect() {
         try {
             String address = InetAddress.getLocalHost().getHostName();
+
+            online = true;
             return new Socket(address, port);
         } catch (IOException e) {
             online = false;
@@ -42,14 +48,14 @@ public class WebUtils {
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                feedback.setAll(-1, e.getMessage());
             } finally {
                 try {
                     if (inputStream != null) inputStream.close();
                     if (outputStream != null) outputStream.close();
                     server.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    feedback.setAll(-1, e.getMessage());
                 }
             }
         }
@@ -74,16 +80,16 @@ public class WebUtils {
                 outputStream.flush();
                 outputStream.writeObject(email);
                 outputStream.flush();
-                //feedback = inputStream.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
+                feedback = (Feedback) inputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                feedback.setAll(-1, e.getMessage());
             } finally {
                 try {
                     if (inputStream != null) inputStream.close();
                     if (outputStream != null) outputStream.close();
                     server.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    feedback.setAll(-1, e.getMessage());
                 }
             }
         }
@@ -91,7 +97,7 @@ public class WebUtils {
         return feedback;
     }
 
-    public static Feedback updateInbox() {
+    public static Feedback updateInbox(String user) {
         Feedback feedback = new Feedback(-1, "Server offline");
         Socket server = connect();
 
@@ -103,6 +109,8 @@ public class WebUtils {
                 outputStream = new ObjectOutputStream(server.getOutputStream());
                 inputStream = new ObjectInputStream(server.getInputStream());
                 outputStream.writeUTF("UPDATE");
+                outputStream.flush();
+                outputStream.writeUTF(user);
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
@@ -117,7 +125,7 @@ public class WebUtils {
                 }
             }
         }
-        System.out.println(feedback);
+
         return feedback;
     }
 }

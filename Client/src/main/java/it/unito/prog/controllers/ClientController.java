@@ -28,6 +28,9 @@ public class ClientController implements Controller{
     private Label userEmail;
 
     @FXML
+    private Label serverInfoLabel;
+
+    @FXML
     void onVBoxButtonAction(ActionEvent event) {
         try {
             Node node = (Node) event.getSource();
@@ -51,7 +54,16 @@ public class ClientController implements Controller{
     @FXML
     void initialize() {
         clientModel = new Client("michele.lorenzo@edu.unito.it");
+        serverInfoLabel.getStyleClass().add("text-danger");
         userEmail.textProperty().bind(clientModel.userProperty());
+        serverInfoLabel.textProperty().bind(clientModel.serverStatusProperty());
+        serverInfoLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue))
+                if (newValue.equals("Server online"))
+                    serverInfoLabel.getStyleClass().setAll("text-success");
+                else
+                    serverInfoLabel.getStyleClass().setAll("text-danger");
+        });
         initRouteMap();
         startCheckUpdate();
     }

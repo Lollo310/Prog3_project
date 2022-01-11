@@ -35,7 +35,7 @@ public class EmailWriteController implements Controller {
         feedback = WebUtils.sendMessage(emailModel);
 
         if (feedback.getId() == 0) {
-            infoLabel.setText("SUCCESS: " + feedback.getMsg());
+            infoLabel.setText(feedback.getMsg());
             infoLabel.setVisible(true);
         } else
             Utils.showAlert(feedback.getMsg());
@@ -43,6 +43,7 @@ public class EmailWriteController implements Controller {
 
     @FXML
     void onClearButtonAction() {
+        infoLabel.setVisible(false);
         emailModel = new Email();
         emailModel.setMessage(Utils.clearHTML);
         setProperty();

@@ -29,6 +29,11 @@ public class Feedback implements Serializable {
         this.msg = msg;
     }
 
+    public void setAll(int id, String msg) {
+        this.id = id;
+        this.msg = msg;
+    }
+
     @Override
     public String toString() {
         return msg;

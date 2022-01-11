@@ -10,11 +10,17 @@ import java.time.LocalDateTime;
 import static it.unito.prog.utils.Utils.parseTimestamp;
 
 public class Email implements Externalizable, Comparable<Email> {
+
     private long id;
+
     private transient final StringProperty sender; // it's assumed that the email addresses are correct
+
     private transient final StringProperty receivers; // it's assumed that the email addresses are correct
+
     private transient final StringProperty object;
+
     private transient final StringProperty message;
+
     private transient final StringProperty timestamp;
 
     public Email() {
@@ -36,43 +42,43 @@ public class Email implements Externalizable, Comparable<Email> {
     }
 
     public String getSender() {
-        return sender.get();
+        return this.sender.get();
     }
 
     public StringProperty senderProperty() {
-        return sender;
+        return this.sender;
     }
 
     public String getReceivers() {
-        return receivers.get();
+        return this.receivers.get();
     }
 
     public StringProperty receiversProperty() {
-        return receivers;
+        return this.receivers;
     }
 
     public String getObject() {
-        return object.get();
+        return this.object.get();
     }
 
     public StringProperty objectProperty() {
-        return object;
+        return this.object;
     }
 
     public String getMessage() {
-        return message.get();
+        return this.message.get();
     }
 
     public StringProperty messageProperty() {
-        return message;
+        return this.message;
     }
 
     public String getTimestamp() {
-        return timestamp.get();
+        return this.timestamp.get();
     }
 
     public StringProperty timestampProperty() {
-        return timestamp;
+        return this.timestamp;
     }
 
     public void setSender(String sender) {
@@ -96,7 +102,7 @@ public class Email implements Externalizable, Comparable<Email> {
     }
 
     public long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(long id) {

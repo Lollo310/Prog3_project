@@ -9,24 +9,27 @@ import java.util.List;
 
 public class Client {
 
+    private final StringProperty serverStatus;
+
     private final StringProperty user;
 
-    private ObservableList<Email> inboxEmails;
+    private final ObservableList<Email> inboxEmails;
 
-    private ObservableList<Email> sentEmails;
+    private final ObservableList<Email> sentEmails;
 
     public Client(String user) {
+        this.serverStatus = new SimpleStringProperty("Server offline");
         this.user = new SimpleStringProperty(user);
-        inboxEmails = FXCollections.observableArrayList();
-        sentEmails = FXCollections.observableArrayList();
+        this.inboxEmails = FXCollections.observableArrayList();
+        this.sentEmails = FXCollections.observableArrayList();
     }
 
     public String getUser() {
-        return user.get();
+        return this.user.get();
     }
 
     public StringProperty userProperty() {
-        return user;
+        return this.user;
     }
 
     public void setUser(String user) {
@@ -34,7 +37,7 @@ public class Client {
     }
 
     public ObservableList<Email> getInboxEmails() {
-        return inboxEmails;
+        return this.inboxEmails;
     }
 
     public void setAllInboxEmails(List<Email> inboxEmails) {
@@ -42,7 +45,7 @@ public class Client {
     }
 
     public ObservableList<Email> getSentEmails() {
-        return sentEmails;
+        return this.sentEmails;
     }
 
     public void setAllSentEmails(List<Email> sentEmails) {
@@ -50,10 +53,22 @@ public class Client {
     }
 
     public void addInboxEmails(List<Email> emails) {
-        inboxEmails.addAll(0, emails);
+        this.inboxEmails.addAll(0, emails);
     }
 
     public void addSentEmails(List<Email> emails) {
-        sentEmails.addAll(emails);
+        this.sentEmails.addAll(emails);
+    }
+
+    public String getServerStatus() {
+        return serverStatus.get();
+    }
+
+    public void setServerStatus(boolean serverStatus) {
+        this.serverStatus.set(serverStatus ? "Server online" : "Server offline");
+    }
+
+    public StringProperty serverStatusProperty() {
+        return serverStatus;
     }
 }

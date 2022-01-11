@@ -9,7 +9,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.ClientController">
     <center>
-        <AnchorPane fx:id="contentPanel" prefHeight="575.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
+        <AnchorPane fx:id="contentPanel" BorderPane.alignment="CENTER" />
     </center>
     <bottom>
         <AnchorPane prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -24,6 +24,7 @@
                     <padding>
                         <Insets bottom="25.0" />
                     </padding></Label>
+            <Label fx:id="serverInfoLabel" alignment="CENTER" prefHeight="29.0" prefWidth="200.0" />
                 <Button fx:id="composeButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text=" + Compose" />
                 <Button fx:id="inboxButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox" />
                 <Button fx:id="sentButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent" />

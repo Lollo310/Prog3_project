@@ -28,7 +28,9 @@ public class EmailListElement extends ListCell<Email> {
         super.updateItem(email, b);
 
         if (email != null) {
-            FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-list-element-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    ClientApplication.class.getResource("email-list-element-view.fxml")
+            );
 
             try {
                 Controller controller;
