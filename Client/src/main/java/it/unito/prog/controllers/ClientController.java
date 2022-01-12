@@ -53,19 +53,31 @@ public class ClientController implements Controller{
 
     @FXML
     void initialize() {
-        clientModel = new Client("michele.lorenzo@edu.unito.it");
         serverInfoLabel.getStyleClass().add("text-danger");
-        userEmail.textProperty().bind(clientModel.userProperty());
-        serverInfoLabel.textProperty().bind(clientModel.serverStatusProperty());
-        serverInfoLabel.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!oldValue.equals(newValue))
-                if (newValue.equals("Server online"))
-                    serverInfoLabel.getStyleClass().setAll("text-success");
-                else
-                    serverInfoLabel.getStyleClass().setAll("text-danger");
-        });
         initRouteMap();
+    }
+
+    @Override
+    public void setModel(Object model) {
+        if (!(model instanceof Client))
+            throw new IllegalArgumentException("model cannot be null and it must be a Client instance");
+
+        clientModel = (Client) model;
+    }
+
+    @Override
+    public void setExtraArgs(Object extraArgs) {
+        if (!(extraArgs instanceof String))
+            throw new IllegalArgumentException("extraArgs cannot be null and it must be a String instance");
+
+        clientModel = new Client((String) extraArgs);
+        setProperty();
         startCheckUpdate();
+    }
+
+    private void startCheckUpdate() {
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(new CheckUpdateTask(clientModel), 3000, 3000);
     }
 
     private void initRouteMap(){
@@ -75,21 +87,15 @@ public class ClientController implements Controller{
         views.put("sentButton", "email-list-view.fxml");
     }
 
-    @Override
-    public void setModel(Object model) {
-        if (!(model instanceof Client))
-            throw new IllegalArgumentException("Model cannot be null and it must be a Client instance");
-
-        this.clientModel = (Client) model;
-    }
-
-    @Override
-    public void setExtraArgs(Object extraArgs) {
-        //do nothing
-    }
-
-    private void startCheckUpdate() {
-        Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(new CheckUpdateTask(clientModel), 3000, 3000);
+    private void setProperty() {
+        userEmail.textProperty().bind(clientModel.userProperty());
+        serverInfoLabel.textProperty().bind(clientModel.serverStatusProperty());
+        serverInfoLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue))
+                if (newValue.equals("Server online"))
+                    serverInfoLabel.getStyleClass().setAll("text-success");
+                else
+                    serverInfoLabel.getStyleClass().setAll("text-danger");
+        });
     }
 }

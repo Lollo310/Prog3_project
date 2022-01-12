@@ -1,5 +1,6 @@
 package it.unito.prog.models;
 
+import it.unito.prog.utils.WebUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -18,10 +19,10 @@ public class Client {
     private final ObservableList<Email> sentEmails;
 
     public Client(String user) {
-        this.serverStatus = new SimpleStringProperty("Server offline");
+        serverStatus = new SimpleStringProperty();
         this.user = new SimpleStringProperty(user);
-        this.inboxEmails = FXCollections.observableArrayList();
-        this.sentEmails = FXCollections.observableArrayList();
+        inboxEmails = FXCollections.observableArrayList();
+        sentEmails = FXCollections.observableArrayList();
     }
 
     public String getUser() {
@@ -70,5 +71,19 @@ public class Client {
 
     public StringProperty serverStatusProperty() {
         return serverStatus;
+    }
+
+    //DA RIVEDERE
+    @SuppressWarnings("unchecked")
+    public void init() {
+        Feedback feedback = WebUtils.load(getUser(), "Inbox");
+        if (feedback.getId() == 0 && feedback.getResult() instanceof List<?>)
+            inboxEmails.setAll((List<Email>) feedback.getResult());
+
+        feedback = WebUtils.load(getUser(), "Sent");
+        if (feedback.getId() == 0 && feedback.getResult() instanceof List<?>)
+            sentEmails.setAll(((List<Email>) feedback.getResult()));
+
+        setServerStatus(WebUtils.isOnline());
     }
 }

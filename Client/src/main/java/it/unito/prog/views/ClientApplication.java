@@ -1,5 +1,6 @@
 package it.unito.prog.views;
 
+import it.unito.prog.controllers.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,9 @@ public class ClientApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("client-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        Controller controller = fxmlLoader.getController();
+
+        controller.setExtraArgs(getParameters().getRaw().get(0));
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         stage.setTitle("Client");
         stage.setScene(scene);
@@ -20,6 +24,6 @@ public class ClientApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }

@@ -8,9 +8,18 @@ public class Feedback implements Serializable {
 
     private String msg;
 
+    private final Object result;
+
     public Feedback(int id, String msg) {
         this.id = id;
         this.msg = msg;
+        result = null;
+    }
+
+    public Feedback(int id, String msg, Object result) {
+        this.id = id;
+        this.msg = msg;
+        this.result = result;
     }
 
     public int getId() {
@@ -21,12 +30,8 @@ public class Feedback implements Serializable {
         return msg;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public Object getResult() {
+        return result;
     }
 
     public void setAll(int id, String msg) {

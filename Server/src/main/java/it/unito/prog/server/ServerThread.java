@@ -62,7 +62,6 @@ public class ServerThread implements Runnable{
                         );
                     });
 
-                    //FileManager.deleteEmail(email, user);
                     outputStream.writeObject(new Feedback(0, "Delete success"));
                     outputStream.flush();
                 }
@@ -75,17 +74,16 @@ public class ServerThread implements Runnable{
                     outputStream.flush();
                 }
 
-                case "LOAD INBOX" -> {
-                    System.out.println("Load inbox okay");
+                case "LOAD" -> {
+                    String user = inputStream.readUTF();
+                    String dir = inputStream.readUTF();
+
+                    Platform.runLater(() -> serverModel.updateLog("[LOAD " + dir.toUpperCase() + "] " + user));
+                    outputStream.writeObject(new Feedback(0, "Load success"));
+                    outputStream.flush();
                 }
 
-                case "LOAD SENT" -> {
-                    System.out.println("Load sent okay");
-                }
-
-                default -> {
-                    System.out.println("Probably is a error");
-                }
+                default -> throw new RuntimeException("Ops...Error in  switch-case");
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

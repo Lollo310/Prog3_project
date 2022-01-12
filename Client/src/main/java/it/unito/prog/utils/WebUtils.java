@@ -13,7 +13,7 @@ public class WebUtils {
 
     private static final int port = 8189;
 
-    private static boolean online = true;
+    private static boolean online = false;
 
     public static boolean isOnline() {
         return online;
@@ -111,6 +111,40 @@ public class WebUtils {
                 outputStream.writeUTF("UPDATE");
                 outputStream.flush();
                 outputStream.writeUTF(user);
+                outputStream.flush();
+                feedback = (Feedback) inputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (inputStream != null) inputStream.close();
+                    if (outputStream != null) outputStream.close();
+                    server.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return feedback;
+    }
+
+    public static Feedback load(String user, String dir) {
+        Feedback feedback = new Feedback(-1, "Server offline");
+        Socket server = connect();
+
+        if (server != null) {
+            ObjectOutputStream outputStream = null;
+            ObjectInputStream inputStream = null;
+
+            try {
+                outputStream = new ObjectOutputStream(server.getOutputStream());
+                inputStream = new ObjectInputStream(server.getInputStream());
+                outputStream.writeUTF("LOAD");
+                outputStream.flush();
+                outputStream.writeUTF(user);
+                outputStream.flush();
+                outputStream.writeUTF(dir);
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {

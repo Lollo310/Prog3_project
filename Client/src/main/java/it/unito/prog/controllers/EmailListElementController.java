@@ -40,9 +40,9 @@ public class EmailListElementController implements Controller {
             Node panel = loader.load();
             Controller controller = loader.getController();
 
-            controller.setModel(this.emailModel);
-            controller.setExtraArgs(this.user);
-            this.contentPane.getChildren().setAll(panel);
+            controller.setModel(emailModel);
+            controller.setExtraArgs(user);
+            contentPane.getChildren().setAll(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,16 +53,17 @@ public class EmailListElementController implements Controller {
     }
 
     private void setLabel() {
-        userLabel.setText(this.emailModel.getSender());
-        previewLabel.setText(this.emailModel.getObject());
-        dateLabel.setText(this.emailModel.getTimestamp());
+        userLabel.setText(emailModel.getSender());
+        previewLabel.setText(emailModel.getObject());
+        dateLabel.setText(emailModel.getTimestamp());
     }
 
     @Override
     public void setModel(Object model) {
         if (!(model instanceof Email))
             throw new IllegalArgumentException("models cannot be null and it must be a Email instance");
-        this.emailModel = (Email) model;
+
+        emailModel = (Email) model;
         setLabel();
     }
 
@@ -70,8 +71,9 @@ public class EmailListElementController implements Controller {
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof List) && ((List<?>) extraArgs).isEmpty())
             throw new IllegalArgumentException("extraArgs connot be null and it must be a Pane instance");
-        this.contentPane = (Pane) ((List<?>) extraArgs).get(0);
-        this.user = (String) ((List<?>) extraArgs).get(1);
+
+        contentPane = (Pane) ((List<?>) extraArgs).get(0);
+        user = (String) ((List<?>) extraArgs).get(1);
     }
 }
 
