@@ -20,6 +20,7 @@ public class Client {
 
     public Client(String user) {
         serverStatus = new SimpleStringProperty();
+        setServerStatus(WebUtils.isOnline());
         this.user = new SimpleStringProperty(user);
         inboxEmails = FXCollections.observableArrayList();
         sentEmails = FXCollections.observableArrayList();
@@ -71,19 +72,5 @@ public class Client {
 
     public StringProperty serverStatusProperty() {
         return serverStatus;
-    }
-
-    //DA RIVEDERE
-    @SuppressWarnings("unchecked")
-    public void init() {
-        Feedback feedback = WebUtils.load(getUser(), "Inbox");
-        if (feedback.getId() == 0 && feedback.getResult() instanceof List<?>)
-            inboxEmails.setAll((List<Email>) feedback.getResult());
-
-        feedback = WebUtils.load(getUser(), "Sent");
-        if (feedback.getId() == 0 && feedback.getResult() instanceof List<?>)
-            sentEmails.setAll(((List<Email>) feedback.getResult()));
-
-        setServerStatus(WebUtils.isOnline());
     }
 }

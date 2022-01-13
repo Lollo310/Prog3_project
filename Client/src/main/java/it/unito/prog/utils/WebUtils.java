@@ -22,9 +22,10 @@ public class WebUtils {
     private static Socket connect() {
         try {
             String address = InetAddress.getLocalHost().getHostName();
+            Socket server = new Socket(address, port);
 
             online = true;
-            return new Socket(address, port);
+            return server;
         } catch (IOException e) {
             online = false;
             return null;

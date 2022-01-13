@@ -1,7 +1,7 @@
 package it.unito.prog.controllers;
 
 import it.unito.prog.models.Client;
-import it.unito.prog.utils.CheckUpdateTask;
+import it.unito.prog.service.CheckUpdateTask;
 import it.unito.prog.views.ClientApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,7 +77,7 @@ public class ClientController implements Controller{
 
     private void startCheckUpdate() {
         Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(new CheckUpdateTask(clientModel), 3000, 3000);
+        timer.scheduleAtFixedRate(new CheckUpdateTask(clientModel), 1000, 5000);
     }
 
     private void initRouteMap(){

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerThread implements Runnable{
 
@@ -52,15 +54,13 @@ public class ServerThread implements Runnable{
                     String user = inputStream.readUTF();
                     Email email = (Email) inputStream.readObject();
 
-                    Platform.runLater(() -> {
-                        serverModel.updateLog("[DELETE] FROM "
-                                + user
-                                + " WITH EMAIL ID "
-                                + email.getId()
-                                + " - "
-                                + Utils.getTimestamp()
-                        );
-                    });
+                    Platform.runLater(() -> serverModel.updateLog("[DELETE] FROM "
+                            + user
+                            + " WITH EMAIL ID "
+                            + email.getId()
+                            + " - "
+                            + Utils.getTimestamp()
+                    ));
 
                     outputStream.writeObject(new Feedback(0, "Delete success"));
                     outputStream.flush();
@@ -69,7 +69,12 @@ public class ServerThread implements Runnable{
                 case "UPDATE" -> {
                     String user = inputStream.readUTF();
 
-                    Platform.runLater(() -> serverModel.updateLog("[UPDATE] " + user));
+                    Platform.runLater(() -> serverModel.updateLog("[UPDATE] "
+                            + user
+                            + " - "
+                            + Utils.getTimestamp()
+                    ));
+
                     outputStream.writeObject(new Feedback(0, "Update success"));
                     outputStream.flush();
                 }
@@ -78,12 +83,20 @@ public class ServerThread implements Runnable{
                     String user = inputStream.readUTF();
                     String dir = inputStream.readUTF();
 
-                    Platform.runLater(() -> serverModel.updateLog("[LOAD " + dir.toUpperCase() + "] " + user));
-                    outputStream.writeObject(new Feedback(0, "Load success"));
+                    Platform.runLater(() -> serverModel.updateLog("[LOAD " + dir.toUpperCase()
+                            + "] "
+                            + user
+                            + " - "
+                            + Utils.getTimestamp()
+                    ));
+
+                    List<Email> emails = new ArrayList<>();
+                    emails.add(new Email("elisali.perottino@edu.unito.it", "michele.lorenzo@edu.unito.it; foca.grassa@unito.it; ciao@cio.it", "Ciao finocchia", "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p style=\"text-align: center;\"><span style=\"font-family: &quot;&quot;;\">csalkcnlsan</span></p></body></html>"));
+                    outputStream.writeObject(new Feedback(0, "Load success", emails));
                     outputStream.flush();
                 }
 
-                default -> throw new RuntimeException("Ops...Error in  switch-case");
+                default -> throw new RuntimeException("Ops...Error in switch-case");
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

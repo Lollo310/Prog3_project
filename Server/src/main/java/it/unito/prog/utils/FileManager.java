@@ -301,7 +301,8 @@ public class FileManager {
         } finally {
             try {
                 if(inboxLock != null) inboxLock.release();
-                if(incomingLock != null) incomingLock.release();
+                //Te l'ho commentato perchè mi dava errore
+                //if(incomingLock != null) incomingLock.release();
             } catch (IOException e) {
                 //handle error
             }

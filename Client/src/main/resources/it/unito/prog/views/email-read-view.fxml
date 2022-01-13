@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.WebView?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane fx:id="contentAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailReadController">
    <children>
@@ -12,13 +13,25 @@
       <TextField fx:id="toTextField" editable="false" layoutX="80.0" layoutY="64.0" prefHeight="38.0" prefWidth="595.0" />
       <Label fx:id="fromLabel" layoutX="27.0" layoutY="12.0" prefHeight="38.0" prefWidth="50.0" text="From" />
       <Label fx:id="toLabel" layoutX="27.0" layoutY="64.0" prefHeight="38.0" prefWidth="50.0" text="To" />
-      <Button fx:id="replyButton" layoutX="610.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReplyButtonAction" prefWidth="65.0" text="Reply" />
-      <Button fx:id="deleteButton" layoutX="80.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDeleteButtonAction" prefWidth="65.0" text="Delete" />
+      <Button fx:id="replyButton" layoutX="598.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReplyButtonAction" prefHeight="25.0" prefWidth="77.0" text="Reply">
+         <graphic>
+            <FontIcon iconLiteral="bi-reply-fill" iconSize="16" />
+         </graphic></Button>
+      <Button fx:id="deleteButton" layoutX="80.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDeleteButtonAction" prefHeight="25.0" prefWidth="83.0" text="Delete">
+         <graphic>
+            <FontIcon iconColor="RED" iconLiteral="bi-trash" iconSize="14" />
+         </graphic></Button>
       <TextField fx:id="subjectTextField" editable="false" layoutX="79.0" layoutY="118.0" prefHeight="38.0" prefWidth="595.0" />
       <Label fx:id="subjectLabel" layoutX="26.0" layoutY="118.0" prefHeight="38.0" prefWidth="50.0" text="Subject" />
-      <Button fx:id="replyAllButton" layoutX="521.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReplyAllButtonAction" prefWidth="65.0" text="Reply All" />
-      <Button fx:id="forwardButton" layoutX="432.0" layoutY="536.0" mnemonicParsing="false" onAction="#onForwardButtonAction" prefWidth="65.0" text="Forward" />
-      <TextField fx:id="datetimeTextField" editable="false" layoutX="509.0" layoutY="14.0" prefHeight="38.0" prefWidth="166.0" />
+      <Button fx:id="replyAllButton" layoutX="503.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReplyAllButtonAction" prefHeight="25.0" prefWidth="83.0" text="Reply All">
+         <graphic>
+            <FontIcon iconLiteral="bi-reply-all-fill" iconSize="16" />
+         </graphic></Button>
+      <Button fx:id="forwardButton" layoutX="411.0" layoutY="536.0" mnemonicParsing="false" onAction="#onForwardButtonAction" prefHeight="25.0" prefWidth="77.0" text="Forward">
+         <graphic>
+            <FontIcon iconLiteral="bi-forward-fill" />
+         </graphic></Button>
+      <TextField fx:id="datetimeTextField" editable="false" layoutX="505.0" layoutY="14.0" prefHeight="38.0" prefWidth="170.0" />
       <WebView fx:id="messageAreaField" disable="true" layoutX="80.0" layoutY="175.0" prefHeight="313.0" prefWidth="595.0" />
       <Label fx:id="infoLabel" layoutX="80.0" layoutY="498.0" prefHeight="32.0" prefWidth="595.0" />
    </children>

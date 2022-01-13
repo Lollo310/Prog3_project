@@ -7,9 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EmailListController implements Controller {
 
     private Client clientModel;
@@ -26,10 +23,6 @@ public class EmailListController implements Controller {
     void initialize() {}
 
     private void setEmailListView() {
-        List<Email> emails = new ArrayList<>();
-        emails.add(new Email("elisali.perottino@edu.unito.it", "michele.lorenzo@edu.unito.it; foca.grassa@unito.it; ciao@cio.it", "Ciao finocchia", "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p style=\"text-align: center;\"><span style=\"font-family: &quot;&quot;;\">csalkcnlsan</span></p></body></html>"));
-        clientModel.setAllInboxEmails(emails);
-
         switch (typeOfList) {
             case "INBOX" -> emailListView.setItems(clientModel.getInboxEmails());
             case "SENT" -> emailListView.setItems(clientModel.getSentEmails());

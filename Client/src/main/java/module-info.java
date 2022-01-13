@@ -13,4 +13,6 @@ module it.unito.prog {
     opens it.unito.prog.controllers to javafx.fxml;
     exports it.unito.prog.utils;
     opens it.unito.prog.utils to javafx.fxml;
+    exports it.unito.prog.service;
+    opens it.unito.prog.service to javafx.fxml;
 }
