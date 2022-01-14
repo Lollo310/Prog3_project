@@ -29,10 +29,12 @@ public class EmailWriteController implements Controller {
     @FXML
     void onSendButtonAction() {
         Feedback feedback;
-        //update timestamp
+
+        emailModel.setTimestamp(Utils.getTimestamp());
         emailModel.setMessage(messageHTMLEditor.getHtmlText());
-        System.out.println(emailModel);
-        feedback = WebUtils.sendMessage(emailModel);
+        feedback = checkData()
+                ? WebUtils.sendMessage(emailModel)
+                : new Feedback(-1, "Incorrect data format. To and subject fields cannot be empty.");
 
         if (feedback.getId() == 0) {
             infoLabel.setText(feedback.getMsg());
@@ -52,7 +54,6 @@ public class EmailWriteController implements Controller {
     @FXML
     void initialize() {
         infoLabel.setVisible(false);
-        infoLabel.getStyleClass().add("alert-success");
         this.emailModel = new Email();
         setProperty();
     }
@@ -75,9 +76,21 @@ public class EmailWriteController implements Controller {
     }
 
     private void setProperty() {
-        subjectTextField.textProperty().bindBidirectional(emailModel.objectProperty());
+        subjectTextField.textProperty().bindBidirectional(emailModel.subjectProperty());
         toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
         messageHTMLEditor.setHtmlText(emailModel.getMessage());
+    }
+
+    private boolean checkData() {
+
+        if (toTextField.getText() == null
+                || subjectTextField.getText() == null
+                || toTextField.getText().equals("")
+                || subjectTextField.getText().equals("")
+        )
+            return false;
+
+        return toTextField.getText().matches("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}\\s*;?\\s*+");
     }
 }
 
