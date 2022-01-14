@@ -4,13 +4,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane prefHeight="575.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailWriteController">
    <children>
-      <TextField fx:id="toTextField" layoutX="80.0" layoutY="14.0" prefHeight="38.0" prefWidth="595.0" promptText="receiver@mail.domain" />
-      <TextField fx:id="subjectTextField" layoutX="80.0" layoutY="64.0" prefHeight="38.0" prefWidth="595.0" />
+      <TextField fx:id="toTextField" layoutX="80.0" layoutY="12.0" prefHeight="38.0" prefWidth="595.0" promptText="receiver@mail.domain" />
+      <TextField fx:id="subjectTextField" layoutX="80.0" layoutY="72.0" prefHeight="38.0" prefWidth="595.0" />
       <Label fx:id="toLabel" layoutX="27.0" layoutY="12.0" prefHeight="38.0" prefWidth="50.0" text="To" />
       <Label fx:id="subjectLabel" layoutX="27.0" layoutY="64.0" prefHeight="38.0" prefWidth="50.0" text="Subject" />
       <Button fx:id="sendButton" layoutX="610.0" layoutY="536.0" mnemonicParsing="false" onAction="#onSendButtonAction" prefWidth="65.0" text="Send">
@@ -19,9 +20,17 @@
          </graphic></Button>
       <HTMLEditor fx:id="messageHTMLEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="80.0" layoutY="116.0" prefHeight="370.0" prefWidth="595.0" />
       <Button fx:id="clearButton" layoutX="534.0" layoutY="536.0" mnemonicParsing="false" onAction="#onClearButtonAction" prefWidth="65.0" text="Clear" />
-      <Label fx:id="infoLabel" layoutX="80.0" layoutY="492.0" prefHeight="38.0" prefWidth="595.0">
+      <Label fx:id="infoLabel" layoutX="80.0" layoutY="492.0" prefHeight="38.0" prefWidth="595.0" styleClass="alert-success">
          <graphic>
             <FontIcon iconColor="#00c30a" iconLiteral="bi-check2" iconSize="30" wrappingWidth="30.0" />
          </graphic></Label>
+      <Label layoutX="80.0" layoutY="50.0" prefHeight="17.0" prefWidth="126.0" styleClass="alert-warning" text="Separete email with ';'">
+         <font>
+            <Font size="11.0" />
+         </font>
+         <graphic>
+            <FontIcon iconColor="#ffcd00" iconLiteral="bi-exclamation-circle-fill" iconSize="12" wrappingWidth="11.0" />
+         </graphic>
+      </Label>
    </children>
 </AnchorPane>
