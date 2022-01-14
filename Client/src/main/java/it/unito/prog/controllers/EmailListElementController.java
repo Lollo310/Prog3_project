@@ -54,7 +54,7 @@ public class EmailListElementController implements Controller {
 
     private void setLabel() {
         userLabel.setText(emailModel.getSender());
-        previewLabel.setText(emailModel.getObject());
+        previewLabel.setText(emailModel.getSubject());
         dateLabel.setText(emailModel.getTimestamp());
     }
 

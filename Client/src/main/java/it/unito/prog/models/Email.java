@@ -4,10 +4,11 @@ import it.unito.prog.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.io.*;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.time.LocalDateTime;
-
-import static it.unito.prog.utils.Utils.parseTimestamp;
 
 public class Email implements Externalizable, Comparable<Email> {
 
@@ -17,7 +18,7 @@ public class Email implements Externalizable, Comparable<Email> {
 
     private transient final StringProperty receivers; // it's assumed that the email addresses are correct
 
-    private transient final StringProperty object;
+    private transient final StringProperty subject;
 
     private transient final StringProperty message;
 
@@ -27,16 +28,16 @@ public class Email implements Externalizable, Comparable<Email> {
         this.id = -1;
         this.sender = new SimpleStringProperty();
         this.receivers = new SimpleStringProperty();
-        this.object = new SimpleStringProperty();
+        this.subject = new SimpleStringProperty();
         this.message = new SimpleStringProperty();
-        this.timestamp = new SimpleStringProperty(Utils.getTimestamp());
+        this.timestamp = new SimpleStringProperty();
     }
 
-    public Email(String sender, String receivers, String object, String message) {
+    public Email(String sender, String receivers, String subject, String message) {
         this.id = -1;
         this.sender = new SimpleStringProperty(sender);
         this.receivers = new SimpleStringProperty(receivers);
-        this.object = new SimpleStringProperty(object);
+        this.subject = new SimpleStringProperty(subject);
         this.message = new SimpleStringProperty(message);
         this.timestamp = new SimpleStringProperty(Utils.getTimestamp());
     }
@@ -57,12 +58,12 @@ public class Email implements Externalizable, Comparable<Email> {
         return this.receivers;
     }
 
-    public String getObject() {
-        return this.object.get();
+    public String getSubject() {
+        return this.subject.get();
     }
 
-    public StringProperty objectProperty() {
-        return this.object;
+    public StringProperty subjectProperty() {
+        return this.subject;
     }
 
     public String getMessage() {
@@ -89,8 +90,8 @@ public class Email implements Externalizable, Comparable<Email> {
         this.receivers.set(receivers);
     }
 
-    public void setObject(String object) {
-        this.object.set(object);
+    public void setSubject(String subject) {
+        this.subject.set(subject);
     }
 
     public void setMessage(String message) {
@@ -110,7 +111,7 @@ public class Email implements Externalizable, Comparable<Email> {
     }
 
     private LocalDateTime getParsedTimestamp() {
-        return parseTimestamp(this.getTimestamp());
+        return Utils.parseTimestamp(this.getTimestamp());
     }
 
     @Override
@@ -119,7 +120,7 @@ public class Email implements Externalizable, Comparable<Email> {
                 "id=" + this.id +
                 ", sender=" + this.sender +
                 ", receivers=" + this.receivers +
-                ", object=" + this.object +
+                ", object=" + this.subject +
                 ", message=" + this.message +
                 ", timestamp=" + this.timestamp +
                 '}';
@@ -129,7 +130,7 @@ public class Email implements Externalizable, Comparable<Email> {
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeUTF(this.sender.get());
         out.writeUTF(this.receivers.get());
-        out.writeUTF(this.object.get());
+        out.writeUTF(this.subject.get());
         out.writeUTF(this.message.get());
         out.writeUTF(this.timestamp.get());
     }
@@ -138,7 +139,7 @@ public class Email implements Externalizable, Comparable<Email> {
     public void readExternal(ObjectInput in) throws IOException {
         this.sender.set(in.readUTF());
         this.receivers.set(in.readUTF());
-        this.object.set(in.readUTF());
+        this.subject.set(in.readUTF());
         this.message.set(in.readUTF());
         this.timestamp.set(in.readUTF());
     }

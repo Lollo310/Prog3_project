@@ -59,7 +59,7 @@ public class EmailReadController implements Controller {
         Email forwardEmail = new Email(
                 user,
                 "",
-                "[forward]" + emailModel.getObject(),
+                "[forward]" + emailModel.getSubject(), //far capire la data e chi la inviata
                 emailModel.getMessage()
         );
 
@@ -82,7 +82,7 @@ public class EmailReadController implements Controller {
         Email replyAllEmail = new Email(
                 user,
                 emailModel.getSender() + "; " + Utils.filterReceivers(user, emailModel.getReceivers()),
-                "[replyAll] " + emailModel.getObject(),
+                "[replyAll] " + emailModel.getSubject(),
                 ""
         );
 
@@ -103,7 +103,7 @@ public class EmailReadController implements Controller {
         Email replyAllEmail = new Email(
                 user,
                 emailModel.getSender(),
-                "[reply] " + emailModel.getObject(),
+                "[reply] " + emailModel.getSubject(),
                 ""
         );
 
@@ -142,7 +142,7 @@ public class EmailReadController implements Controller {
     private void setProperty() {
         fromTextField.textProperty().bind(emailModel.senderProperty());
         toTextField.textProperty().bind(emailModel.receiversProperty());
-        subjectTextField.textProperty().bind(emailModel.objectProperty());
+        subjectTextField.textProperty().bind(emailModel.subjectProperty());
         messageAreaField.getEngine().loadContent(emailModel.getMessage());
         datetimeTextField.textProperty().bind(emailModel.timestampProperty());
     }
