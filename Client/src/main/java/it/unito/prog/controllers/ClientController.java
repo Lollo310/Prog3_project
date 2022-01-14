@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,6 +30,9 @@ public class ClientController implements Controller{
 
     @FXML
     private Label serverInfoLabel;
+
+    @FXML
+    private FontIcon serverInfoIcon;
 
     @FXML
     void onVBoxButtonAction(ActionEvent event) {
@@ -92,10 +96,13 @@ public class ClientController implements Controller{
         serverInfoLabel.textProperty().bind(clientModel.serverStatusProperty());
         serverInfoLabel.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue))
-                if (newValue.equals("Server online"))
+                if (newValue.equals("Server online")) {
                     serverInfoLabel.getStyleClass().setAll("text-success");
-                else
+                    serverInfoIcon.getStyleClass().setAll("text-success");
+                } else {
                     serverInfoLabel.getStyleClass().setAll("text-danger");
+                    serverInfoIcon.getStyleClass().setAll("text-danger");
+                }
         });
     }
 }
