@@ -21,11 +21,19 @@
     <left>
         <VBox prefHeight="575.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="userEmail" alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="200.0">
+               <graphic>
+                  <FontIcon iconLiteral="bi-person-circle" iconSize="70" />
+               </graphic>
+            </Label>
+                <Label fx:id="userEmail" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="200.0">
                     <padding>
                         <Insets bottom="25.0" />
                     </padding></Label>
-            <Label fx:id="serverInfoLabel" alignment="CENTER" prefHeight="29.0" prefWidth="200.0" />
+            <Label fx:id="serverInfoLabel" alignment="CENTER" prefHeight="29.0" prefWidth="200.0">
+               <graphic>
+                  <FontIcon fx:id="serverInfoIcon" iconLiteral="bi-record-fill" styleClass="text-danger" wrappingWidth="17.0" />
+               </graphic></Label>
                 <Button fx:id="composeButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text=" Compose">
                <graphic>
                   <FontIcon iconLiteral="bi-plus-circle" iconSize="16" />
