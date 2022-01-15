@@ -112,6 +112,11 @@ public class FileManager {
         String[] directoryList = directory.list();
         List<Email> retrievedEmails = new ArrayList<>();
 
+        //check if user exists
+        if(!existsUserDir(username)) {
+            initUserDir(username);
+        }
+
         //acquire lock on the specified directory
         FileChannel channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.READ);
         FileLock lock = channel.lock(0, Long.MAX_VALUE, true);
