@@ -48,25 +48,37 @@ public class FileManager {
              if(!existsUserDir(receiver)) initUserDir(receiver);
          }
 
+         FileLock lock = null;
+        FileChannel channel = null;
+         try {
+         //lock sender's dir
+         channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.WRITE);
+         lock = channel.lock();
 
-             //lock sender's dir
-             FileChannel channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.WRITE);
-             FileLock lock = channel.lock();
+         //write email to file in sender's Sent dir
+         writeEmailOnFile(email, new File (basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
 
-             //write email to file in sender's Sent dir
-             writeEmailOnFile(email, new File (basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
-             lock.release();
+         } finally {
+             if (channel != null) channel.close(); //also releases the lock
+         }
 
-             for (String receiver : receivers) {
-                 //lock receiver's dir
-                 String username = parseEmailAddress(receiver);
+
+
+         for (String receiver : receivers) {
+             //lock receiver's dir
+             String username = parseEmailAddress(receiver);
+             try {
                  channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.WRITE);
                  channel.lock();
 
                  //write email to file in receivers' Incoming dir
-                 writeEmailOnFile(email, new File (basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
-                 lock.release();
+                 writeEmailOnFile(email, new File(basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
+             } finally {
+                 //if (lock != null) lock.release();
+                 if (channel != null) channel.close(); //also releases the lock
              }
+
+         }
 
          return new Feedback(0, "Message sent successfully.");
     }
@@ -100,7 +112,7 @@ public class FileManager {
                     f = new Feedback(-1, "Failed to delete file.");
                 }
 
-                if(lock != null) lock.release();
+                //if(lock != null) lock.release();
                 channel.close(); //also releases the lock
         }
         return f;
@@ -125,13 +137,13 @@ public class FileManager {
         if (directoryList != null) {
             for (String email : directoryList) {
                 if (!email.equals("lock")) {
-                    //try catch
                     retrievedEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + dir + File.separator + email)));
                 }
             }
         }
 
-        if(lock != null) lock.release();
+        //if(lock != null) lock.release();
+        if (channel != null) channel.close(); //also releases the lock
 
         //return the emails list
         return new Feedback(0, "Success", retrievedEmails);
@@ -227,9 +239,11 @@ public class FileManager {
             }
         }
 
-        if(inboxLock != null) inboxLock.release();
+        //if(inboxLock != null) inboxLock.release();
         //Te l'ho commentato perché mi dava errore
-        if(incomingLock != null) incomingLock.release();
+        //if(incomingLock != null) incomingLock.release();
+        if (inboxChannel != null) inboxChannel.close(); //also releases the lock
+        if (incomingChannel != null) incomingChannel.close(); //also releases the lock
     }
 
 
@@ -242,6 +256,7 @@ public class FileManager {
     private static void writeEmailOnFile(Email email, File f)  throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(f);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        email.writeExternal(objectOutputStream);
 
         objectOutputStream.flush();
         objectOutputStream.close();

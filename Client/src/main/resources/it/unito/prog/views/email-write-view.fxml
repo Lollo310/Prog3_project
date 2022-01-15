@@ -24,7 +24,7 @@
          <graphic>
             <FontIcon iconColor="#00c30a" iconLiteral="bi-check2" iconSize="30" wrappingWidth="30.0" />
          </graphic></Label>
-      <Label layoutX="80.0" layoutY="50.0" prefHeight="17.0" prefWidth="126.0" styleClass="alert-warning" text="Separete email with ';'">
+      <Label layoutX="80.0" layoutY="50.0" prefHeight="17.0" prefWidth="126.0" styleClass="alert-warning" text="Separate email with ';'">
          <font>
             <Font size="11.0" />
          </font>

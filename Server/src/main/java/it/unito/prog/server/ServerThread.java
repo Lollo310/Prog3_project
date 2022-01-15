@@ -1,6 +1,7 @@
 package it.unito.prog.server;
 
 import it.unito.prog.models.Email;
+import it.unito.prog.models.Feedback;
 import it.unito.prog.models.Server;
 import it.unito.prog.utils.FileManager;
 import it.unito.prog.utils.Utils;
@@ -67,14 +68,17 @@ public class ServerThread implements Runnable{
 
                 case "UPDATE" -> {
                     String user = inputStream.readUTF();
+                    Feedback feedback = FileManager.updateInbox(user);
 
-                    Platform.runLater(() -> serverModel.updateLog("[UPDATE] "
-                            + user
-                            + " - "
-                            + Utils.getTimestamp()
-                    ));
+                    if (feedback.getId() == 0) {
+                        Platform.runLater(() -> serverModel.updateLog("[UPDATE] "
+                                + user
+                                + " - "
+                                + Utils.getTimestamp()
+                        ));
+                    }
 
-                    outputStream.writeObject(FileManager.updateInbox(user));
+                    outputStream.writeObject(feedback);
                     outputStream.flush();
                 }
 
