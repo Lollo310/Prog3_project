@@ -14,6 +14,7 @@ public class Utils {
     }
 
     public static String[] parseReceivers (String receivers) {
+
         return receivers.split("\\s*;\\s*");
     }
 
