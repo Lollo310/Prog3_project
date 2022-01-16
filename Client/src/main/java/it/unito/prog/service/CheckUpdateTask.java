@@ -3,6 +3,7 @@ package it.unito.prog.service;
 import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Feedback;
+import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.application.Platform;
 
@@ -26,10 +27,10 @@ public class CheckUpdateTask extends TimerTask {
             isLoad = loadEmail();
 
         Feedback feedback = WebUtils.updateInbox(this.clientModel.getUser());
-        System.out.println(feedback);
-        System.out.println(WebUtils.isOnline());
-        Platform.runLater(() -> clientModel.addInboxEmails((List<Email>) feedback.getResult()));
         Platform.runLater(() -> clientModel.setServerStatus(WebUtils.isOnline()));
+
+        if (feedback.getId() == 0)
+            Platform.runLater(() -> clientModel.addInboxEmails((List<Email>) feedback.getResult()));
     }
 
     @SuppressWarnings("unchecked")
