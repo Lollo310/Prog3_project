@@ -222,9 +222,9 @@ public class FileManager {
         //else, if there are emails to be moved
         //lock Inbox and Incoming directories for writing
         FileChannel inboxChannel = FileChannel.open(Paths.get(basePath + username + File.separator + "Inbox" + File.separator + "lock"), StandardOpenOption.WRITE);
-        FileLock inboxLock = inboxChannel.lock(0, Long.MAX_VALUE, true);
+        FileLock inboxLock = inboxChannel.lock();
         FileChannel incomingChannel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.WRITE);
-        FileLock incomingLock = incomingChannel.lock(0, Long.MAX_VALUE, true);
+        FileLock incomingLock = incomingChannel.lock();
 
         //try moving each and every file which isn't the lock file
         if (incomingEmails != null) {
@@ -278,6 +278,7 @@ public class FileManager {
         objectInputStream.close();
         fileInputStream.close();
 
+        System.out.println("Reading email: " + email);
         return email;
     }
 }
