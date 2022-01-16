@@ -37,7 +37,7 @@ public class EmailListController implements Controller {
         if (!(model instanceof Client))
             throw  new IllegalArgumentException("Model cannot be null and it must be a Client instance");
         clientModel = (Client) model;
-        setEmailListView(); //altrimenti dà null
+        setEmailListView();
     }
 
     @Override

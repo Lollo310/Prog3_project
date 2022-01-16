@@ -28,6 +28,7 @@ public class CheckUpdateTask extends TimerTask {
         Feedback feedback = WebUtils.updateInbox(this.clientModel.getUser());
         System.out.println(feedback);
         System.out.println(WebUtils.isOnline());
+        Platform.runLater(() -> clientModel.addInboxEmails((List<Email>) feedback.getResult()));
         Platform.runLater(() -> clientModel.setServerStatus(WebUtils.isOnline()));
     }
 
