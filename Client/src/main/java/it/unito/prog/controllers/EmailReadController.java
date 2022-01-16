@@ -1,5 +1,6 @@
 package it.unito.prog.controllers;
 
+import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Feedback;
 import it.unito.prog.utils.Utils;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 public class EmailReadController implements Controller {
 
-    private String user;
+    private Client clientModel;
 
     private Email emailModel;
 
@@ -44,9 +45,10 @@ public class EmailReadController implements Controller {
 
     @FXML
     void onDeleteButtonAction() {
-        Feedback feedback = WebUtils.deleteMessage(user, emailModel);
+        Feedback feedback = WebUtils.deleteMessage(clientModel.getUser(), emailModel);
 
         if (feedback.getId() == 0) {
+            clientModel.removeEmail(emailModel);
             infoLabel.setText(feedback.getMsg());
             infoLabel.setVisible(true);
         } else
@@ -57,7 +59,7 @@ public class EmailReadController implements Controller {
     void onForwardButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
         Email forwardEmail = new Email(
-                user,
+                clientModel.getUser(),
                 "",
                 "[forward]" + emailModel.getSubject(), //far capire la data e chi la inviata
                 emailModel.getMessage()
@@ -80,8 +82,8 @@ public class EmailReadController implements Controller {
     void onReplyAllButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
         Email replyAllEmail = new Email(
-                user,
-                emailModel.getSender() + "; " + Utils.filterReceivers(user, emailModel.getReceivers()),
+                clientModel.getUser(),
+                emailModel.getSender() + "; " + Utils.filterReceivers(clientModel.getUser(), emailModel.getReceivers()),
                 "[replyAll] " + emailModel.getSubject(),
                 ""
         );
@@ -101,7 +103,7 @@ public class EmailReadController implements Controller {
     void onReplyButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
         Email replyAllEmail = new Email(
-                user,
+                clientModel.getUser(),
                 emailModel.getSender(),
                 "[reply] " + emailModel.getSubject(),
                 ""
@@ -134,9 +136,9 @@ public class EmailReadController implements Controller {
 
     @Override
     public void setExtraArgs(Object extraArgs) {
-        if (!(extraArgs instanceof String))
+        if (!(extraArgs instanceof Client))
             throw new IllegalArgumentException("extraArgs cannot be null and it must be a String instance");
-        this.user = (String) extraArgs;
+        this.clientModel = (Client) extraArgs;
     }
 
     private void setProperty() {

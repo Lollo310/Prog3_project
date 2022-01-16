@@ -12,6 +12,8 @@ import javafx.scene.web.HTMLEditor;
 
 public class EmailWriteController implements Controller {
 
+    private Client clientModel;
+
     private Email emailModel;
 
     @FXML
@@ -37,6 +39,7 @@ public class EmailWriteController implements Controller {
                 : new Feedback(-1, "Incorrect data format. To and subject fields cannot be empty.");
 
         if (feedback.getId() == 0) {
+            clientModel.addSentEmails(emailModel);
             infoLabel.setText(feedback.getMsg());
             infoLabel.setVisible(true);
         } else
@@ -63,7 +66,8 @@ public class EmailWriteController implements Controller {
         if (!(model instanceof Client))
             throw new IllegalArgumentException("model cannot be null && it must Client instance");
 
-        emailModel.setSender(((Client) model).getUser());
+        clientModel = (Client) model;
+        emailModel.setSender(clientModel.getUser());
     }
 
     @Override

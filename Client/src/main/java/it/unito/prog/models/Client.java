@@ -58,8 +58,8 @@ public class Client {
         this.inboxEmails.addAll(0, emails);
     }
 
-    public void addSentEmails(List<Email> emails) {
-        this.sentEmails.addAll(emails);
+    public void addSentEmails(Email email) {
+        this.sentEmails.add(0, email);
     }
 
     public String getServerStatus() {
@@ -72,5 +72,10 @@ public class Client {
 
     public StringProperty serverStatusProperty() {
         return serverStatus;
+    }
+
+    public void removeEmail(Email email) {
+        inboxEmails.remove(email);
+        sentEmails.remove(email);
     }
 }

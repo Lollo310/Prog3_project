@@ -29,7 +29,7 @@ public class EmailListController implements Controller {
             default -> System.err.println("Error");
         }
 
-        emailListView.setCellFactory(listView -> new EmailListElement(contentAnchorPane, clientModel.getUser()));
+        emailListView.setCellFactory(listView -> new EmailListElement(contentAnchorPane, clientModel));
     }
 
     @Override

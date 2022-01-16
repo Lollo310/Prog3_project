@@ -2,6 +2,7 @@ package it.unito.prog.utils;
 
 import it.unito.prog.controllers.Controller;
 import it.unito.prog.controllers.EmailListElementController;
+import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +17,11 @@ public class EmailListElement extends ListCell<Email> {
 
     private final Pane contentPanel;
 
-    private final String user;
+    private final Client clientModel;
 
-    public EmailListElement(Pane contentPanel, String user) {
+    public EmailListElement(Pane contentPanel, Client clientModel) {
         this.contentPanel = contentPanel;
-        this.user = user;
+        this.clientModel = clientModel;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class EmailListElement extends ListCell<Email> {
 
                 controller.setModel(email);
                 args.add(this.contentPanel);
-                args.add(this.user);
+                args.add(this.clientModel);
                 controller.setExtraArgs(args);
                 setGraphic(((EmailListElementController) controller).getEmailListElement());
             } catch (IOException e) {

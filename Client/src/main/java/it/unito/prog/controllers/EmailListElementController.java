@@ -1,5 +1,6 @@
 package it.unito.prog.controllers;
 
+import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXML;
@@ -18,7 +19,7 @@ public class EmailListElementController implements Controller {
 
     private Pane contentPane;
 
-    private String user;
+    private Client clientModel;
 
     @FXML
     private Label dateLabel;
@@ -41,7 +42,7 @@ public class EmailListElementController implements Controller {
             Controller controller = loader.getController();
 
             controller.setModel(emailModel);
-            controller.setExtraArgs(user);
+            controller.setExtraArgs(clientModel);
             contentPane.getChildren().setAll(panel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,7 +74,7 @@ public class EmailListElementController implements Controller {
             throw new IllegalArgumentException("extraArgs connot be null and it must be a Pane instance");
 
         contentPane = (Pane) ((List<?>) extraArgs).get(0);
-        user = (String) ((List<?>) extraArgs).get(1);
+        clientModel = (Client) ((List<?>) extraArgs).get(1);
     }
 }
 

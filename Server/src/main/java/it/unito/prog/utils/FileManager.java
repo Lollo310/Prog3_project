@@ -85,7 +85,7 @@ public class FileManager {
      */
     public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
         String username = parseEmailAddress(emailAddress);
-        String dir = email.getSender().equals(username) ? "Sent" : "Inbox";
+        String dir = email.getSender().equals(emailAddress) ? "Sent" : "Inbox";
         Feedback f = new Feedback(0, "File deleted successfully.");
 
         //check if user exists, if not try creating a directory for said user
