@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class ClientController implements Controller{
     private Map<String, String> views;
 
     @FXML
-    private AnchorPane contentPanel;
+    private BorderPane contentBorderPane;
 
     @FXML
     private Label userEmail;
@@ -49,7 +49,8 @@ public class ClientController implements Controller{
             }
 
             controller.setModel(clientModel);
-            contentPanel.getChildren().setAll(panel);
+            controller.setContentPanel(contentBorderPane);
+            contentBorderPane.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,6 +68,11 @@ public class ClientController implements Controller{
             throw new IllegalArgumentException("model cannot be null and it must be a Client instance");
 
         clientModel = (Client) model;
+    }
+
+    @Override
+    public void setContentPanel(Node contentPanel) {
+        //do nothing
     }
 
     @Override

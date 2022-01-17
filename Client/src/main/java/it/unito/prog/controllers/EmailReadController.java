@@ -151,6 +151,11 @@ public class EmailReadController implements Controller {
         this.clientModel = (Client) extraArgs;
     }
 
+    @Override
+    public void setContentPanel(Node contentPanel) {
+        //do nothing
+    }
+
     private void setProperty() {
         fromTextField.textProperty().bind(emailModel.senderProperty());
         toTextField.textProperty().bind(emailModel.receiversProperty());

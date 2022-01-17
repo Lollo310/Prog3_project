@@ -4,8 +4,9 @@ import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.utils.EmailListElement;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 public class EmailListController implements Controller {
 
@@ -13,8 +14,7 @@ public class EmailListController implements Controller {
 
     private String typeOfList;
 
-    @FXML
-    private AnchorPane contentAnchorPane;
+    private BorderPane contentPanel;
 
     @FXML
     private ListView<Email> emailListView;
@@ -29,7 +29,7 @@ public class EmailListController implements Controller {
             default -> System.err.println("Error");
         }
 
-        emailListView.setCellFactory(listView -> new EmailListElement(contentAnchorPane, clientModel));
+        emailListView.setCellFactory(listView -> new EmailListElement(contentPanel, clientModel));
     }
 
     @Override
@@ -45,6 +45,13 @@ public class EmailListController implements Controller {
         if (!(extraArgs instanceof String))
             throw new IllegalArgumentException("ExtraArgs cannot be null and it must be a String instance");
         typeOfList = (String) extraArgs;
+    }
+
+    @Override
+    public void setContentPanel(Node contentPanel) {
+        if (!(contentPanel instanceof BorderPane))
+            throw new IllegalArgumentException("ExtraArgs cannot be null and it must be a String instance");
+        this.contentPanel = (BorderPane) contentPanel;
     }
 }
 

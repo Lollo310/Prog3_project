@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class EmailListElementController implements Controller {
 
     private Email emailModel;
 
-    private Pane contentPane;
+    private BorderPane contentBorderPane;
 
     private Client clientModel;
 
@@ -43,7 +44,8 @@ public class EmailListElementController implements Controller {
 
             controller.setModel(emailModel);
             controller.setExtraArgs(clientModel);
-            contentPane.getChildren().setAll(panel);
+            //contentPane.getChildren().setAll(panel);
+            contentBorderPane.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,10 +73,15 @@ public class EmailListElementController implements Controller {
     @Override
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof List) && ((List<?>) extraArgs).isEmpty())
-            throw new IllegalArgumentException("extraArgs connot be null and it must be a Pane instance");
+            throw new IllegalArgumentException("extraArgs cannot be null and it must be a Pane instance");
 
-        contentPane = (Pane) ((List<?>) extraArgs).get(0);
+        contentBorderPane = (BorderPane) ((List<?>) extraArgs).get(0);
         clientModel = (Client) ((List<?>) extraArgs).get(1);
+    }
+
+    @Override
+    public void setContentPanel(Node contentPanel) {
+        //do nothing
     }
 }
 

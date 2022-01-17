@@ -7,6 +7,7 @@ import it.unito.prog.models.Email;
 import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -15,11 +16,11 @@ import java.util.List;
 
 public class EmailListElement extends ListCell<Email> {
 
-    private final Pane contentPanel;
+    private final BorderPane contentPanel;
 
     private final Client clientModel;
 
-    public EmailListElement(Pane contentPanel, Client clientModel) {
+    public EmailListElement(BorderPane contentPanel, Client clientModel) {
         this.contentPanel = contentPanel;
         this.clientModel = clientModel;
     }

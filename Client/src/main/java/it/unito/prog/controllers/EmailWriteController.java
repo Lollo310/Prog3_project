@@ -6,6 +6,7 @@ import it.unito.prog.models.Feedback;
 import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
@@ -39,7 +40,7 @@ public class EmailWriteController implements Controller {
                 : new Feedback(-1, "Incorrect data format. To and subject fields cannot be empty.");
 
         if (feedback.getId() == 0) {
-            clientModel.addSentEmails(emailModel);
+            clientModel.addSentEmails((Email) feedback.getResult());
             infoLabel.setText(feedback.getMsg());
             infoLabel.setVisible(true);
         } else
@@ -77,6 +78,11 @@ public class EmailWriteController implements Controller {
 
         emailModel = (Email) extraArgs;
         setProperty();
+    }
+
+    @Override
+    public void setContentPanel(Node contentPanel) {
+        //do nothing
     }
 
     private void setProperty() {
