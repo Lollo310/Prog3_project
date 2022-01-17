@@ -87,7 +87,7 @@ public class FileManager {
      * @param email         to be deleted
      * @param emailAddress  user for whom the email has to be deleted
      * @return              code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException  on channel/lock failures
+     * @throws IOException  on init directory failure
      */
     public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
         String username = parseEmailAddress(emailAddress);
@@ -122,6 +122,13 @@ public class FileManager {
         return f;
     }
 
+    /**
+     * Retrieves the list of email in the specified directory.
+     * @param emailAddress user whose emails have to be retrieved
+     * @param dir          directory in which the emails to be retrieved are located
+     * @return             code 0 Feedback on success, code -1 Feedback on failure
+     * @throws IOException on init directory failure
+     */
     public static Feedback getEmailList (String emailAddress, String dir) throws IOException {
         String username = parseEmailAddress(emailAddress);
         File directory = new File(basePath + username + File.separator + dir);
@@ -166,6 +173,7 @@ public class FileManager {
      * Returns a list of incoming emails and moves said emails from the user's Incoming directory to the Inbox directory.
      * @param emailAddress user's email address
      * @return             list of incoming emails on success, null otherwise
+     * @throws IOException on init directory failure
      */
     @SuppressWarnings("unchecked")
     public static Feedback updateInbox (String emailAddress) throws IOException {
