@@ -13,9 +13,9 @@
         <AnchorPane fx:id="contentPanel" BorderPane.alignment="CENTER" />
     </center>
     <bottom>
-        <AnchorPane prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" layoutX="297.0" layoutY="4.0" text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" />
+                <Label alignment="CENTER" layoutX="297.0" layoutY="4.0" text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" textFill="WHITE" />
             </children></AnchorPane>
     </bottom>
     <left>
@@ -25,6 +25,9 @@
                <graphic>
                   <FontIcon iconLiteral="bi-person-circle" iconSize="70" />
                </graphic>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
             </Label>
                 <Label fx:id="userEmail" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="200.0">
                     <padding>

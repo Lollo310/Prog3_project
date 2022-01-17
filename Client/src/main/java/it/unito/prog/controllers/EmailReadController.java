@@ -53,15 +53,17 @@ public class EmailReadController implements Controller {
                 Node panel = loader.load();
                 Controller controller = loader.getController();
 
-                controller.setModel(clientModel);
                 controller.setExtraArgs(emailModel.getSender().equals(clientModel.getUser()) ? "SENT" : "INBOX");
+                controller.setModel(clientModel);
                 clientModel.removeEmail(emailModel);
-                contentAnchorPane.getChildren().setAll();
+                contentAnchorPane.getChildren().setAll(panel);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else
-            Utils.showAlert(feedback.getMsg());
+        } else {
+            infoLabel.setText(feedback.getMsg());
+            infoLabel.setVisible(true);
+        }
     }
 
     @FXML
@@ -132,7 +134,6 @@ public class EmailReadController implements Controller {
     @FXML
     void initialize() {
         infoLabel.setVisible(false);
-        infoLabel.getStyleClass().add("alert-success");
     }
 
     @Override
