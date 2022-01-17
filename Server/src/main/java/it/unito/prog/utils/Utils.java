@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class Utils {
 
@@ -24,5 +25,9 @@ public class Utils {
 
     public static LocalDateTime parseTimestamp(String timestamp) {
         return LocalDateTime.parse(timestamp, formatter);
+    }
+
+    public static long generateUUID() {
+        return UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
     }
 }

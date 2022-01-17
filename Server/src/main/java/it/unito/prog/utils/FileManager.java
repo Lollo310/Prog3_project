@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static it.unito.prog.utils.Utils.*;
 
@@ -31,7 +32,7 @@ public class FileManager {
     public static Feedback sendEmail(Email email) throws IOException {
          String sender = parseEmailAddress(email.getSender());
          String[] receivers = parseReceivers(email.getReceivers());
-         Feedback f = new Feedback(0, "Message sent successfully.");
+         Feedback f = new Feedback(0, "Message sent successfully.", email);
 
          //check if sender exists, if not try creating a directory for the sender
          if(notExistsUserDir(sender))
@@ -52,6 +53,9 @@ public class FileManager {
              //lock sender's Sent directory
              channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.WRITE);
              lock = channel.lock();
+
+             //update email's id
+             email.setId(generateUUID());
 
              //write email to file in sender's Sent directory
              writeEmailOnFile(email, new File(basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
