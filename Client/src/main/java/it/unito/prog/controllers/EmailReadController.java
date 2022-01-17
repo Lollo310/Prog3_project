@@ -48,9 +48,18 @@ public class EmailReadController implements Controller {
         Feedback feedback = WebUtils.deleteMessage(clientModel.getUser(), emailModel);
 
         if (feedback.getId() == 0) {
-            clientModel.removeEmail(emailModel);
-            infoLabel.setText(feedback.getMsg());
-            infoLabel.setVisible(true);
+            try {
+                FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-list-view.fxml"));
+                Node panel = loader.load();
+                Controller controller = loader.getController();
+
+                controller.setModel(clientModel);
+                controller.setExtraArgs(emailModel.getSender().equals(clientModel.getUser()) ? "SENT" : "INBOX");
+                clientModel.removeEmail(emailModel);
+                contentAnchorPane.getChildren().setAll();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else
             Utils.showAlert(feedback.getMsg());
     }
