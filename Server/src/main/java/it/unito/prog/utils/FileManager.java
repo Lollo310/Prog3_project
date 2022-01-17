@@ -19,8 +19,6 @@ public class FileManager {
 
     private static final String cwd = Path.of("").toAbsolutePath().toString();
 
-    //private static final String parent = Paths.get(cwd).getParent().toAbsolutePath().toString();
-
     private static final String basePath = cwd + File.separator + "users" + File.separator;
 
     // PUBLIC METHODS
@@ -35,39 +33,46 @@ public class FileManager {
          String[] receivers = parseReceivers(email.getReceivers());
 
          //check if sender exists, if not try creating a directory for the sender
-         if(notExistsUserDir(sender)) {
-             initUserDir(sender);
-         }
+         if(notExistsUserDir(sender))
+             return new Feedback(-1, "Invalid sender '" + sender + "'.");
 
-        //check if there's at least one receiver
-         if(receivers.length == 0) return new Feedback(-1, "No receivers specified.");
 
         //check if each receiver exists, if not try creating a directory for them
          for (String receiver : receivers) {
-             if(receiver.equals(sender)) return new Feedback(-1, "Cannot send mail to yourself.");
-             if(notExistsUserDir(parseEmailAddress(receiver))) initUserDir(parseEmailAddress(receiver));
+             if(receiver.equals(sender))
+                 return new Feedback(-1, "Cannot send mail to yourself.");
+             if(notExistsUserDir(parseEmailAddress(receiver)))
+                 return new Feedback(-1, "Invalid receiver '" + receiver + "'.");
          }
 
-         //lock sender's dir
-         FileChannel channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.WRITE);
-         FileLock lock = channel.lock();
-
-         //write email to file in sender's Sent dir
-         writeEmailOnFile(email, new File (basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
-
-        if (lock != null) lock.release();
-         channel.close(); //also releases the lock
-
-         for (String receiver : receivers) {
-             //lock receiver's dir
-             String username = parseEmailAddress(receiver);
-
-             channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.WRITE);
+         FileChannel channel = null;
+         FileLock lock = null;
+         try {
+             //lock sender's Sent directory
+             channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.WRITE);
              lock = channel.lock();
 
-             //write email to file in receivers' Incoming dir
-             writeEmailOnFile(email, new File(basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
+             //write email to file in sender's Sent directory
+             writeEmailOnFile(email, new File(basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
 
+             if (lock != null) lock.release();
+             channel.close(); //also releases the lock
+
+             for (String receiver : receivers) {
+                 //lock receiver's dir
+                 String username = parseEmailAddress(receiver);
+
+                 channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.WRITE);
+                 lock = channel.lock();
+
+                 //write email to file in receivers' Incoming dir
+                 writeEmailOnFile(email, new File(basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
+
+             }
+         } catch (IOException e) {
+             return new Feedback (-1, "Error occurred while sending the email.");
+
+         } finally {
              if (lock != null) lock.release();
              channel.close(); //also releases the lock
 
@@ -94,7 +99,7 @@ public class FileManager {
         }
 
         if (Files.exists(Paths.get(basePath + username + File.separator + dir + File.separator + email.getId() + ".txt"))) {
-            //lock dir
+            //lock the user's directory containing the email to be deleted
             FileChannel channel = FileChannel.open(Paths.get(basePath + username + File.separator + dir + File.separator + "lock"), StandardOpenOption.READ);
             FileLock lock = channel.lock(0, Long.MAX_VALUE, true);
 
