@@ -5,6 +5,7 @@ module it.unito.prog {
 
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires org.jsoup;
 
     exports it.unito.prog.views;
     opens it.unito.prog.views to javafx.fxml;
