@@ -8,27 +8,27 @@
 <?import javafx.scene.web.WebView?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="contentAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailReadController">
+<AnchorPane prefHeight="575.0" prefWidth="700.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailReadController">
    <children>
       <TextField fx:id="fromTextField" editable="false" layoutX="80.0" layoutY="14.0" prefHeight="38.0" prefWidth="408.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="212.0" />
       <TextField fx:id="toTextField" editable="false" layoutX="80.0" layoutY="64.0" prefHeight="38.0" prefWidth="595.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="25.0" />
-      <Label fx:id="fromLabel" layoutX="27.0" layoutY="12.0" prefHeight="38.0" prefWidth="50.0" text="From" AnchorPane.leftAnchor="27.0" />
-      <Label fx:id="toLabel" layoutX="27.0" layoutY="64.0" prefHeight="38.0" prefWidth="50.0" text="To" AnchorPane.leftAnchor="27.0" />
-      <Button fx:id="replyButton" layoutX="598.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReplyButtonAction" prefHeight="25.0" prefWidth="77.0" text="Reply" AnchorPane.bottomAnchor="13.399999999999999" AnchorPane.rightAnchor="24.400000000000006">
+      <Label fx:id="fromLabel" layoutX="27.0" layoutY="12.0" prefHeight="38.0" prefWidth="50.0" text="From" textFill="#000000bf" AnchorPane.leftAnchor="27.0" />
+      <Label fx:id="toLabel" layoutX="27.0" layoutY="64.0" prefHeight="38.0" prefWidth="50.0" text="To" textFill="#000000bf" AnchorPane.leftAnchor="27.0" />
+      <Button fx:id="replyButton" layoutX="585.0" layoutY="537.0" mnemonicParsing="false" onAction="#onReplyButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Reply" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="25.0">
          <graphic>
             <FontIcon iconLiteral="bi-reply-fill" iconSize="16" />
          </graphic></Button>
-      <Button fx:id="deleteButton" layoutX="80.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDeleteButtonAction" prefHeight="25.0" prefWidth="83.0" text="Delete" AnchorPane.bottomAnchor="13.399999999999999" AnchorPane.leftAnchor="80.0">
+      <Button fx:id="deleteButton" layoutX="80.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDeleteButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Delete" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="80.0">
          <graphic>
             <FontIcon iconColor="RED" iconLiteral="bi-trash" iconSize="14" />
          </graphic></Button>
       <TextField fx:id="subjectTextField" editable="false" layoutX="80.0" layoutY="118.0" prefHeight="38.0" prefWidth="595.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="25.0" />
-      <Label fx:id="subjectLabel" layoutX="26.0" layoutY="118.0" prefHeight="38.0" prefWidth="50.0" text="Subject" AnchorPane.leftAnchor="27.0" />
-      <Button fx:id="replyAllButton" layoutX="501.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReplyAllButtonAction" prefHeight="25.0" prefWidth="83.0" text="Reply All" AnchorPane.bottomAnchor="13.399999999999977" AnchorPane.rightAnchor="115.79999999999995">
+      <Label fx:id="subjectLabel" layoutX="26.0" layoutY="118.0" prefHeight="38.0" prefWidth="50.0" text="Subject" textFill="#000000bf" AnchorPane.leftAnchor="27.0" />
+      <Button fx:id="replyAllButton" layoutX="488.0" layoutY="537.0" mnemonicParsing="false" onAction="#onReplyAllButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Reply All" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="122.0">
          <graphic>
             <FontIcon iconLiteral="bi-reply-all-fill" iconSize="16" />
          </graphic></Button>
-      <Button fx:id="forwardButton" layoutX="410.0" layoutY="536.0" mnemonicParsing="false" onAction="#onForwardButtonAction" prefHeight="25.0" prefWidth="77.0" text="Forward" AnchorPane.bottomAnchor="13.399999999999977" AnchorPane.rightAnchor="212.39999999999998">
+      <Button fx:id="forwardButton" layoutX="390.0" layoutY="537.0" mnemonicParsing="false" onAction="#onForwardButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Forward" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="220.0">
          <graphic>
             <FontIcon iconLiteral="bi-forward-fill" />
          </graphic></Button>

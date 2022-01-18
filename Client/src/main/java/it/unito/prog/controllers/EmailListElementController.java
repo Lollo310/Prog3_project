@@ -9,16 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
-import java.util.List;
 
 public class EmailListElementController implements Controller {
 
     private Email emailModel;
 
-    private BorderPane contentBorderPane;
+    private BorderPane contentPanel;
 
     private Client clientModel;
 
@@ -44,8 +42,8 @@ public class EmailListElementController implements Controller {
 
             controller.setModel(emailModel);
             controller.setExtraArgs(clientModel);
-            //contentPane.getChildren().setAll(panel);
-            contentBorderPane.setCenter(panel);
+            controller.setContentPanel(contentPanel);
+            contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,16 +70,18 @@ public class EmailListElementController implements Controller {
 
     @Override
     public void setExtraArgs(Object extraArgs) {
-        if (!(extraArgs instanceof List) && ((List<?>) extraArgs).isEmpty())
-            throw new IllegalArgumentException("extraArgs cannot be null and it must be a Pane instance");
+        if (!(extraArgs instanceof Client))
+            throw new IllegalArgumentException("extraArgs cannot be null and it must be a Client instance");
 
-        contentBorderPane = (BorderPane) ((List<?>) extraArgs).get(0);
-        clientModel = (Client) ((List<?>) extraArgs).get(1);
+        clientModel = (Client) extraArgs;
     }
 
     @Override
-    public void setContentPanel(Node contentPanel) {
-        //do nothing
+    public void setContentPanel(BorderPane contentPanel) {
+        if (contentPanel == null)
+            throw new IllegalArgumentException("contentPanel cannot be null");
+
+        this.contentPanel = contentPanel;
     }
 }
 

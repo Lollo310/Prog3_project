@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 
 import java.io.IOException;
@@ -22,8 +23,7 @@ public class EmailReadController implements Controller {
 
     private Email emailModel;
 
-    @FXML
-    private AnchorPane contentAnchorPane;
+    private BorderPane contentPanel;
 
     @FXML
     private TextField datetimeTextField;
@@ -56,7 +56,7 @@ public class EmailReadController implements Controller {
                 controller.setExtraArgs(emailModel.getSender().equals(clientModel.getUser()) ? "SENT" : "INBOX");
                 controller.setModel(clientModel);
                 clientModel.removeEmail(emailModel);
-                contentAnchorPane.getChildren().setAll(panel);
+                contentPanel.setCenter(panel);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -83,7 +83,7 @@ public class EmailReadController implements Controller {
             Controller controller = loader.getController();
 
             controller.setExtraArgs(forwardEmail);
-            contentAnchorPane.getChildren().setAll(panel);
+            contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,7 +104,7 @@ public class EmailReadController implements Controller {
             Controller controller = loader.getController();
 
             controller.setExtraArgs(replyAllEmail);
-            contentAnchorPane.getChildren().setAll(panel);
+            contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,7 +125,7 @@ public class EmailReadController implements Controller {
             Controller controller = loader.getController();
 
             controller.setExtraArgs(replyAllEmail);
-            contentAnchorPane.getChildren().setAll(panel);
+            contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,8 +152,11 @@ public class EmailReadController implements Controller {
     }
 
     @Override
-    public void setContentPanel(Node contentPanel) {
-        //do nothing
+    public void setContentPanel(BorderPane contentPanel) {
+        if (contentPanel == null)
+            throw new IllegalArgumentException("contentPanel cannot be null");
+
+        this.contentPanel = contentPanel;
     }
 
     private void setProperty() {

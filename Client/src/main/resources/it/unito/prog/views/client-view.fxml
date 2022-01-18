@@ -15,7 +15,7 @@
     <bottom>
         <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" layoutX="297.0" layoutY="4.0" text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" textFill="WHITE" />
+                <Label alignment="CENTER" layoutX="297.0" layoutY="4.0" text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" textFill="WHITE" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="297.0" />
             </children></AnchorPane>
     </bottom>
     <left>
@@ -41,8 +41,17 @@
                <graphic>
                   <FontIcon iconLiteral="bi-plus-circle" iconSize="16" />
                </graphic></Button>
-                <Button fx:id="inboxButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox" />
-                <Button fx:id="sentButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent" />
+                <Button fx:id="inboxButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox">
+               <graphic>
+                  <Label fx:id="counterLabel" prefHeight="17.0" prefWidth="9.0" textFill="#07b800" />
+               </graphic></Button>
+                <Button fx:id="sentButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets right="82.0" />
+               </padding></Button>
             </children>
         </VBox>
     </left>

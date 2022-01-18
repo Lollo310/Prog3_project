@@ -23,6 +23,9 @@ public class ClientController implements Controller{
     private Map<String, String> views;
 
     @FXML
+    private Label counterLabel;
+
+    @FXML
     private BorderPane contentBorderPane;
 
     @FXML
@@ -71,7 +74,7 @@ public class ClientController implements Controller{
     }
 
     @Override
-    public void setContentPanel(Node contentPanel) {
+    public void setContentPanel(BorderPane contentPanel) {
         //do nothing
     }
 
@@ -98,6 +101,7 @@ public class ClientController implements Controller{
     }
 
     private void setProperty() {
+        counterLabel.textProperty().bind(clientModel.counterNewEmailProperty());
         userEmail.textProperty().bind(clientModel.userProperty());
         serverInfoLabel.textProperty().bind(clientModel.serverStatusProperty());
         serverInfoLabel.textProperty().addListener((observable, oldValue, newValue) -> {

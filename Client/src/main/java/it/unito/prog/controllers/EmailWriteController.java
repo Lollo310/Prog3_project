@@ -6,9 +6,9 @@ import it.unito.prog.models.Feedback;
 import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.web.HTMLEditor;
 
 public class EmailWriteController implements Controller {
@@ -81,7 +81,7 @@ public class EmailWriteController implements Controller {
     }
 
     @Override
-    public void setContentPanel(Node contentPanel) {
+    public void setContentPanel(BorderPane contentPanel) {
         //do nothing
     }
 

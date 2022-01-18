@@ -3,7 +3,6 @@ package it.unito.prog.service;
 import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Feedback;
-import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.application.Platform;
 
@@ -22,6 +21,7 @@ public class CheckUpdateTask extends TimerTask {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void run() {
         if (!isLoad)
             isLoad = loadEmail();

@@ -4,7 +4,6 @@ import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.utils.EmailListElement;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 
@@ -24,19 +23,23 @@ public class EmailListController implements Controller {
 
     private void setEmailListView() {
         switch (typeOfList) {
-            case "INBOX" -> emailListView.setItems(clientModel.getInboxEmails());
-            case "SENT" -> emailListView.setItems(clientModel.getSentEmails());
+            case "INBOX" -> {
+                this.clientModel.resetCounterNewEmail();
+                this.emailListView.setItems(clientModel.getInboxEmails());
+            }
+            case "SENT" -> this.emailListView.setItems(clientModel.getSentEmails());
             default -> System.err.println("Error");
         }
 
-        emailListView.setCellFactory(listView -> new EmailListElement(contentPanel, clientModel));
+        this.emailListView.setCellFactory(listView -> new EmailListElement(contentPanel, clientModel));
     }
 
     @Override
     public void setModel(Object model) {
         if (!(model instanceof Client))
             throw  new IllegalArgumentException("Model cannot be null and it must be a Client instance");
-        clientModel = (Client) model;
+
+        this.clientModel = (Client) model;
         setEmailListView();
     }
 
@@ -44,14 +47,16 @@ public class EmailListController implements Controller {
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof String))
             throw new IllegalArgumentException("ExtraArgs cannot be null and it must be a String instance");
-        typeOfList = (String) extraArgs;
+
+        this.typeOfList = (String) extraArgs;
     }
 
     @Override
-    public void setContentPanel(Node contentPanel) {
-        if (!(contentPanel instanceof BorderPane))
-            throw new IllegalArgumentException("ExtraArgs cannot be null and it must be a String instance");
-        this.contentPanel = (BorderPane) contentPanel;
+    public void setContentPanel(BorderPane contentPanel) {
+        if (contentPanel == null)
+            throw new IllegalArgumentException("contentPanel cannot be null");
+
+        this.contentPanel = contentPanel;
     }
 }
 

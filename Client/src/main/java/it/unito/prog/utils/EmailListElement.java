@@ -8,7 +8,6 @@ import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ public class EmailListElement extends ListCell<Email> {
 
             try {
                 Controller controller;
-                List<Object> args = new ArrayList<>();
 
                 loader.load();
                 controller = loader.getController();
@@ -45,9 +43,8 @@ public class EmailListElement extends ListCell<Email> {
                     throw new RuntimeException("unexpected return value");
 
                 controller.setModel(email);
-                args.add(this.contentPanel);
-                args.add(this.clientModel);
-                controller.setExtraArgs(args);
+                controller.setExtraArgs(this.clientModel);
+                controller.setContentPanel(this.contentPanel);
                 setGraphic(((EmailListElementController) controller).getEmailListElement());
             } catch (IOException e) {
                 e.printStackTrace();

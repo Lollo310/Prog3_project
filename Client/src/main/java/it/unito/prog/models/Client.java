@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Client {
 
+    private final StringProperty counterNewEmail;
+
     private final StringProperty serverStatus;
 
     private final StringProperty user;
@@ -19,11 +21,16 @@ public class Client {
     private final ObservableList<Email> sentEmails;
 
     public Client(String user) {
+        counterNewEmail = new SimpleStringProperty("");
         serverStatus = new SimpleStringProperty();
         setServerStatus(WebUtils.isOnline());
         this.user = new SimpleStringProperty(user);
         inboxEmails = FXCollections.observableArrayList();
         sentEmails = FXCollections.observableArrayList();
+    }
+
+    public StringProperty counterNewEmailProperty() {
+        return counterNewEmail;
     }
 
     public String getUser() {
@@ -32,10 +39,6 @@ public class Client {
 
     public StringProperty userProperty() {
         return this.user;
-    }
-
-    public void setUser(String user) {
-        this.user.set(user);
     }
 
     public ObservableList<Email> getInboxEmails() {
@@ -56,14 +59,11 @@ public class Client {
 
     public void addInboxEmails(List<Email> emails) {
         this.inboxEmails.addAll(0, emails);
+        increaseCounterNewEmail(emails.size());
     }
 
     public void addSentEmails(Email email) {
         this.sentEmails.add(0, email);
-    }
-
-    public String getServerStatus() {
-        return serverStatus.get();
     }
 
     public void setServerStatus(boolean serverStatus) {
@@ -77,5 +77,15 @@ public class Client {
     public void removeEmail(Email email) {
         inboxEmails.remove(email);
         sentEmails.remove(email);
+    }
+
+    private void increaseCounterNewEmail(int n) {
+        int counter = counterNewEmail.get().equals("") ? 0 : Integer.parseInt(counterNewEmail.get());
+        counter+=n;
+        counterNewEmail.set(Integer.toString(counter));
+    }
+
+    public void resetCounterNewEmail() {
+        counterNewEmail.set("");
     }
 }
