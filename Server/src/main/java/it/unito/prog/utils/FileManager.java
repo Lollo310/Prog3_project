@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static it.unito.prog.utils.Utils.*;
 
@@ -64,16 +63,16 @@ public class FileManager {
              channel.close(); //also releases the lock
 
              for (String receiver : receivers) {
-                 //lock receiver's dir
                  String username = parseEmailAddress(receiver);
 
+                 //lock receiver's Incoming directory
                  channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.WRITE);
                  lock = channel.lock();
 
-                 //write email to file in receivers' Incoming dir
+                 //write email to file in receiver's Incoming dir
                  writeEmailOnFile(email, new File(basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
-
              }
+
          } catch (IOException e) {
              f.setAll(-1, "Error occurred while sending the email.");
 
@@ -107,6 +106,7 @@ public class FileManager {
         FileLock lock = null;
         try {
             if (Files.exists(Paths.get(basePath + username + File.separator + dir + File.separator + email.getId() + ".txt"))) {
+
                 //lock the user's directory containing the email to be deleted
                 channel = FileChannel.open(Paths.get(basePath + username + File.separator + dir + File.separator + "lock"), StandardOpenOption.READ);
                 lock = channel.lock(0, Long.MAX_VALUE, true);
@@ -281,7 +281,6 @@ public class FileManager {
 
         return ret;
     }
-
 
     /**
      * Given an email and a file, writes said email on said file.
