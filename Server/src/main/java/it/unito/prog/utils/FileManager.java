@@ -196,7 +196,7 @@ public class FileManager {
                 f.setAll(-1, "Error occurred while updating inbox.");
         }
 
-        if (newEmails == null) f.setAll(-1, "No updates available.");
+        if (newEmails == null || newEmails.size() <= 0) f.setAll(-1, "No updates available.");
 
         return f;
     }
