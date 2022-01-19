@@ -38,8 +38,8 @@ public class Utils {
         return String.join("; ", filteredReceiverList);
     }
 
-    public static void showAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, msg);
+    public static void showAlert(Alert.AlertType alertType, String msg) {
+        Alert alert = new Alert(alertType, msg);
         alert.show();
     }
 }

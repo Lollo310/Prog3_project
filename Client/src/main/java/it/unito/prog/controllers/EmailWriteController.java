@@ -6,6 +6,7 @@ import it.unito.prog.models.Feedback;
 import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -44,7 +45,7 @@ public class EmailWriteController implements Controller {
             infoLabel.setText(feedback.getMsg());
             infoLabel.setVisible(true);
         } else
-            Utils.showAlert(feedback.getMsg());
+            Utils.showAlert(Alert.AlertType.ERROR, feedback.getMsg());
     }
 
     @FXML

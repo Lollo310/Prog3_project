@@ -5,8 +5,8 @@
 
 <AnchorPane fx:id="emailListElement" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onEmailListElementMouseClicked" prefHeight="37.5" prefWidth="675.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailListElementController">
    <children>
-      <Label fx:id="userLabel" prefHeight="38.0" prefWidth="130.0" text="user" />
-      <Label fx:id="previewLabel" layoutX="130.0" prefHeight="37.5" prefWidth="450.0" text="subject - message" />
-      <Label fx:id="dateLabel" layoutX="580.0" prefHeight="38.0" prefWidth="95.0" text="dd/mm/yyyy" />
+      <Label fx:id="userLabel" prefHeight="38.0" prefWidth="162.0" text="example.example@mail.com" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="513.0" />
+      <Label fx:id="previewLabel" layoutX="162.0" prefHeight="38.0" prefWidth="398.0" text="subject - message" AnchorPane.leftAnchor="162.0" AnchorPane.rightAnchor="115.0" />
+      <Label fx:id="dateLabel" layoutX="577.0" prefHeight="38.0" prefWidth="113.0" text="dd/mm/yyyy hh:mm" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

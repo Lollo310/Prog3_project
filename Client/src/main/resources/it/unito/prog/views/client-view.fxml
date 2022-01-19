@@ -19,17 +19,17 @@
             </children></AnchorPane>
     </bottom>
     <left>
-        <VBox prefHeight="575.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="575.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.80);" BorderPane.alignment="CENTER">
             <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="200.0">
                <graphic>
-                  <FontIcon iconLiteral="bi-person-circle" iconSize="70" />
+                  <FontIcon iconColor="#ffffffbf" iconLiteral="bi-person-circle" iconSize="70" />
                </graphic>
                <padding>
                   <Insets top="10.0" />
                </padding>
             </Label>
-                <Label fx:id="userEmail" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="200.0">
+                <Label fx:id="userEmail" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="200.0" textFill="#ffffffbf">
                     <padding>
                         <Insets bottom="25.0" />
                     </padding></Label>
@@ -37,15 +37,15 @@
                <graphic>
                   <FontIcon fx:id="serverInfoIcon" iconLiteral="bi-record-fill" styleClass="text-danger" wrappingWidth="17.0" />
                </graphic></Label>
-                <Button fx:id="composeButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text=" Compose">
+                <Button fx:id="composeButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" styleClass="btn-default" text=" Compose">
                <graphic>
                   <FontIcon iconLiteral="bi-plus-circle" iconSize="16" />
                </graphic></Button>
-                <Button fx:id="inboxButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Inbox">
+                <Button fx:id="inboxButton" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" styleClass="btn-default" text="Inbox">
                <graphic>
                   <Label fx:id="counterLabel" prefHeight="17.0" prefWidth="9.0" textFill="#07b800" />
                </graphic></Button>
-                <Button fx:id="sentButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" text="Sent">
+                <Button fx:id="sentButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onVBoxButtonAction" prefHeight="75.0" prefWidth="200.0" styleClass="btn-default" text="Sent">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

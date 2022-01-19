@@ -10,8 +10,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EmailListElement extends ListCell<Email> {
 

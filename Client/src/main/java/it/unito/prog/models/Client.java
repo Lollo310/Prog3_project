@@ -1,11 +1,15 @@
 package it.unito.prog.models;
 
+import it.unito.prog.utils.Utils;
 import it.unito.prog.utils.WebUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Client {
@@ -46,6 +50,7 @@ public class Client {
     }
 
     public void setAllInboxEmails(List<Email> inboxEmails) {
+        inboxEmails.sort(Collections.reverseOrder(Email::compareTo));
         this.inboxEmails.setAll(inboxEmails);
     }
 
@@ -54,12 +59,15 @@ public class Client {
     }
 
     public void setAllSentEmails(List<Email> sentEmails) {
+        sentEmails.sort(Collections.reverseOrder(Email::compareTo));
         this.sentEmails.setAll(sentEmails);
     }
 
     public void addInboxEmails(List<Email> emails) {
+        emails.sort(Collections.reverseOrder(Email::compareTo));
         this.inboxEmails.addAll(0, emails);
         increaseCounterNewEmail(emails.size());
+        Utils.showAlert(Alert.AlertType.INFORMATION,"You have (" + emails.size() + ") new emails!");
     }
 
     public void addSentEmails(Email email) {

@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 
@@ -83,7 +82,8 @@ public class EmailReadController implements Controller {
             Controller controller = loader.getController();
 
             controller.setExtraArgs(forwardEmail);
-            contentPanel.setCenter(panel);
+            controller.setModel(this.clientModel);
+            this.contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,6 +104,7 @@ public class EmailReadController implements Controller {
             Controller controller = loader.getController();
 
             controller.setExtraArgs(replyAllEmail);
+            controller.setModel(this.clientModel);
             contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,6 +126,7 @@ public class EmailReadController implements Controller {
             Controller controller = loader.getController();
 
             controller.setExtraArgs(replyAllEmail);
+            controller.setModel(this.clientModel);
             contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();

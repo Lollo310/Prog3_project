@@ -70,10 +70,6 @@ public class Email implements Externalizable, Comparable<Email> {
         return this.message.get();
     }
 
-    public StringProperty messageProperty() {
-        return this.message;
-    }
-
     public String getTimestamp() {
         return this.timestamp.get();
     }
@@ -84,14 +80,6 @@ public class Email implements Externalizable, Comparable<Email> {
 
     public void setSender(String sender) {
         this.sender.set(sender);
-    }
-
-    public void setReceivers(String receivers) {
-        this.receivers.set(receivers);
-    }
-
-    public void setSubject(String subject) {
-        this.subject.set(subject);
     }
 
     public void setMessage(String message) {

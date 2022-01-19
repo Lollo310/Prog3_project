@@ -4,10 +4,11 @@ import it.unito.prog.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.io.*;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.time.LocalDateTime;
-
-import static it.unito.prog.utils.Utils.parseTimestamp;
 
 public class Email implements Externalizable, Comparable<Email> {
 
@@ -69,10 +70,6 @@ public class Email implements Externalizable, Comparable<Email> {
         return this.message.get();
     }
 
-    public StringProperty messageProperty() {
-        return this.message;
-    }
-
     public String getTimestamp() {
         return this.timestamp.get();
     }
@@ -83,14 +80,6 @@ public class Email implements Externalizable, Comparable<Email> {
 
     public void setSender(String sender) {
         this.sender.set(sender);
-    }
-
-    public void setReceivers(String receivers) {
-        this.receivers.set(receivers);
-    }
-
-    public void setSubject(String subject) {
-        this.subject.set(subject);
     }
 
     public void setMessage(String message) {
@@ -110,7 +99,7 @@ public class Email implements Externalizable, Comparable<Email> {
     }
 
     private LocalDateTime getParsedTimestamp() {
-        return parseTimestamp(this.getTimestamp());
+        return Utils.parseTimestamp(this.getTimestamp());
     }
 
     @Override

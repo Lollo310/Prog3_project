@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Server {
-    private ObservableList<String> log;
+    private final ObservableList<String> log;
 
     public Server() {
         log = FXCollections.observableArrayList();
