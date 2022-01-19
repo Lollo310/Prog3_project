@@ -176,7 +176,7 @@ public class FileManager {
     /**
      * Returns a list of incoming emails and moves said emails from the user's Incoming directory to the Inbox directory.
      * @param emailAddress user's email address
-     * @return             list of incoming emails on success, null otherwise
+     * @return             code 0 Feedback and list of incoming emails on success, code -1 Feedback otherwise
      * @throws IOException on init directory failure
      */
     @SuppressWarnings("unchecked")
@@ -194,8 +194,9 @@ public class FileManager {
         if (newEmails != null && newEmails.size() > 0) {
             if (!moveNewEmails(username))
                 f.setAll(-1, "Error occurred while updating inbox.");
-
         }
+
+        if (newEmails == null) f.setAll(-1, "No updates available.");
 
         return f;
     }
