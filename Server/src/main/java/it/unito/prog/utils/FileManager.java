@@ -27,9 +27,8 @@ public class FileManager {
      * Sends an email.
      * @param email         email to be sent
      * @return              code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException  on channel/lock close failure
      */
-    public static Feedback sendEmail(Email email) throws IOException {
+    public static Feedback sendEmail(Email email) {
          String sender = parseEmailAddress(email.getSender());
          String[] receivers = parseReceivers(email.getReceivers());
          Feedback f = new Feedback(0, "Message sent successfully.", email);
@@ -74,9 +73,10 @@ public class FileManager {
              f.setAll(-1, "Error occurred while sending the email.");
 
          } finally {
-             if (lock != null) lock.release();
-             if (channel != null)channel.close(); //also releases the lock
-
+             try {
+                 if (lock != null) lock.release();
+                 if (channel != null) channel.close(); //also releases the lock
+             } catch (IOException ignore) {}
          }
 
          return f;
@@ -87,9 +87,8 @@ public class FileManager {
      * @param email         email to be deleted
      * @param emailAddress  user for whom the email has to be deleted
      * @return              code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException  on channel/lock close failure
      */
-    public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
+    public static Feedback deleteEmail(Email email, String emailAddress) {
         String username = parseEmailAddress(emailAddress);
         String dir = email.getSender().equals(emailAddress) ? "Sent" : "Inbox";
         Feedback f = new Feedback(0, "File deleted successfully.");
@@ -113,8 +112,10 @@ public class FileManager {
         } catch (IOException e) {
             f.setAll(-1, "Error occurred while deleting the email.");
         } finally {
-            if (lock != null) lock.release();
-            if (channel != null) channel.close(); //also releases the lock
+            try {
+                if (lock != null) lock.release();
+                if (channel != null) channel.close();
+            } catch (IOException ignore) {}
         }
 
         return f;
@@ -125,9 +126,8 @@ public class FileManager {
      * @param emailAddress user whose emails have to be retrieved
      * @param dir          directory in which the emails to be retrieved are located
      * @return             code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException on channel/lock close failure
      */
-    public static Feedback getEmailList (String emailAddress, String dir) throws IOException {
+    public static Feedback getEmailList (String emailAddress, String dir) {
         String username = parseEmailAddress(emailAddress);
         File directory = new File(basePath + username + File.separator + dir);
         String[] directoryList = directory.list();
@@ -155,7 +155,9 @@ public class FileManager {
             f.setAll(-1, "Error occurred while retrieving email list.");
 
         } finally {
-            if (lock != null) lock.release();
+            try {
+                if (lock != null) lock.release();
+            } catch (IOException ignore) {}
 
         }
 
@@ -166,10 +168,9 @@ public class FileManager {
      * Returns a list of incoming emails and moves said emails from the user's Incoming directory to the Inbox directory.
      * @param emailAddress user's email address
      * @return             code 0 Feedback and list of incoming emails on success, code -1 Feedback otherwise
-     * @throws IOException on init directory failure
      */
     @SuppressWarnings("unchecked")
-    public static Feedback updateInbox (String emailAddress) throws IOException{
+    public static Feedback updateInbox (String emailAddress){
         String username = parseEmailAddress(emailAddress);
         List<Email> newEmails = (List<Email>) getEmailList(emailAddress, "Incoming").getResult();
         Feedback f = new Feedback (0, "Inbox updated successfully.", newEmails);
@@ -205,8 +206,9 @@ public class FileManager {
     /**
      * Given a user, moves said user's incoming emails from the incoming directory to the inbox directory.
      * @param username user's username
+     * @return         true if the move has been successful, false otherwise
      */
-    private static boolean moveNewEmails(String username) throws IOException {
+    private static boolean moveNewEmails(String username) {
         File incomingDir = new File(basePath + username + File.separator + "Incoming");
         String[] incomingEmails = incomingDir.list();
         boolean ret = true;
@@ -216,14 +218,13 @@ public class FileManager {
         FileChannel incomingChannel = null;
         FileLock incomingLock = null;
         try {
-            //lock Inbox and Incoming directories for writing
             inboxChannel = FileChannel.open(Paths.get(basePath + username + File.separator + "Inbox" + File.separator + "lock"), StandardOpenOption.WRITE);
             inboxLock = inboxChannel.lock();
             incomingChannel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.WRITE);
             incomingLock = incomingChannel.lock();
 
             //try moving each and every file which isn't the lock file
-            if (incomingEmails != null) {
+            if (incomingEmails != null && incomingEmails.length > 0) {
                 for (String incomingEmail : incomingEmails) {
                     if (!incomingEmail.equals("lock")) {
                         Files.move(
@@ -239,10 +240,12 @@ public class FileManager {
             ret = false;
 
         } finally {
-            if (inboxLock != null) inboxLock.release();
-            if (incomingLock != null) incomingLock.release();
-            if (inboxChannel != null) inboxChannel.close(); //also releases the lock
-            if (incomingChannel != null) incomingChannel.close(); //also releases the lock
+            try {
+                if (inboxLock != null) inboxLock.release();
+                if (incomingLock != null) incomingLock.release();
+                if (inboxChannel != null) inboxChannel.close();
+                if (incomingChannel != null) incomingChannel.close();
+            } catch (IOException ignore) {}
         }
 
         return ret;
@@ -284,6 +287,7 @@ public class FileManager {
     }
 
     /*
+    This method's supposed to be used when the user registers to the service and the persistent directory gets set up.
     private static void initUserDir(String username) throws IOException {
         Path user = Paths.get(basePath + username);
         Path inbox = Paths.get(basePath + username + File.separator + "Inbox");
