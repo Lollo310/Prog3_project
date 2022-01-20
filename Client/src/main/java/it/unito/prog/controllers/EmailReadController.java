@@ -44,7 +44,7 @@ public class EmailReadController implements Controller {
 
     @FXML
     void onDeleteButtonAction() {
-        Feedback feedback = WebUtils.deleteMessage(clientModel.getUser(), emailModel);
+        Feedback feedback = WebUtils.deleteMessage(this.clientModel.getUser(), this.emailModel);
 
         if (feedback.getId() == 0) {
             try {
@@ -52,10 +52,14 @@ public class EmailReadController implements Controller {
                 Node panel = loader.load();
                 Controller controller = loader.getController();
 
-                controller.setExtraArgs(emailModel.getSender().equals(clientModel.getUser()) ? "SENT" : "INBOX");
-                controller.setModel(clientModel);
-                clientModel.removeEmail(emailModel);
-                contentPanel.setCenter(panel);
+                controller.setExtraArgs(
+                        this.emailModel.getSender().equals(this.clientModel.getUser()) ? "SENT" : "INBOX"
+                );
+
+                controller.setModel(this.clientModel);
+                controller.setContentPanel(this.contentPanel);
+                this.clientModel.removeEmail(this.emailModel);
+                this.contentPanel.setCenter(panel);
             } catch (IOException e) {
                 e.printStackTrace();
             }
