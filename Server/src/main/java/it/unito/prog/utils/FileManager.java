@@ -27,49 +27,46 @@ public class FileManager {
      * Sends an email.
      * @param email         email to be sent
      * @return              code 0 Feedback on success, code -1 Feedback on failure
+     * @throws IOException  on channel/lock close failure
      */
     public static Feedback sendEmail(Email email) throws IOException {
          String sender = parseEmailAddress(email.getSender());
          String[] receivers = parseReceivers(email.getReceivers());
          Feedback f = new Feedback(0, "Message sent successfully.", email);
 
-         //check if sender exists, if not try creating a directory for the sender
+         //check if sender exists
          if(notExistsUserDir(sender))
-             return new Feedback(-1, "Invalid sender '" + sender + "'.");
+             return new Feedback(-1, "Invalid sender " + sender + ".");
 
-
-        //check if each receiver exists, if not try creating a directory for them
+        //check if each receiver exists
          for (String receiver : receivers) {
              if(receiver.equals(sender))
-                 return new Feedback(-1, "Cannot send mail to yourself.");
+                 return new Feedback(-1, "Cannot send email to yourself.");
              if(notExistsUserDir(parseEmailAddress(receiver)))
-                 return new Feedback(-1, "Invalid receiver '" + receiver + "'.");
+                 return new Feedback(-1, "Invalid receiver " + receiver + ".");
          }
 
          FileChannel channel = null;
          FileLock lock = null;
          try {
-             //lock sender's Sent directory
+             //write email in sender's Sent directory
              channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.WRITE);
              lock = channel.lock();
 
-             //update email's id
              email.setId(generateUUID());
 
-             //write email to file in sender's Sent directory
              writeEmailOnFile(email, new File(basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
 
              if (lock != null) lock.release();
-             channel.close(); //also releases the lock
+             channel.close();
 
+             //write email in receivers' Incoming directory
              for (String receiver : receivers) {
                  String username = parseEmailAddress(receiver);
 
-                 //lock receiver's Incoming directory
                  channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.WRITE);
                  lock = channel.lock();
 
-                 //write email to file in receiver's Incoming dir
                  writeEmailOnFile(email, new File(basePath + username + File.separator + "Incoming" + File.separator + email.getId() + ".txt"));
              }
 
@@ -87,27 +84,24 @@ public class FileManager {
 
     /**
      * Deletes an email.
-     * @param email         to be deleted
+     * @param email         email to be deleted
      * @param emailAddress  user for whom the email has to be deleted
      * @return              code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException  on init directory failure
+     * @throws IOException  on channel/lock close failure
      */
     public static Feedback deleteEmail(Email email, String emailAddress) throws IOException {
         String username = parseEmailAddress(emailAddress);
         String dir = email.getSender().equals(emailAddress) ? "Sent" : "Inbox";
         Feedback f = new Feedback(0, "File deleted successfully.");
 
-        //check if user exists, if not try creating a directory for said user
-        if(notExistsUserDir(username)) {
-            initUserDir(username);
-        }
+        //check if user exists
+        if(notExistsUserDir(username))
+            return new Feedback(-1, "Invalid user " + username + ".");
 
         FileChannel channel = null;
         FileLock lock = null;
         try {
             if (Files.exists(Paths.get(basePath + username + File.separator + dir + File.separator + email.getId() + ".txt"))) {
-
-                //lock the user's directory containing the email to be deleted
                 channel = FileChannel.open(Paths.get(basePath + username + File.separator + dir + File.separator + "lock"), StandardOpenOption.READ);
                 lock = channel.lock(0, Long.MAX_VALUE, true);
 
@@ -131,7 +125,7 @@ public class FileManager {
      * @param emailAddress user whose emails have to be retrieved
      * @param dir          directory in which the emails to be retrieved are located
      * @return             code 0 Feedback on success, code -1 Feedback on failure
-     * @throws IOException on init directory failure
+     * @throws IOException on channel/lock close failure
      */
     public static Feedback getEmailList (String emailAddress, String dir) throws IOException {
         String username = parseEmailAddress(emailAddress);
@@ -141,19 +135,15 @@ public class FileManager {
         Feedback f = new Feedback(0, "Success", retrievedEmails);
 
         //check if user exists
-        if(notExistsUserDir(username)) {
-            initUserDir(username);
-        }
+        if(notExistsUserDir(username))
+            return new Feedback(-1, "Invalid user " + username + ".");
 
-        FileChannel channel = null;
         FileLock lock = null;
-        try {
-            //acquire lock on the specified directory
-            channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.READ);
+        try (FileChannel channel = FileChannel.open(Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock"), StandardOpenOption.READ)) {
             lock = channel.lock(0, Long.MAX_VALUE, true);
 
-            //get emails from the directory
-            if (directoryList != null) {
+            //get emails from the specified directory
+            if (directoryList != null && directoryList.length > 0) {
                 for (String email : directoryList) {
                     if (!email.equals("lock")) {
                         retrievedEmails.add(readEmailFromFile(new Email(), new File(basePath + username + File.separator + dir + File.separator + email)));
@@ -166,7 +156,6 @@ public class FileManager {
 
         } finally {
             if (lock != null) lock.release();
-            if (channel != null) channel.close(); //also releases the lock
 
         }
 
@@ -180,15 +169,14 @@ public class FileManager {
      * @throws IOException on init directory failure
      */
     @SuppressWarnings("unchecked")
-    public static Feedback updateInbox (String emailAddress) throws IOException {
+    public static Feedback updateInbox (String emailAddress) throws IOException{
         String username = parseEmailAddress(emailAddress);
         List<Email> newEmails = (List<Email>) getEmailList(emailAddress, "Incoming").getResult();
         Feedback f = new Feedback (0, "Inbox updated successfully.", newEmails);
 
         //check if user exists
-        if(notExistsUserDir(username)) {
-            initUserDir(username);
-        }
+        if(notExistsUserDir(username))
+            return new Feedback(-1, "Invalid user " + username + ".");
 
         //move email from Incoming directory to Inbox directory
         if (newEmails != null && newEmails.size() > 0) {
@@ -212,28 +200,6 @@ public class FileManager {
         Path path = Paths.get(basePath + File.separator + username);
 
         return !Files.exists(path);
-    }
-
-    /**
-     * Creates a user directory containing the following sub-directories: inbox, sent, incoming.
-     * @param username user's username
-     */
-    private static void initUserDir(String username) throws IOException {
-        Path user = Paths.get(basePath + username);
-        Path inbox = Paths.get(basePath + username + File.separator + "Inbox");
-        Path sent = Paths.get(basePath + username + File.separator + "Sent");
-        Path incoming = Paths.get(basePath + username + File.separator + "Incoming");
-        Path inbox_lock = Paths.get(basePath + username + File.separator + "Inbox" + File.separator + "lock");
-        Path sent_lock = Paths.get(basePath + username + File.separator + "Sent" + File.separator + "lock");
-        Path incoming_lock = Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock");
-
-        Files.createDirectories(user);
-        Files.createDirectories(inbox);
-        Files.createDirectories(sent);
-        Files.createDirectories(incoming);
-        Files.createFile(inbox_lock);
-        Files.createFile(sent_lock);
-        Files.createFile(incoming_lock);
     }
 
     /**
@@ -316,4 +282,23 @@ public class FileManager {
         System.out.println("Reading email: " + email);
         return email;
     }
+
+    /*
+    private static void initUserDir(String username) throws IOException {
+        Path user = Paths.get(basePath + username);
+        Path inbox = Paths.get(basePath + username + File.separator + "Inbox");
+        Path sent = Paths.get(basePath + username + File.separator + "Sent");
+        Path incoming = Paths.get(basePath + username + File.separator + "Incoming");
+        Path inbox_lock = Paths.get(basePath + username + File.separator + "Inbox" + File.separator + "lock");
+        Path sent_lock = Paths.get(basePath + username + File.separator + "Sent" + File.separator + "lock");
+        Path incoming_lock = Paths.get(basePath + username + File.separator + "Incoming" + File.separator + "lock");
+
+        Files.createDirectories(user);
+        Files.createDirectories(inbox);
+        Files.createDirectories(sent);
+        Files.createDirectories(incoming);
+        Files.createFile(inbox_lock);
+        Files.createFile(sent_lock);
+        Files.createFile(incoming_lock);
+    } */
 }

@@ -1,4 +1,4 @@
-package it.unito.prog.server;
+package it.unito.prog.service;
 
 import it.unito.prog.models.Email;
 import it.unito.prog.models.Feedback;

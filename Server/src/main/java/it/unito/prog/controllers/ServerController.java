@@ -1,7 +1,7 @@
 package it.unito.prog.controllers;
 
 import it.unito.prog.models.Server;
-import it.unito.prog.server.ServerThread;
+import it.unito.prog.service.ServerThread;
 import it.unito.prog.utils.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
