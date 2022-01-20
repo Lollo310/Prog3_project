@@ -84,15 +84,17 @@ public class WebUtils {
                 outputStream.writeObject(email);
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                feedback.setAll(-1, e.getMessage());
+            } catch (IOException e) {
+                feedback.setAll(-1, "Send aborted. Connection error.");
+            } catch (ClassNotFoundException e) {
+                feedback.setAll(-1, "Fatal error: " + e.getMessage());
             } finally {
                 try {
                     if (inputStream != null) inputStream.close();
                     if (outputStream != null) outputStream.close();
                     server.close();
                 } catch (IOException e) {
-                    feedback.setAll(-1, e.getMessage());
+                    //ignored
                 }
             }
         }
@@ -116,15 +118,17 @@ public class WebUtils {
                 outputStream.writeUTF(user);
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                feedback.setAll(-1, "Send aborted. Connection error.");
+            } catch (ClassNotFoundException e) {
+                feedback.setAll(-1, "Fatal error: " + e.getMessage());
             } finally {
                 try {
                     if (inputStream != null) inputStream.close();
                     if (outputStream != null) outputStream.close();
                     server.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //ignored
                 }
             }
         }
@@ -150,15 +154,17 @@ public class WebUtils {
                 outputStream.writeUTF(dir);
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                feedback.setAll(-1, "Send aborted. Connection error.");
+            } catch (ClassNotFoundException e) {
+                feedback.setAll(-1, "Fatal error: " + e.getMessage());
             } finally {
                 try {
                     if (inputStream != null) inputStream.close();
                     if (outputStream != null) outputStream.close();
                     server.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //ignored
                 }
             }
         }
