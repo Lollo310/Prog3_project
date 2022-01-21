@@ -108,6 +108,8 @@ public class FileManager {
 
                 if(!forDeletion.delete())
                     f.setAll(-1, "Error occurred while deleting the email.");
+            } else {
+                f.setAll(-1, "Email not found for deletion.");
             }
         } catch (IOException e) {
             f.setAll(-1, "Error occurred while deleting the email.");
