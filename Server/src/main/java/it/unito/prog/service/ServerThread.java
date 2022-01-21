@@ -65,7 +65,6 @@ public class ServerThread implements Runnable{
                         + Utils.getTimestamp()
         );
 
-        System.out.println(email);
         outputStream.writeObject(FileManager.sendEmail(email));
         outputStream.flush();
     }

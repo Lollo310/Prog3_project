@@ -282,7 +282,6 @@ public class FileManager {
         objectInputStream.close();
         fileInputStream.close();
 
-        System.out.println("Reading email: " + email);
         return email;
     }
 
