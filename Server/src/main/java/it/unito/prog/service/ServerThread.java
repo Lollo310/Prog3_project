@@ -56,32 +56,29 @@ public class ServerThread implements Runnable{
 
     private void send(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Email email = (Email) inputStream.readObject();
+        Feedback feedback = FileManager.sendEmail(email);
 
-        updateServerLog("[SEND] FROM "
-                        + email.getSender()
-                        + " TO "
-                        + email.getReceivers()
-                        + " - "
-                        + Utils.getTimestamp()
+        updateServerLog( feedback.getId() == 0
+                ? "[SEND] FROM " + email.getSender() + " TO " + email.getReceivers() + " - " + Utils.getTimestamp()
+                : "[ERROR] " + feedback.getMsg() + " - " + Utils.getTimestamp()
         );
 
-        outputStream.writeObject(FileManager.sendEmail(email));
+        outputStream.writeObject(feedback);
         outputStream.flush();
     }
 
     private void delete(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         String user = inputStream.readUTF();
         Email email = (Email) inputStream.readObject();
+        Feedback feedback = FileManager.deleteEmail(email, user);
 
-        updateServerLog("[DELETE] FROM "
-                + user
-                + " WITH EMAIL ID "
-                + email.getId()
-                + " - "
-                + Utils.getTimestamp()
+
+        updateServerLog( feedback.getId() == 0
+                ? "[DELETE] FROM " + user + " WITH EMAIL ID " + email.getId() + " - " + Utils.getTimestamp()
+                : "[ERROR] " + feedback.getMsg() + " - " + Utils.getTimestamp()
         );
 
-        outputStream.writeObject(FileManager.deleteEmail(email, user));
+        outputStream.writeObject(feedback);
         outputStream.flush();
     }
 
@@ -104,15 +101,14 @@ public class ServerThread implements Runnable{
     private void load(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException {
         String user = inputStream.readUTF();
         String dir = inputStream.readUTF();
+        Feedback feedback = FileManager.getEmailList(user, dir);
 
-        updateServerLog("[LOAD " + dir.toUpperCase()
-                + "] "
-                + user
-                + " - "
-                + Utils.getTimestamp()
+        updateServerLog( feedback.getId() == 0
+                ? "[LOAD " + dir.toUpperCase() + "] " + user + " - " + Utils.getTimestamp()
+                : "[ERROR] " + feedback.getMsg() + " - " + Utils.getTimestamp()
         );
 
-        outputStream.writeObject(FileManager.getEmailList(user, dir));
+        outputStream.writeObject(feedback);
         outputStream.flush();
     }
 

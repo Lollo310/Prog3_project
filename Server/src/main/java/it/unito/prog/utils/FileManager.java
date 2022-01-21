@@ -39,7 +39,7 @@ public class FileManager {
 
         //check if each receiver exists
          for (String receiver : receivers) {
-             if(receiver.equals(sender))
+             if(receiver.equals(email.getSender()))
                  return new Feedback(-1, "Cannot send email to yourself.");
              if(notExistsUserDir(parseEmailAddress(receiver)))
                  return new Feedback(-1, "Invalid receiver " + receiver + ".");

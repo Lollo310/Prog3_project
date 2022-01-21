@@ -116,6 +116,7 @@ public class Email implements Externalizable, Comparable<Email> {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeLong(this.id);
         out.writeUTF(this.sender.get());
         out.writeUTF(this.receivers.get());
         out.writeUTF(this.subject.get());
@@ -125,6 +126,7 @@ public class Email implements Externalizable, Comparable<Email> {
 
     @Override
     public void readExternal(ObjectInput in) throws IOException {
+        this.id = in.readLong();
         this.sender.set(in.readUTF());
         this.receivers.set(in.readUTF());
         this.subject.set(in.readUTF());
