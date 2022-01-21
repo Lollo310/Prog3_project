@@ -31,6 +31,7 @@ public class FileManager {
     public static Feedback sendEmail(Email email) {
          String sender = parseEmailAddress(email.getSender());
          String[] receivers = parseReceivers(email.getReceivers());
+         email.setId(generateUUID());
          Feedback f = new Feedback(0, "Message sent successfully.", email);
 
          //check if sender exists
@@ -51,8 +52,6 @@ public class FileManager {
              //write email in sender's Sent directory
              channel = FileChannel.open(Paths.get(basePath + sender + File.separator + "Sent" + File.separator + "lock"), StandardOpenOption.WRITE);
              lock = channel.lock();
-
-             email.setId(generateUUID());
 
              writeEmailOnFile(email, new File(basePath + sender + File.separator + "Sent" + File.separator + email.getId() + ".txt"));
 
