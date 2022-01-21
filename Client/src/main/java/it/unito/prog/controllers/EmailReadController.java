@@ -73,13 +73,13 @@ public class EmailReadController implements Controller {
     void onForwardButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
         Email forwardEmail = new Email(
-                clientModel.getUser(),
+                this.clientModel.getUser(),
                 "",
-                "[forward]" + emailModel.getSubject(), //far capire la data e chi la inviata
-                emailModel.getMessage()
+                "[forward]" + this.emailModel.getSubject(), //far capire la data e chi la inviata
+                this.emailModel.getMessage()
         );
 
-        forwardEmail.setTimestamp(emailModel.getTimestamp());
+        forwardEmail.setTimestamp(this.emailModel.getTimestamp());
 
         try {
             Node panel = loader.load();
@@ -97,9 +97,9 @@ public class EmailReadController implements Controller {
     void onReplyAllButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
         Email replyAllEmail = new Email(
-                clientModel.getUser(),
-                emailModel.getSender() + "; " + Utils.filterReceivers(clientModel.getUser(), emailModel.getReceivers()),
-                "[replyAll] " + emailModel.getSubject(),
+                this.clientModel.getUser(),
+                this.emailModel.getSender() + "; " + Utils.filterReceivers(this.clientModel.getUser(), this.emailModel.getReceivers()),
+                "[replyAll] " + this.emailModel.getSubject(),
                 ""
         );
 
@@ -109,7 +109,7 @@ public class EmailReadController implements Controller {
 
             controller.setExtraArgs(replyAllEmail);
             controller.setModel(this.clientModel);
-            contentPanel.setCenter(panel);
+            this.contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,9 +119,9 @@ public class EmailReadController implements Controller {
     void onReplyButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
         Email replyAllEmail = new Email(
-                clientModel.getUser(),
-                emailModel.getSender(),
-                "[reply] " + emailModel.getSubject(),
+                this.clientModel.getUser(),
+                this.emailModel.getSender(),
+                "[reply] " + this.emailModel.getSubject(),
                 ""
         );
 
@@ -131,7 +131,7 @@ public class EmailReadController implements Controller {
 
             controller.setExtraArgs(replyAllEmail);
             controller.setModel(this.clientModel);
-            contentPanel.setCenter(panel);
+            this.contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,13 +139,14 @@ public class EmailReadController implements Controller {
 
     @FXML
     void initialize() {
-        infoLabel.setVisible(false);
+        this.infoLabel.setVisible(false);
     }
 
     @Override
     public void setModel(Object model) {
         if (!(model instanceof Email))
             throw new IllegalArgumentException("models cannot be null and it must be a Email instance");
+
         this.emailModel = (Email) model;
         setProperty();
     }
@@ -154,6 +155,7 @@ public class EmailReadController implements Controller {
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof Client))
             throw new IllegalArgumentException("extraArgs cannot be null and it must be a String instance");
+
         this.clientModel = (Client) extraArgs;
     }
 
