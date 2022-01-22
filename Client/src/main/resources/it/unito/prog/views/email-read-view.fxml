@@ -4,34 +4,64 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.web.WebView?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="575.0" prefWidth="700.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailReadController">
+<AnchorPane prefHeight="575.0" prefWidth="700.0" style="-fx-background-color: #E3E8EA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailReadController">
    <children>
       <TextField fx:id="fromTextField" editable="false" layoutX="80.0" layoutY="14.0" prefHeight="38.0" prefWidth="408.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="212.0" />
       <TextField fx:id="toTextField" editable="false" layoutX="80.0" layoutY="64.0" prefHeight="38.0" prefWidth="595.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="25.0" />
-      <Label fx:id="fromLabel" layoutX="27.0" layoutY="12.0" prefHeight="38.0" prefWidth="50.0" text="From" textFill="#000000bf" AnchorPane.leftAnchor="27.0" />
-      <Label fx:id="toLabel" layoutX="27.0" layoutY="64.0" prefHeight="38.0" prefWidth="50.0" text="To" textFill="#000000bf" AnchorPane.leftAnchor="27.0" />
-      <Button fx:id="replyButton" layoutX="585.0" layoutY="537.0" mnemonicParsing="false" onAction="#onReplyButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Reply" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="25.0">
+      <Label fx:id="fromLabel" layoutX="27.0" layoutY="12.0" prefHeight="38.0" prefWidth="50.0" text="From" textFill="#474e52" AnchorPane.leftAnchor="27.0" />
+      <Label fx:id="toLabel" layoutX="27.0" layoutY="64.0" prefHeight="38.0" prefWidth="50.0" text="To" textFill="#474e52" AnchorPane.leftAnchor="27.0" />
+      <Button id="replyButton" fx:id="replyButton" layoutX="481.0" layoutY="537.0" mnemonicParsing="false" onAction="#onReplyButtonAction" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #bccad0;" stylesheets="@css/style.css" text="Reply" textFill="#495054" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="129.0">
          <graphic>
-            <FontIcon iconLiteral="bi-reply-fill" iconSize="16" />
-         </graphic></Button>
-      <Button fx:id="deleteButton" layoutX="80.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDeleteButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Delete" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="80.0">
+            <FontIcon iconColor="#495054" iconLiteral="bi-reply-fill" iconSize="16" />
+         </graphic>
+         <effect>
+            <DropShadow height="10.0" offsetX="3.0" offsetY="3.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.6078431606292725" green="0.658823549747467" blue="0.6823529601097107" />
+               </color>
+            </DropShadow>
+         </effect></Button>
+      <Button fx:id="deleteButton" layoutX="80.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDeleteButtonAction" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #BCCAD0;" stylesheets="@css/style.css" text="Delete" textFill="#495054" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="80.0">
          <graphic>
-            <FontIcon iconColor="RED" iconLiteral="bi-trash" iconSize="14" />
-         </graphic></Button>
+            <FontIcon iconColor="#495054" iconLiteral="bi-trash" iconSize="14" />
+         </graphic>
+         <effect>
+            <DropShadow height="10.0" offsetX="3.0" offsetY="3.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.6078431606292725" green="0.658823549747467" blue="0.6823529601097107" />
+               </color>
+            </DropShadow>
+         </effect></Button>
       <TextField fx:id="subjectTextField" editable="false" layoutX="80.0" layoutY="118.0" prefHeight="38.0" prefWidth="595.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="25.0" />
-      <Label fx:id="subjectLabel" layoutX="26.0" layoutY="118.0" prefHeight="38.0" prefWidth="50.0" text="Subject" textFill="#000000bf" AnchorPane.leftAnchor="27.0" />
-      <Button fx:id="replyAllButton" layoutX="488.0" layoutY="537.0" mnemonicParsing="false" onAction="#onReplyAllButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Reply All" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="122.0">
+      <Label fx:id="subjectLabel" layoutX="26.0" layoutY="118.0" prefHeight="38.0" prefWidth="50.0" text="Subject" textFill="#474e52" AnchorPane.leftAnchor="27.0" />
+      <Button id="replyAllButton" fx:id="replyAllButton" layoutX="378.0" layoutY="537.0" mnemonicParsing="false" onAction="#onReplyAllButtonAction" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #bccad0;" stylesheets="@css/style.css" text="Reply All" textFill="#495054" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="232.0">
          <graphic>
-            <FontIcon iconLiteral="bi-reply-all-fill" iconSize="16" />
-         </graphic></Button>
-      <Button fx:id="forwardButton" layoutX="390.0" layoutY="537.0" mnemonicParsing="false" onAction="#onForwardButtonAction" prefHeight="25.0" prefWidth="90.0" styleClass="btn-default" text="Forward" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="220.0">
+            <FontIcon iconColor="#495054" iconLiteral="bi-reply-all-fill" iconSize="16" />
+         </graphic>
+         <effect>
+            <DropShadow height="10.0" offsetX="3.0" offsetY="3.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.6078431606292725" green="0.658823549747467" blue="0.6823529601097107" />
+               </color>
+            </DropShadow>
+         </effect></Button>
+      <Button fx:id="forwardButton" layoutX="585.0" layoutY="537.0" mnemonicParsing="false" onAction="#onForwardButtonAction" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #bccad0;" stylesheets="@css/style.css" text="Forward" textFill="#495054" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="25.0">
          <graphic>
-            <FontIcon iconLiteral="bi-forward-fill" />
-         </graphic></Button>
+            <FontIcon iconColor="#495054" iconLiteral="bi-forward-fill" />
+         </graphic>
+         <effect>
+            <DropShadow height="10.0" offsetX="3.0" offsetY="3.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.6078431606292725" green="0.658823549747467" blue="0.6823529601097107" />
+               </color>
+            </DropShadow>
+         </effect></Button>
       <TextField fx:id="datetimeTextField" editable="false" layoutX="501.0" layoutY="14.0" prefHeight="38.0" prefWidth="174.0" AnchorPane.rightAnchor="25.0" />
       <WebView fx:id="messageAreaField" disable="true" layoutX="80.0" layoutY="175.0" prefHeight="313.0" prefWidth="595.0" AnchorPane.bottomAnchor="86.39999389648438" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="24.79998779296875" AnchorPane.topAnchor="175.0" />
       <Label fx:id="infoLabel" layoutX="80.0" layoutY="498.0" prefHeight="32.0" prefWidth="595.0" style="-fx-border-width: 1;" styleClass="alert-danger" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="24.799999999999955">

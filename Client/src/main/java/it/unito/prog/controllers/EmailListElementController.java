@@ -11,10 +11,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.List;
 
 public class EmailListElementController implements Controller {
 
@@ -44,23 +46,13 @@ public class EmailListElementController implements Controller {
             Node panel = loader.load();
             Controller controller = loader.getController();
 
-            controller.setModel(emailModel);
             controller.setExtraArgs(clientModel);
+            controller.setModel(emailModel);
             controller.setContentPanel(contentPanel);
             contentPanel.setCenter(panel);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    void onDeleteButtonAction() {
-        Feedback feedback = WebUtils.deleteMessage(this.clientModel.getUser(), this.emailModel);
-
-        if (feedback.getId() == 0)
-            this.clientModel.removeEmail(this.emailModel);
-        else
-            Utils.showAlert(Alert.AlertType.ERROR, feedback.getMsg());
     }
 
     public AnchorPane getEmailListElement() {
@@ -87,7 +79,7 @@ public class EmailListElementController implements Controller {
         if (!(extraArgs instanceof Client))
             throw new IllegalArgumentException("extraArgs cannot be null and it must be a Client instance");
 
-        clientModel = (Client) extraArgs;
+        clientModel = (Client)  extraArgs;
     }
 
     @Override

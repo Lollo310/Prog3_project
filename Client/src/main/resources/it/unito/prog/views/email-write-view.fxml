@@ -3,31 +3,47 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="575.0" prefWidth="700.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailWriteController">
+<AnchorPane prefHeight="575.0" prefWidth="700.0" style="-fx-background-color: #e3e8ea;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.prog.controllers.EmailWriteController">
    <children>
       <TextField fx:id="toTextField" layoutX="80.0" layoutY="12.0" prefHeight="38.0" prefWidth="595.0" promptText="receiver@mail.domain" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="24.799999999999955" />
       <TextField fx:id="subjectTextField" layoutX="80.0" layoutY="75.0" prefHeight="38.0" prefWidth="595.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="24.799999999999955" />
-      <Label fx:id="toLabel" layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="50.0" text="To" textFill="#000000bf" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-      <Label fx:id="subjectLabel" layoutX="14.0" layoutY="75.0" prefHeight="38.0" prefWidth="50.0" text="Subject" textFill="#000000bf" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="75.0" />
-      <Button fx:id="sendButton" layoutX="609.0" layoutY="536.0" mnemonicParsing="false" onAction="#onSendButtonAction" prefHeight="25.0" prefWidth="73.0" styleClass="btn-default" text="Send" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="25.0">
+      <Label fx:id="toLabel" layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="50.0" text="To" textFill="#474e52" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+      <Label fx:id="subjectLabel" layoutX="14.0" layoutY="75.0" prefHeight="38.0" prefWidth="50.0" text="Subject" textFill="#474e52" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="75.0" />
+      <Button fx:id="sendButton" layoutX="609.0" layoutY="536.0" mnemonicParsing="false" onAction="#onSendButtonAction" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: #bccad0;" stylesheets="@css/style.css" text="Send" textFill="#495054" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="25.0">
          <graphic>
             <FontIcon iconColor="#01bc1d" iconLiteral="bi-check" iconSize="16" wrappingWidth="16.000001907348633" />
-         </graphic></Button>
+         </graphic>
+         <effect>
+            <DropShadow height="10.0" offsetX="3.0" offsetY="3.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.6078431606292725" green="0.658823549747467" blue="0.6823529601097107" />
+               </color>
+            </DropShadow>
+         </effect></Button>
       <HTMLEditor fx:id="messageHTMLEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="80.0" layoutY="119.0" prefHeight="367.0" prefWidth="595.0" AnchorPane.bottomAnchor="88.80000000000001" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="24.799999999999955" AnchorPane.topAnchor="119.0" />
-      <Button fx:id="clearButton" layoutX="521.0" layoutY="537.0" mnemonicParsing="false" onAction="#onClearButtonAction" prefHeight="25.0" prefWidth="73.0" styleClass="btn-default" text="Clear" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="106.0">
+      <Button fx:id="clearButton" layoutX="515.0" layoutY="537.0" mnemonicParsing="false" onAction="#onClearButtonAction" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: #bccad0;" stylesheets="@css/style.css" text="Clear" textFill="#495054" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="112.0">
          <graphic>
-            <FontIcon iconColor="#b5b500" iconLiteral="bi-eraser-fill" iconSize="12" />
-         </graphic></Button>
+            <FontIcon iconColor="#9a9a00" iconLiteral="bi-eraser-fill" iconSize="12" />
+         </graphic>
+         <effect>
+            <DropShadow height="10.0" offsetX="3.0" offsetY="3.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.6078431606292725" green="0.658823549747467" blue="0.6823529601097107" />
+               </color>
+            </DropShadow>
+         </effect></Button>
       <Label fx:id="infoLabel" layoutX="80.0" layoutY="492.0" prefHeight="38.0" prefWidth="595.0" style="-fx-border-width: 1;" styleClass="alert-success" AnchorPane.bottomAnchor="44.6" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="24.799999999999955">
          <graphic>
             <FontIcon iconColor="#00c30a" iconLiteral="bi-check2" iconSize="30" wrappingWidth="30.0" />
          </graphic></Label>
-      <Label layoutX="80.0" layoutY="54.0" prefHeight="17.0" prefWidth="126.0" style="-fx-border-width: 1;" styleClass="alert-warning" text="Separate email with ';'" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="54.0">
+      <Label layoutX="80.0" layoutY="54.0" prefHeight="17.0" prefWidth="151.0" style="-fx-border-width: 1;" styleClass="alert-warning" text="Separate receivers with ';'" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="54.0">
          <font>
             <Font size="11.0" />
          </font>

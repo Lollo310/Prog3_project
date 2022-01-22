@@ -9,6 +9,7 @@ import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +24,12 @@ public class EmailReadController implements Controller {
     private Email emailModel;
 
     private BorderPane contentPanel;
+
+    @FXML
+    private Button replyAllButton;
+
+    @FXML
+    private Button replyButton;
 
     @FXML
     private TextField datetimeTextField;
@@ -75,7 +82,7 @@ public class EmailReadController implements Controller {
         Email forwardEmail = new Email(
                 this.clientModel.getUser(),
                 "",
-                "[forward]" + this.emailModel.getSubject(), //far capire la data e chi la inviata
+                "[forward] " + this.emailModel.getSubject(), //far capire la data e chi la inviata
                 this.emailModel.getMessage()
         );
 
@@ -149,6 +156,11 @@ public class EmailReadController implements Controller {
 
         this.emailModel = (Email) model;
         setProperty();
+
+        if (emailModel.getSender().equals(clientModel.getUser())){
+            replyButton.setVisible(false);
+            replyAllButton.setVisible(false);
+        }
     }
 
     @Override

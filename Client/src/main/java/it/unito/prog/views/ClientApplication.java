@@ -18,7 +18,7 @@ public class ClientApplication extends Application {
 
         controller.setExtraArgs(getParameters().getRaw().get(0));
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        stage.setTitle("Client");
+        stage.setTitle("Eta Client");
         stage.setScene(scene);
         stage.show();
     }
