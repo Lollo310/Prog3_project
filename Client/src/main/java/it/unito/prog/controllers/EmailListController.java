@@ -3,7 +3,6 @@ package it.unito.prog.controllers;
 import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
 import it.unito.prog.utils.EmailListElement;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;

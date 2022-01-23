@@ -2,21 +2,15 @@ package it.unito.prog.controllers;
 
 import it.unito.prog.models.Client;
 import it.unito.prog.models.Email;
-import it.unito.prog.models.Feedback;
-import it.unito.prog.utils.Utils;
-import it.unito.prog.utils.WebUtils;
 import it.unito.prog.views.ClientApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.util.List;
 
 public class EmailListElementController implements Controller {
 
