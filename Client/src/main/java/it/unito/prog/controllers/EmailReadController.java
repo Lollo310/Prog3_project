@@ -82,7 +82,7 @@ public class EmailReadController implements Controller {
         Email forwardEmail = new Email(
                 this.clientModel.getUser(),
                 "",
-                "[forward] " + this.emailModel.getSubject(), //far capire la data e chi la inviata
+                "[Forward from " + this.emailModel.getSender() + "] " + this.emailModel.getSubject(),
                 this.emailModel.getMessage()
         );
 
@@ -106,7 +106,7 @@ public class EmailReadController implements Controller {
         Email replyAllEmail = new Email(
                 this.clientModel.getUser(),
                 this.emailModel.getSender() + "; " + Utils.filterReceivers(this.clientModel.getUser(), this.emailModel.getReceivers()),
-                "[replyAll] " + this.emailModel.getSubject(),
+                "[ReplyAll] " + this.emailModel.getSubject(),
                 ""
         );
 
@@ -128,7 +128,7 @@ public class EmailReadController implements Controller {
         Email replyAllEmail = new Email(
                 this.clientModel.getUser(),
                 this.emailModel.getSender(),
-                "[reply] " + this.emailModel.getSubject(),
+                "[Reply] " + this.emailModel.getSubject(),
                 ""
         );
 
