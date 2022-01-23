@@ -48,6 +48,10 @@ public class Client {
         return this.inboxEmails;
     }
 
+    /**
+     * Sorts and sets the inbox email list.
+     * @param inboxEmails list of emails to be set.
+     */
     public void setAllInboxEmails(List<Email> inboxEmails) {
         inboxEmails.sort(Collections.reverseOrder(Email::compareTo));
         this.inboxEmails.setAll(inboxEmails);
@@ -57,11 +61,20 @@ public class Client {
         return this.sentEmails;
     }
 
+    /**
+     * Sorts and sets the sent email list.
+     * @param sentEmails list of emails to be set.
+     */
     public void setAllSentEmails(List<Email> sentEmails) {
         sentEmails.sort(Collections.reverseOrder(Email::compareTo));
         this.sentEmails.setAll(sentEmails);
     }
 
+    /**
+     * Append a sorted list of emails to the beginning of the current inbox email list, then increments the new emails
+     * counter and visualizes it.
+     * @param emails email list to be added.
+     */
     public void addInboxEmails(List<Email> emails) {
         emails.sort(Collections.reverseOrder(Email::compareTo));
         this.inboxEmails.addAll(0, emails);
@@ -69,6 +82,10 @@ public class Client {
         Utils.showAlert(Alert.AlertType.INFORMATION,"You have (" + emails.size() + ") new emails!");
     }
 
+    /**
+     * Appends the email to the beginning of the current inbox sent list.
+     * @param email email to be added.
+     */
     public void addSentEmails(Email email) {
         this.sentEmails.add(0, email);
     }
@@ -81,17 +98,28 @@ public class Client {
         return serverStatus;
     }
 
+    /**
+     * Deletes an email.
+     * @param email to be deleted.
+     */
     public void removeEmail(Email email) {
         inboxEmails.remove(email);
         sentEmails.remove(email);
     }
 
+    /**
+     * Used for counting the number of new emails received.
+     * @param n counter.
+     */
     private void increaseCounterNewEmail(int n) {
         int counter = counterNewEmail.get().equals("") ? 0 : Integer.parseInt(counterNewEmail.get());
         counter+=n;
         counterNewEmail.set(Integer.toString(counter));
     }
 
+    /**
+     * Resets the counter used for counting the number of new emails received.
+     */
     public void resetCounterNewEmail() {
         counterNewEmail.set("");
     }

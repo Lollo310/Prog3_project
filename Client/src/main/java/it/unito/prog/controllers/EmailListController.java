@@ -11,6 +11,7 @@ public class EmailListController implements Controller {
 
     private Client clientModel;
 
+    //typeOfList can either be "Inbox" or "Sent"
     private String typeOfList;
 
     private BorderPane contentPanel;
@@ -18,9 +19,9 @@ public class EmailListController implements Controller {
     @FXML
     private ListView<Email> emailListView;
 
-    @FXML
-    void initialize() {}
-
+    /**
+     * Sets the view's content according to the list type which can be either "Inbox" or "Sent".
+     */
     private void setEmailListView() {
         switch (typeOfList) {
             case "INBOX" -> {
@@ -34,6 +35,10 @@ public class EmailListController implements Controller {
         this.emailListView.setCellFactory(listView -> new EmailListElement(contentPanel, clientModel));
     }
 
+    /**
+     * Sets the client model and the email list view.
+     * @param model model used by the controller.
+     */
     @Override
     public void setModel(Object model) {
         if (!(model instanceof Client))
@@ -43,6 +48,10 @@ public class EmailListController implements Controller {
         setEmailListView();
     }
 
+    /**
+     * Sets the typeOfList as extraArg.
+     * @param extraArgs extra arguments to be used by the controller.
+     */
     @Override
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof String))
@@ -51,6 +60,10 @@ public class EmailListController implements Controller {
         this.typeOfList = (String) extraArgs;
     }
 
+    /**
+     * Sets the panel used for attaching graphical components.
+     * @param contentPanel border pane.
+     */
     @Override
     public void setContentPanel(BorderPane contentPanel) {
         if (contentPanel == null)

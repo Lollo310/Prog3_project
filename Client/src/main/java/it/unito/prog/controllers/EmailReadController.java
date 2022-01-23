@@ -49,6 +49,12 @@ public class EmailReadController implements Controller {
     @FXML
     private Label infoLabel;
 
+    /**
+     * Defines the behaviour on email delete.
+     * Tries deleting the email from the server.
+     * Deletes the email from the client's model's list and updates the view on success.
+     * Shows the error on the infoLabel on failure.
+     */
     @FXML
     void onDeleteButtonAction() {
         Feedback feedback = WebUtils.deleteMessage(this.clientModel.getUser(), this.emailModel);
@@ -76,6 +82,10 @@ public class EmailReadController implements Controller {
         }
     }
 
+    /**
+     * Defines the behaviour on email forward.
+     * Initializes the email to forward then loads the writing view.
+     */
     @FXML
     void onForwardButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
@@ -85,8 +95,6 @@ public class EmailReadController implements Controller {
                 "[Forward from " + this.emailModel.getSender() + "] " + this.emailModel.getSubject(),
                 this.emailModel.getMessage()
         );
-
-        forwardEmail.setTimestamp(this.emailModel.getTimestamp());
 
         try {
             Node panel = loader.load();
@@ -100,6 +108,11 @@ public class EmailReadController implements Controller {
         }
     }
 
+    /**
+     * Defines the behaviour on email reply all.
+     * Initializes the email to forward then loads the writing view where the to field has been completed with the list
+     * of users the email has been received from.
+     */
     @FXML
     void onReplyAllButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
@@ -122,6 +135,11 @@ public class EmailReadController implements Controller {
         }
     }
 
+    /**
+     * Defines the behaviour on email reply.
+     * Initializes the email to forward then loads the writing view where the to field has been completed with the email
+     * address of the user the email has been received from.
+     */
     @FXML
     void onReplyButtonAction() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-write-view.fxml"));
@@ -144,11 +162,19 @@ public class EmailReadController implements Controller {
         }
     }
 
+    /**
+     * On initialization, hides the label used for showing errors.
+     */
     @FXML
     void initialize() {
         this.infoLabel.setVisible(false);
     }
 
+    /**
+     * Takes an email as model, sets its properties then shows the reply, reply all, forward buttons if the email has
+     * been received, only the forward button if the email has been sent.
+     * @param model model used by the controller.
+     */
     @Override
     public void setModel(Object model) {
         if (!(model instanceof Email))
@@ -163,6 +189,10 @@ public class EmailReadController implements Controller {
         }
     }
 
+    /**
+     * Takes the client model as extra arg.
+     * @param extraArgs extra arguments to be used by the controller.
+     */
     @Override
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof Client))
@@ -171,6 +201,10 @@ public class EmailReadController implements Controller {
         this.clientModel = (Client) extraArgs;
     }
 
+    /**
+     * Sets the panel used for attaching graphical components.
+     * @param contentPanel border pane.
+     */
     @Override
     public void setContentPanel(BorderPane contentPanel) {
         if (contentPanel == null)
@@ -179,6 +213,9 @@ public class EmailReadController implements Controller {
         this.contentPanel = contentPanel;
     }
 
+    /**
+     * Binds the view properties to the respective email model properties.
+     */
     private void setProperty() {
         fromTextField.textProperty().bind(emailModel.senderProperty());
         toTextField.textProperty().bind(emailModel.receiversProperty());

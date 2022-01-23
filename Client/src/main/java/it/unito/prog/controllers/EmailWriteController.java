@@ -30,6 +30,12 @@ public class EmailWriteController implements Controller {
     @FXML
     private Label infoLabel;
 
+    /**
+     * Defines the behaviour on email send.
+     * The current time is taken as timestamp and the email is sent.
+     * On success, the infoLabel shows that the email has been sent.
+     * On failure, an alert shows that the email has not been sent.
+     */
     @FXML
     void onSendButtonAction() {
         Feedback feedback;
@@ -38,7 +44,9 @@ public class EmailWriteController implements Controller {
         emailModel.setMessage(messageHTMLEditor.getHtmlText());
         feedback = checkData()
                 ? WebUtils.sendMessage(emailModel)
-                : new Feedback(-1, "Incorrect data format. To and subject fields cannot be empty.");
+                : new Feedback(-1,
+                        "Incorrect data format. To and subject fields cannot be empty and receivers format must be correct."
+                   );
 
         if (feedback.getId() == 0) {
             clientModel.addSentEmails((Email) feedback.getResult());
@@ -48,6 +56,10 @@ public class EmailWriteController implements Controller {
             Utils.showAlert(Alert.AlertType.ERROR, feedback.getMsg());
     }
 
+    /**
+     * Defines the behaviour on email clear.
+     * Deletes all the current email content.
+     */
     @FXML
     void onClearButtonAction() {
         infoLabel.setVisible(false);
@@ -56,6 +68,9 @@ public class EmailWriteController implements Controller {
         setProperty();
     }
 
+    /**
+     * Initializes the writing view by hiding the infoLabel and setting and empty email as email model.
+     */
     @FXML
     void initialize() {
         infoLabel.setVisible(false);
@@ -63,6 +78,10 @@ public class EmailWriteController implements Controller {
         setProperty();
     }
 
+    /**
+     * Takes the client as model and sets the client user as email sender.
+     * @param model model used by the controller.
+     */
     @Override
     public void setModel(Object model) {
         if (!(model instanceof Client))
@@ -72,6 +91,10 @@ public class EmailWriteController implements Controller {
         emailModel.setSender(clientModel.getUser());
     }
 
+    /**
+     * Takes the email model in case the view is called by the forward and reply buttons.
+     * @param extraArgs extra arguments to be used by the controller.
+     */
     @Override
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof Email))
@@ -81,17 +104,28 @@ public class EmailWriteController implements Controller {
         setProperty();
     }
 
+    /**
+     * Sets the panel used for attaching graphical components.
+     * @param contentPanel border pane.
+     */
     @Override
     public void setContentPanel(BorderPane contentPanel) {
         //do nothing
     }
 
+    /**
+     * Bi-directionally binds the view properties to the respective email model properties.
+     */
     private void setProperty() {
         subjectTextField.textProperty().bindBidirectional(emailModel.subjectProperty());
         toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
         messageHTMLEditor.setHtmlText(emailModel.getMessage());
     }
 
+    /**
+     * Checks that the email data is valid.
+     * @return true if the data is valid, false otherwise.
+     */
     private boolean checkData() {
 
         if (toTextField.getText() == null

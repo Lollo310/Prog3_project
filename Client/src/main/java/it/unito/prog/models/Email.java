@@ -14,9 +14,9 @@ public class Email implements Externalizable, Comparable<Email> {
 
     private long id;
 
-    private transient final StringProperty sender; // it's assumed that the email addresses are correct
+    private transient final StringProperty sender;
 
-    private transient final StringProperty receivers; // it's assumed that the email addresses are correct
+    private transient final StringProperty receivers;
 
     private transient final StringProperty subject;
 
@@ -98,6 +98,9 @@ public class Email implements Externalizable, Comparable<Email> {
         this.id = id;
     }
 
+    /**
+     * @return timestamp in dd/mm/yyyy hh:mm format.
+     */
     private LocalDateTime getParsedTimestamp() {
         return Utils.parseTimestamp(this.getTimestamp());
     }
@@ -114,6 +117,11 @@ public class Email implements Externalizable, Comparable<Email> {
                 '}';
     }
 
+    /**
+     * Used for custom serialization.
+     * @param out ObjectOutput stream.
+     * @throws IOException caused by writes on the output stream.
+     */
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeLong(this.id);
@@ -124,6 +132,11 @@ public class Email implements Externalizable, Comparable<Email> {
         out.writeUTF(this.timestamp.get());
     }
 
+    /**
+     * Used for custom deserialization.
+     * @param in ObjectInput stream.
+     * @throws IOException caused by reads on the input stream.
+     */
     @Override
     public void readExternal(ObjectInput in) throws IOException {
         this.id = in.readLong();
@@ -134,6 +147,11 @@ public class Email implements Externalizable, Comparable<Email> {
         this.timestamp.set(in.readUTF());
     }
 
+    /**
+     * Compares the emails' timestamps.
+     * @param o email to be compared.
+     * @return n == 0 if equal, n < 0 if lesser, n > 0 if greater.
+     */
     @Override
     public int compareTo(Email o) {
         return this.getParsedTimestamp().compareTo(o.getParsedTimestamp());

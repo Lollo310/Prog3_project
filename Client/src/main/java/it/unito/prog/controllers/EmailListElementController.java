@@ -32,6 +32,10 @@ public class EmailListElementController implements Controller {
     @FXML
     private Label userLabel;
 
+    /**
+     * Specifies the list view's cells behaviour on click.
+     * Allows to visualize the email content when double-clicking on the list's emails.
+     */
     @FXML
     void onEmailListElementMouseClicked() {
         FXMLLoader loader = new FXMLLoader(ClientApplication.class.getResource("email-read-view.fxml"));
@@ -49,16 +53,26 @@ public class EmailListElementController implements Controller {
         }
     }
 
+    /**
+     * @return the anchor pane containing the list view's elements.
+     */
     public AnchorPane getEmailListElement() {
         return emailListElement;
     }
 
+    /**
+     * Sets the email's preview in the list view's cell.
+     */
     private void setLabel() {
         userLabel.setText(emailModel.getSender());
         previewLabel.setText(emailModel.getSubject());
         dateLabel.setText(emailModel.getTimestamp());
     }
 
+    /**
+     * Takes an email as model and sets its labels accordingly.
+     * @param model model used by the controller.
+     */
     @Override
     public void setModel(Object model) {
         if (!(model instanceof Email))
@@ -68,6 +82,10 @@ public class EmailListElementController implements Controller {
         setLabel();
     }
 
+    /**
+     * Takes the client model as extra arg to pass to the other controllers.
+     * @param extraArgs extra arguments to be used by the controller.
+     */
     @Override
     public void setExtraArgs(Object extraArgs) {
         if (!(extraArgs instanceof Client))
@@ -76,6 +94,10 @@ public class EmailListElementController implements Controller {
         clientModel = (Client)  extraArgs;
     }
 
+    /**
+     * Sets the panel used for attaching graphical components.
+     * @param contentPanel border pane.
+     */
     @Override
     public void setContentPanel(BorderPane contentPanel) {
         if (contentPanel == null)

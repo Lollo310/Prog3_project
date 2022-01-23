@@ -34,6 +34,11 @@ public class Feedback implements Serializable {
         return result;
     }
 
+    /**
+     * Sets the id and msg parameter.
+     * @param id id to be set.
+     * @param msg msg to be set.
+     */
     public void setAll(int id, String msg) {
         this.id = id;
         this.msg = msg;

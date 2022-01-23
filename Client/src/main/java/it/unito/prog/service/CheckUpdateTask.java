@@ -13,18 +13,22 @@ public class CheckUpdateTask extends TimerTask {
 
     private final Client clientModel;
 
-    private boolean isLoad;
+    private boolean isLoaded;
 
     public CheckUpdateTask(Client clientModel) {
         this.clientModel = clientModel;
-        isLoad = false;
+        isLoaded = false;
     }
 
+    /**
+     * Checks the server status.
+     * If the server is online and isLoaded == false, calls the loadEmail method and checks if there are new emails.
+     */
     @Override
     @SuppressWarnings("unchecked")
     public void run() {
-        if (!isLoad)
-            isLoad = loadEmail();
+        if (!isLoaded)
+            isLoaded = loadEmail();
 
         Feedback feedback = WebUtils.updateInbox(this.clientModel.getUser());
         Platform.runLater(() -> clientModel.setServerStatus(WebUtils.isOnline()));
@@ -33,6 +37,10 @@ public class CheckUpdateTask extends TimerTask {
             Platform.runLater(() -> clientModel.addInboxEmails((List<Email>) feedback.getResult()));
     }
 
+    /**
+     * Tries loading the emails from the server to the Inbox and Sent lists.
+     * @return true on success, false otherwise.
+     */
     @SuppressWarnings("unchecked")
     private boolean loadEmail() {
         Feedback feedback = WebUtils.load(clientModel.getUser(), "Inbox");
