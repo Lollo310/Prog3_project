@@ -103,7 +103,7 @@ public class WebUtils {
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
             } catch (IOException e) {
-                feedback.setAll(-1, "Send aborted. Connection error.");
+                feedback.setAll(-1, "Delete aborted. Connection error.");
             } catch (ClassNotFoundException e) {
                 feedback.setAll(-1, "Fatal error: " + e.getMessage());
             } finally {
@@ -142,7 +142,7 @@ public class WebUtils {
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
             } catch (IOException e) {
-                feedback.setAll(-1, "Send aborted. Connection error.");
+                feedback.setAll(-1, "Update aborted. Connection error.");
             } catch (ClassNotFoundException e) {
                 feedback.setAll(-1, "Fatal error: " + e.getMessage());
             } finally {
@@ -184,7 +184,7 @@ public class WebUtils {
                 outputStream.flush();
                 feedback = (Feedback) inputStream.readObject();
             } catch (IOException e) {
-                feedback.setAll(-1, "Send aborted. Connection error.");
+                feedback.setAll(-1, "Load aborted. Connection error.");
             } catch (ClassNotFoundException e) {
                 feedback.setAll(-1, "Fatal error: " + e.getMessage());
             } finally {
