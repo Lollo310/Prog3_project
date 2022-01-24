@@ -22,6 +22,11 @@ public class EmailListElement extends ListCell<Email> {
         this.clientModel = clientModel;
     }
 
+    /**
+     * Taken an email list view Cell, updates the item associated with the cell and sets its graphic components.
+     * @param email email to be represented graphically.
+     * @param b true if the cell is empty, false otherwise.
+     */
     @Override
     protected void updateItem(Email email, boolean b) {
         super.updateItem(email, b);

@@ -62,7 +62,7 @@ public class Client {
     }
 
     /**
-     * Sorts and sets the sent email list.
+     * Sorts and sets the Sent email list.
      * @param sentEmails list of emails to be set.
      */
     public void setAllSentEmails(List<Email> sentEmails) {
