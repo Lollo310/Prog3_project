@@ -28,26 +28,31 @@ public class FileManager {
         init();
     }
 
+    /**
+     * Initializes the lock hashmap by adding an Inbox lock, Sent lock and Incoming lock for each user.
+     */
     private void init() {
         File directory = new File(basePath);
         String[] users = directory.list();
 
-        for (String user : users) {
-            lockHashMap.put(basePath + user + File.separator + "Inbox", new ReentrantReadWriteLock());
-            lockHashMap.put(basePath + user + File.separator + "Sent", new ReentrantReadWriteLock());
-            lockHashMap.put(basePath + user + File.separator + "Incoming", new ReentrantReadWriteLock());
-        }
+        if (users != null && users.length > 0)
+            for (String user : users) {
+                lockHashMap.put(basePath + user + File.separator + "Inbox", new ReentrantReadWriteLock());
+                lockHashMap.put(basePath + user + File.separator + "Sent", new ReentrantReadWriteLock());
+                lockHashMap.put(basePath + user + File.separator + "Incoming", new ReentrantReadWriteLock());
+            }
     }
 
     /**
-     * Sends an email.
-     * @param email         email to be sent
-     * @return              code 0 Feedback on success, code -1 Feedback on failure
+     * Makes effective the send operation by writing the sent email in the sender's Sent directory and in the receivers'
+     * Incoming directory.
+     * @param email email to be sent
+     * @return      code 0 Feedback on success with the updated email as Feedback result, code -1 Feedback on failure
      */
     public Feedback sendEmail(Email email) {
          String sender = parseEmailAddress(email.getSender());
          String[] receivers = parseReceivers(email.getReceivers());
-         String senderPath = basePath + sender + File.separator + "Sent";
+         String senderPath = getPath(sender, "Sent");
          Feedback f = new Feedback(0, "Message sent successfully.", email);
 
          //check if sender exists
@@ -76,10 +81,10 @@ public class FileManager {
         //write email in receivers' Incoming directory
         for (String receiver : receivers) {
             String username = parseEmailAddress(receiver);
-            String receiverPath = basePath + username + File.separator + "Incoming";
+            String receiverPath = getPath(username, "Incoming");
 
             try {
-                lockHashMap.get(basePath + username + File.separator + "Incoming").writeLock().lock();
+                lockHashMap.get(receiverPath).writeLock().lock();
                 writeEmailOnFile(email, new File(receiverPath + File.separator + email.getId() + ".txt"));
             } catch (IOException e) {
                 return new Feedback(-1, "Error occurred while sending the email.");
@@ -92,7 +97,7 @@ public class FileManager {
     }
 
     /**
-     * Deletes an email.
+     * Makes effective the delete operation removing the file associated with the email id.
      * @param email         email to be deleted
      * @param emailAddress  user for whom the email has to be deleted
      * @return              code 0 Feedback on success, code -1 Feedback on failure
@@ -100,7 +105,7 @@ public class FileManager {
     public Feedback deleteEmail(Email email, String emailAddress) {
         String username = parseEmailAddress(emailAddress);
         String dir = email.getSender().equals(emailAddress) ? "Sent" : "Inbox";
-        String userPath = basePath + username + File.separator + dir;
+        String userPath = getPath(username, dir);
         Feedback f = new Feedback(0, "File deleted successfully.");
 
         //check if user exists
@@ -109,7 +114,7 @@ public class FileManager {
 
         try {
             if (Files.exists(Paths.get(userPath + File.separator + email.getId() + ".txt"))) {
-                lockHashMap.get(basePath + username + File.separator + dir).writeLock().lock();
+                lockHashMap.get(userPath).writeLock().lock();
 
                 File forDeletion = new File(userPath + File.separator + email.getId() + ".txt");
 
@@ -133,7 +138,7 @@ public class FileManager {
      */
     public Feedback getEmailList (String emailAddress, String dir) {
         String username = parseEmailAddress(emailAddress);
-        String userPath = basePath + username + File.separator + dir;
+        String userPath = getPath(username, dir);
         File directory = new File(userPath);
         String[] directoryList = directory.list();
         List<Email> retrievedEmails = new ArrayList<>();
@@ -151,7 +156,6 @@ public class FileManager {
                 for (String email : directoryList)
                     retrievedEmails.add(readEmailFromFile(new Email(), new File(userPath + File.separator + email)));
         } catch (IOException e) {
-            e.printStackTrace();
             f.setAll(-1, "Error occurred while retrieving email list.");
         } finally {
             lockHashMap.get(userPath).readLock().unlock();
@@ -211,7 +215,6 @@ public class FileManager {
             lockHashMap.get(basePath + username + File.separator + "Inbox").writeLock().lock();
             lockHashMap.get(basePath + username + File.separator + "Incoming").writeLock().lock();
 
-            //try moving each and every file which isn't the lock file
             if (incomingEmails != null && incomingEmails.length > 0)
                 for (String incomingEmail : incomingEmails)
                         Files.move(
@@ -261,5 +264,15 @@ public class FileManager {
         fileInputStream.close();
 
         return email;
+    }
+
+    /**
+     * Given a user and a directory, returns the path to the user's said directory.
+     * @param username  user.
+     * @param directory user's directory which path is needed.
+     * @return          user's directory's path.
+     */
+    private String getPath(String username, String directory) {
+        return basePath + username + File.separator + directory;
     }
 }
