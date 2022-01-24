@@ -23,6 +23,9 @@ public class ServerThread implements Runnable{
         this.serverModel = serverModel;
     }
 
+    /**
+     * Calls the right method according to the request.
+     */
     @Override
     public void run() {
         ObjectOutputStream outputStream = null;
@@ -54,6 +57,16 @@ public class ServerThread implements Runnable{
         }
     }
 
+    /**
+     * Calls the FileManager send method to make the operation effects persistent.
+     * Updates the server log then writes a Feedback on the output stream which can be:
+     * - code 0 on success, containing the updated email
+     * - code -1 on failure, with its respective error msg
+     * @param outputStream socket output stream.
+     * @param inputStream socket input stream.
+     * @throws IOException eventually caused by writes on the outputStream.
+     * @throws ClassNotFoundException eventually caused by readObject.
+     */
     private void send(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Email email = (Email) inputStream.readObject();
         Feedback feedback = FileManager.sendEmail(email);
@@ -67,6 +80,14 @@ public class ServerThread implements Runnable{
         outputStream.flush();
     }
 
+    /**
+     * Calls the FileManager delete method to make the operation effects persistent.
+     * Updates the server log then writes a Feedback on the output stream.
+     * @param outputStream socket output stream.
+     * @param inputStream socket input stream.
+     * @throws IOException eventually caused by writes on the outputStream.
+     * @throws ClassNotFoundException eventually caused by readObject.
+     */
     private void delete(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         String user = inputStream.readUTF();
         Email email = (Email) inputStream.readObject();
@@ -82,6 +103,15 @@ public class ServerThread implements Runnable{
         outputStream.flush();
     }
 
+    /**
+     * Calls the FileManager updateInbox method to make the operation effects persistent.
+     * Updates the server log then writes a Feedback on the output stream which can be:
+     * - code 0 on success, containing the new emails list
+     * - code -1 on failure, with its respective error msg
+     * @param outputStream socket output stream.
+     * @param inputStream socket input stream.
+     * @throws IOException eventually caused by writes on the outputStream.
+     */
     private void update(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException {
         String user = inputStream.readUTF();
         Feedback feedback = FileManager.updateInbox(user);
@@ -98,6 +128,15 @@ public class ServerThread implements Runnable{
         outputStream.flush();
     }
 
+    /**
+     * Calls the FileManager load method to make the operation effects persistent.
+     * Updates the server log then writes a Feedback on the output stream which can be:
+     * - code 0 on success, containing the specified emails list
+     * - code -1 on failure, with its respective error msg
+     * @param outputStream socket output stream.
+     * @param inputStream socket input stream.
+     * @throws IOException eventually caused by writes on the outputStream.
+     */
     private void load(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException {
         String user = inputStream.readUTF();
         String dir = inputStream.readUTF();

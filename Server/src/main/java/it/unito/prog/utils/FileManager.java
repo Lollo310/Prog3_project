@@ -20,9 +20,7 @@ public class FileManager {
     private static final String cwd = Path.of("").toAbsolutePath().toString();
 
     private static final String basePath = cwd + File.separator + "users" + File.separator;
-
-    // PUBLIC METHODS
-
+    
     /**
      * Sends an email.
      * @param email         email to be sent
@@ -191,8 +189,6 @@ public class FileManager {
 
         return f;
     }
-
-    // AUXILIARY METHODS
 
     /**
      * Checks if a user's directory already exists.

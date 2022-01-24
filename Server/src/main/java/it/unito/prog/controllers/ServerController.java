@@ -26,6 +26,9 @@ public class ServerController {
     @FXML
     private ListView<String> logListView;
 
+    /**
+     * Initializes the server view by binding the list view and the log then starting the server service.
+     */
     @FXML
     void initialize() {
         serverModel = new Server();
@@ -34,6 +37,9 @@ public class ServerController {
         serverModel.updateLog("SERVER START - " + Utils.getTimestamp());
     }
 
+    /**
+     * Overrides the window closure event.
+     */
     public void exitApplication() {
         System.out.println("Shutting down...");
 
@@ -43,10 +49,13 @@ public class ServerController {
             Platform.exit();
             System.exit(0);
         } catch (IOException e) {
-            e.printStackTrace();
+            //ignored
         }
     }
 
+    /**
+     * Launches the execution of the thread which carries out the clients requests handling task.
+     */
     private void startServerService() {
         Thread serverService = new Thread(() -> {
             try {

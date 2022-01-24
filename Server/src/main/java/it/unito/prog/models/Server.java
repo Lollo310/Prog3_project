@@ -14,6 +14,10 @@ public class Server {
         return log;
     }
 
+    /**
+     * Given a string, adds it to the server log.
+     * @param s string to be added.
+     */
     public void updateLog(String s){
         log.add(s);
     }

@@ -105,18 +105,6 @@ public class Email implements Externalizable, Comparable<Email> {
         return Utils.parseTimestamp(this.getTimestamp());
     }
 
-    @Override
-    public String toString() {  //debug
-        return "Email{" +
-                "id=" + this.id +
-                ", sender=" + this.sender +
-                ", receivers=" + this.receivers +
-                ", object=" + this.subject +
-                ", message=" + this.message +
-                ", timestamp=" + this.timestamp +
-                '}';
-    }
-
     /**
      * Used for custom serialization.
      * @param out ObjectOutput stream.
