@@ -18,9 +18,12 @@ public class ServerThread implements Runnable{
 
     private final Server serverModel;
 
-    public ServerThread(Socket socket, Server serverModel) {
+    private final FileManager fileManager;
+
+    public ServerThread(Socket socket, Server serverModel, FileManager fileManager) {
         this.socket = socket;
         this.serverModel = serverModel;
+        this.fileManager = fileManager;
     }
 
     /**
@@ -69,7 +72,7 @@ public class ServerThread implements Runnable{
      */
     private void send(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Email email = (Email) inputStream.readObject();
-        Feedback feedback = FileManager.sendEmail(email);
+        Feedback feedback = fileManager.sendEmail(email);
 
         updateServerLog( feedback.getId() == 0
                 ? "[SEND] FROM " + email.getSender() + " TO " + email.getReceivers() + " - " + Utils.getTimestamp()
@@ -91,7 +94,7 @@ public class ServerThread implements Runnable{
     private void delete(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         String user = inputStream.readUTF();
         Email email = (Email) inputStream.readObject();
-        Feedback feedback = FileManager.deleteEmail(email, user);
+        Feedback feedback = fileManager.deleteEmail(email, user);
 
 
         updateServerLog( feedback.getId() == 0
@@ -114,7 +117,7 @@ public class ServerThread implements Runnable{
      */
     private void update(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException {
         String user = inputStream.readUTF();
-        Feedback feedback = FileManager.updateInbox(user);
+        Feedback feedback = fileManager.updateInbox(user);
 
         if (feedback.getId() == 0) {
             updateServerLog("[UPDATE] "
@@ -140,7 +143,7 @@ public class ServerThread implements Runnable{
     private void load(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException {
         String user = inputStream.readUTF();
         String dir = inputStream.readUTF();
-        Feedback feedback = FileManager.getEmailList(user, dir);
+        Feedback feedback = fileManager.getEmailList(user, dir);
 
         updateServerLog( feedback.getId() == 0
                 ? "[LOAD " + dir.toUpperCase() + "] " + user + " - " + Utils.getTimestamp()

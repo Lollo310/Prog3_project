@@ -2,6 +2,7 @@ package it.unito.prog.controllers;
 
 import it.unito.prog.models.Server;
 import it.unito.prog.service.ServerThread;
+import it.unito.prog.utils.FileManager;
 import it.unito.prog.utils.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ServerController {
 
@@ -20,6 +22,8 @@ public class ServerController {
     private ExecutorService executorService;
 
     private ServerSocket serverSocket;
+
+    private FileManager fileManager;
 
     private static final int port = 8189;
 
@@ -31,10 +35,11 @@ public class ServerController {
      */
     @FXML
     void initialize() {
-        serverModel = new Server();
-        logListView.setItems(serverModel.getLog());
+        this.serverModel = new Server();
+        this.fileManager = new FileManager();
+        logListView.setItems(this.serverModel.getLog());
         startServerService();
-        serverModel.updateLog("SERVER START - " + Utils.getTimestamp());
+        this.serverModel.updateLog("SERVER START - " + Utils.getTimestamp());
     }
 
     /**
@@ -46,9 +51,13 @@ public class ServerController {
         try {
             serverSocket.close();
             executorService.shutdown();
+
+            if(!executorService.awaitTermination(3, TimeUnit.SECONDS))
+                executorService.shutdownNow();
+            
             Platform.exit();
             System.exit(0);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             //ignored
         }
     }
@@ -64,7 +73,7 @@ public class ServerController {
 
                 while (true) {
                     Socket socket = serverSocket.accept();
-                    executorService.execute(new ServerThread(socket, serverModel));
+                    executorService.execute(new ServerThread(socket, this.serverModel, this.fileManager));
                 }
             } catch (IOException e) {
                 //ignored
