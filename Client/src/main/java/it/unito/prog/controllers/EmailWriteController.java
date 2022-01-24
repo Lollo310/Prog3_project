@@ -135,7 +135,7 @@ public class EmailWriteController implements Controller {
         )
             return false;
 
-        return toTextField.getText().matches("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}\\s*;?\\s*+");
+        return toTextField.getText().matches("([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}\\s*;?\\s*)+");
     }
 }
 
