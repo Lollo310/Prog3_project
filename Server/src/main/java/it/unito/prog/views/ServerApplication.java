@@ -14,6 +14,8 @@ public class ServerApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(ServerApplication.class.getResource("server-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Server");
+        stage.setMinWidth(400);
+        stage.setMinHeight(300);
         stage.setScene(scene);
         stage.setOnCloseRequest(e -> ((ServerController) fxmlLoader.getController()).exitApplication());
         stage.show();
