@@ -12,15 +12,6 @@ public class Utils {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     /**
-     * Given an email address, extracts the username.
-     * @param emailAddress email address to be parsed.
-     * @return email address' extracted username.
-     */
-    public static String parseEmailAddress (String emailAddress) {
-        return emailAddress.split("@")[0];
-    }
-
-    /**
      * Given a string of receivers, splits the receivers.
      * @param receivers string of receivers.
      * @return array of receivers.
