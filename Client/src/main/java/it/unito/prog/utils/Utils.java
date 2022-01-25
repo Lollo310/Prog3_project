@@ -66,6 +66,7 @@ public class Utils {
      */
     public static void showAlert(Alert.AlertType alertType, String msg) {
         Alert alert = new Alert(alertType, msg);
+        alert.setTitle("Eta Client");
         alert.show();
     }
 }

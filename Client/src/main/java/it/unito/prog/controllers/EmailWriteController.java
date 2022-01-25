@@ -65,6 +65,7 @@ public class EmailWriteController implements Controller {
         infoLabel.setVisible(false);
         emailModel = new Email();
         emailModel.setMessage(Utils.clearHTML);
+        emailModel.setSender(clientModel.getUser());
         setProperty();
     }
 
@@ -117,8 +118,8 @@ public class EmailWriteController implements Controller {
      * Bi-directionally binds the view properties to the respective email model properties.
      */
     private void setProperty() {
-        subjectTextField.textProperty().bindBidirectional(emailModel.subjectProperty());
         toTextField.textProperty().bindBidirectional(emailModel.receiversProperty());
+        subjectTextField.textProperty().bindBidirectional(emailModel.subjectProperty());
         messageHTMLEditor.setHtmlText(emailModel.getMessage());
     }
 

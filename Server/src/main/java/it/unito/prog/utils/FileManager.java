@@ -52,7 +52,6 @@ public class FileManager {
     public Feedback sendEmail(Email email) {
          String[] receivers = parseReceivers(email.getReceivers());
          String senderPath = getPath(email.getSender(), "Sent");
-         Feedback f = new Feedback(0, "Message sent successfully.", email);
 
          //check if sender exists
          if(notExistsUserDir(email.getSender()))
@@ -91,7 +90,7 @@ public class FileManager {
             }
         }
 
-        return f;
+        return new Feedback(0, "Message sent successfully.", email);
     }
 
     /**
@@ -103,28 +102,23 @@ public class FileManager {
     public Feedback deleteEmail(Email email, String emailAddress) {
         String dir = email.getSender().equals(emailAddress) ? "Sent" : "Inbox";
         String userPath = getPath(emailAddress, dir);
-        Feedback f = new Feedback(0, "File deleted successfully.");
 
         //check if user exists
         if(notExistsUserDir(emailAddress))
             return new Feedback(-1, "Invalid user " + emailAddress + ".");
 
         try {
-            if (Files.exists(Paths.get(userPath + File.separator + email.getId() + ".txt"))) {
-                lockHashMap.get(userPath).writeLock().lock();
+            lockHashMap.get(userPath).writeLock().lock();
 
-                File forDeletion = new File(userPath + File.separator + email.getId() + ".txt");
+            return Files.deleteIfExists(Paths.get(userPath + File.separator + email.getId() + ".txt"))
+                    ? new Feedback(0, "File deleted successfully.")
+                    : new Feedback(-1, "Email not found for deletion.");
 
-                if(!forDeletion.delete())
-                    f.setAll(-1, "Error occurred while deleting the email.");
-            } else {
-                f.setAll(-1, "Email not found for deletion.");
-            }
+        } catch (IOException e) {
+            return new Feedback(-1, "Error occurred while deleting the email.");
         } finally {
             lockHashMap.get(userPath).writeLock().unlock();
         }
-
-        return f;
     }
 
     /**

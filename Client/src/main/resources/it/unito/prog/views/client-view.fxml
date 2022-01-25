@@ -26,7 +26,7 @@
     <bottom>
         <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-background-color: #707A7E;" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" layoutX="297.0" layoutY="4.0" text="Copyright © 2021 by Michele Lorenzo &amp; Elisa Li Perottino" textFill="#e3e8ea" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="297.0" />
+                <Label alignment="CENTER" layoutX="297.0" layoutY="4.0" text="Copyright © 2022 by Michele Lorenzo &amp; Elisa Li Perottino" textFill="#e3e8ea" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="297.0" />
             </children></AnchorPane>
     </bottom>
     <left>

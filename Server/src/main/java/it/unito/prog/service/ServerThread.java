@@ -74,7 +74,7 @@ public class ServerThread implements Runnable{
         Email email = (Email) inputStream.readObject();
         Feedback feedback = fileManager.sendEmail(email);
 
-        updateServerLog( feedback.getId() == 0
+        updateServerLog(feedback.getId() == 0
                 ? "[SEND] FROM " + email.getSender() + " TO " + email.getReceivers() + " - " + Utils.getTimestamp()
                 : "[ERROR] " + feedback.getMsg() + " - " + Utils.getTimestamp()
         );
