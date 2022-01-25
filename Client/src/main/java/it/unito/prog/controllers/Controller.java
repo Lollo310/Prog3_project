@@ -10,7 +10,7 @@ public interface Controller {
     void setModel(Object model);
 
     /**
-     * Allows to pass extra arguments, such as models, to the controller.
+     * Allows passing extra arguments, such as models, to the controller.
      * @param extraArgs extra arguments to be used by the controller.
      */
     void setExtraArgs(Object extraArgs);
