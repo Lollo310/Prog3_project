@@ -46,7 +46,7 @@ public class EmailWriteController implements Controller {
                 ? WebUtils.sendMessage(emailModel)
                 : new Feedback(-1,
                         "Incorrect data format. To and subject fields cannot be empty and receivers format must be correct."
-                   );
+                );
 
         if (feedback.getId() == 0) {
             clientModel.addSentEmails((Email) feedback.getResult());
