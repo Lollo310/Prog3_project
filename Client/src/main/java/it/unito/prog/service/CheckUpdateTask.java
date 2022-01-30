@@ -48,13 +48,15 @@ public class CheckUpdateTask extends TimerTask {
         if (feedback.getId() < 0 || !(feedback.getResult() instanceof List<?>))
             return false;
 
-        clientModel.setAllInboxEmails((List<Email>) feedback.getResult());
-        feedback = WebUtils.load(clientModel.getUser(), "Sent");
+        Platform.runLater(() -> clientModel.setAllInboxEmails((List<Email>) feedback.getResult()));
 
-        if (feedback.getId() < 0 || !(feedback.getResult() instanceof List<?>))
+        Feedback feedback2 = WebUtils.load(clientModel.getUser(), "Sent");
+
+        if (feedback2.getId() < 0 || !(feedback2.getResult() instanceof List<?>))
             return false;
 
-        clientModel.setAllSentEmails((List<Email>) feedback.getResult());
+        Platform.runLater(() -> clientModel.setAllSentEmails((List<Email>) feedback2.getResult()));
+
         return true;
     }
 }

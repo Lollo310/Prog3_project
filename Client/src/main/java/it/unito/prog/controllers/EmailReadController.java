@@ -92,7 +92,7 @@ public class EmailReadController implements Controller {
         Email forwardEmail = new Email(
                 this.clientModel.getUser(),
                 "",
-                "[Forward from " + this.emailModel.getSender() + "] " + this.emailModel.getSubject(),
+                "[Forwarded from " + this.emailModel.getSender() + "] " + this.emailModel.getSubject(),
                 this.emailModel.getMessage()
         );
 
